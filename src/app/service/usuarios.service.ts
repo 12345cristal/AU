@@ -1,32 +1,49 @@
 import { Injectable } from '@angular/core';
-import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
+import { Observable, of } from 'rxjs';
 
-export interface Usuario {
-  id: number;
-  iniciales: string;
-  nombre: string;
-  email: string;
+/**
+ * Interfaz que define la estructura del nuevo usuario
+ */
+export interface NuevoUsuario {
+  nombreCompleto: string;
+  correoElectronico: string;
   rol: string;
-  especialidad?: string;
-  contacto: string;
-  ultimoAcceso: string;
-  activo: boolean;
+  especialidad?: string; // Opcional
+}
+
+/**
+ * Interfaz para las opciones de select (futuro dropdown)
+ */
+export interface RolUsuario {
+    id: string;
+    name: string;
 }
 
 @Injectable({
   providedIn: 'root'
 })
-export class UsuariosService {
-  private baseUrl = 'http://localhost:8000'; // tu backend FastAPI
+export class UsuarioService {
 
-  constructor(private http: HttpClient) {}
+  constructor() { }
 
-  getUsuarios(): Observable<Usuario[]> {
-    return this.http.get<Usuario[]>(`${this.baseUrl}/usuarios`);
+  /**
+   * En el futuro, se usará HttpClient para enviar los datos al backend.
+   */
+  createNewUser(userData: NuevoUsuario): Observable<any> {
+    console.log('Simulando creación de usuario:', userData);
+    // Retorna un observable vacío (simulación de respuesta exitosa)
+    return of({ success: true, message: 'Usuario creado (simulado)' });
   }
 
-  toggleActivo(id: number, estado: boolean): Observable<any> {
-    return this.http.patch(`${this.baseUrl}/usuarios/${id}/estado`, { activo: estado });
+  /**
+   * Obtiene la lista de roles disponibles del backend.
+   */
+  getAvailableRoles(): Observable<RolUsuario[]> {
+    // Retorno de datos simulados
+    return of([
+        { id: 'terapeuta', name: 'Terapeuta' },
+        { id: 'padre', name: 'Padre' },
+        { id: 'administrador', name: 'Administrador' },
+    ] as RolUsuario[]);
   }
 }

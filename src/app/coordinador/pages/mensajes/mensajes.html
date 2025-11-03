@@ -3,68 +3,72 @@
   <h2>Mensajes</h2>
   <p>Comunicación personalizada con tutores y padres</p>
 
+  <!-- Resumen general -->
   <div class="mensajes-resumen">
     <div>Total Mensajes: 4</div>
-    <div>Enviados: 1</div>
-    <div>Vistos: 2</div>
+    <div>Enviados: 4</div>
+    <div>Vistos: 3</div>
     <div>Completados: 1</div>
   </div>
 
+  <!-- Bandeja -->
   <div class="bandeja">
     <h3>Bandeja de Mensajes</h3>
 
     <!-- Mensaje 1 -->
     <div class="mensaje-card">
-      <div class="prioridad">{{mensaje1.prioridad}}</div>
-      <div class="titulo">{{mensaje1.titulo}}</div>
-      <div class="destinatario">Para: {{mensaje1.destinatario}}</div>
-      <div class="contenido">{{mensaje1.contenido}}</div>
-      <div class="enviado">Enviado: {{mensaje1.enviado}}</div>
-      <div class="visto" *ngIf="mensaje1.visto">Visto: {{mensaje1.visto}}</div>
+      <div class="prioridad">{{ mensaje1.prioridad }}</div>
+      <div class="titulo">{{ mensaje1.titulo }}</div>
+      <div class="destinatario">Para: {{ mensaje1.destinatario }}</div>
+      <div class="contenido">{{ mensaje1.contenido }}</div>
+      <div class="enviado">Enviado: {{ mensaje1.enviado }}</div>
+      <div class="visto">Visto: {{ mensaje1.visto || 'No visto aún' }}</div>
     </div>
 
     <!-- Mensaje 2 -->
     <div class="mensaje-card">
-      <div class="prioridad">{{mensaje2.prioridad}}</div>
-      <div class="titulo">{{mensaje2.titulo}}</div>
-      <div class="destinatario">Para: {{mensaje2.destinatario}}</div>
-      <div class="contenido">{{mensaje2.contenido}}</div>
-      <div class="enviado">Enviado: {{mensaje2.enviado}}</div>
-      <div class="visto" *ngIf="mensaje2.visto">Visto: {{mensaje2.visto}}</div>
+      <div class="prioridad">{{ mensaje2.prioridad }}</div>
+      <div class="titulo">{{ mensaje2.titulo }}</div>
+      <div class="destinatario">Para: {{ mensaje2.destinatario }}</div>
+      <div class="contenido">{{ mensaje2.contenido }}</div>
+      <div class="enviado">Enviado: {{ mensaje2.enviado }}</div>
+      <div class="visto">Visto: {{ mensaje2.visto || 'No visto aún' }}</div>
     </div>
 
     <!-- Mensaje 3 -->
     <div class="mensaje-card">
-      <div class="prioridad">{{mensaje3.prioridad}}</div>
-      <div class="titulo">{{mensaje3.titulo}}</div>
-      <div class="destinatario">Para: {{mensaje3.destinatario}}</div>
-      <div class="contenido">{{mensaje3.contenido}}</div>
-      <div class="enviado">Enviado: {{mensaje3.enviado}}</div>
+      <div class="prioridad">{{ mensaje3.prioridad }}</div>
+      <div class="titulo">{{ mensaje3.titulo }}</div>
+      <div class="destinatario">Para: {{ mensaje3.destinatario }}</div>
+      <div class="contenido">{{ mensaje3.contenido }}</div>
+      <div class="enviado">Enviado: {{ mensaje3.enviado }}</div>
+      <div class="visto">{{ mensaje3.visto || 'No visto aún' }}</div>
     </div>
 
     <!-- Mensaje 4 -->
     <div class="mensaje-card">
-      <div class="prioridad">{{mensaje4.prioridad}}</div>
-      <div class="titulo">{{mensaje4.titulo}}</div>
-      <div class="destinatario">Para: {{mensaje4.destinatario}}</div>
-      <div class="contenido">{{mensaje4.contenido}}</div>
-      <div class="enviado">Enviado: {{mensaje4.enviado}}</div>
-      <div class="visto" *ngIf="mensaje4.visto">Visto: {{mensaje4.visto}}</div>
+      <div class="prioridad">{{ mensaje4.prioridad }}</div>
+      <div class="titulo">{{ mensaje4.titulo }}</div>
+      <div class="destinatario">Para: {{ mensaje4.destinatario }}</div>
+      <div class="contenido">{{ mensaje4.contenido }}</div>
+      <div class="enviado">Enviado: {{ mensaje4.enviado }}</div>
+      <div class="visto">Visto: {{ mensaje4.visto || 'No visto aún' }}</div>
     </div>
-
   </div>
 
   <!-- Nuevo mensaje -->
   <div class="nuevo-mensaje">
     <h3>Enviar mensaje personalizado</h3>
-    <input #paciente placeholder="Seleccionar paciente">
+
+    <input #paciente type="text" placeholder="Seleccionar paciente" />
     <select #prioridad>
       <option value="Normal">Normal</option>
       <option value="Alta">Alta</option>
       <option value="Urgente">Urgente</option>
     </select>
-    <input #asunto placeholder="Asunto del mensaje">
+    <input #asunto type="text" placeholder="Asunto del mensaje" />
     <textarea #contenido placeholder="Escriba su mensaje aquí..."></textarea>
+
     <button (click)="enviarNuevoMensaje(asunto.value, paciente.value, prioridad.value, contenido.value)">
       Enviar
     </button>

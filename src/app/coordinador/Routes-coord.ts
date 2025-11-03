@@ -4,7 +4,6 @@ import { LayoutComponent } from './layout/layout';
 import { InicioComponent } from './pages/inicio/inicio';
 import { UsuariosComponent } from './pages/usuarios/usuarios';
 import { CitasComponent } from './pages/citas/citas';
-import { TerapeutasComponent } from './pages/terapeutas/terapeutas';
 import { PadresComponent } from './pages/padres/padres';
 import { RecursosComponent } from './pages/recursos/recursos';
 import { MensajesComponent } from './pages/mensajes/mensajes';
@@ -23,7 +22,7 @@ import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
 // Nuevos componentes
 import { AsistenteIAComponent } from './pages/asistente-ia/asistente-ia';
 import { CapacitacionesComponent } from './pages/capacitaciones/capacitaciones';
-
+import { PersonalComponent } from './pages/personal/personal';
 export const COORDINADOR_ROUTES: Routes = [
   {
     path: 'coordinador',
@@ -33,7 +32,7 @@ export const COORDINADOR_ROUTES: Routes = [
       { path: 'inicio', component: InicioComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'citas', component: CitasComponent },
-      { path: 'terapeutas', component: TerapeutasComponent },
+      { path: 'personal', component: PersonalComponent },
       { path: 'padres', component: PadresComponent },
       { path: 'recursos', component: RecursosComponent },
       { path: 'mensajes', component: MensajesComponent },

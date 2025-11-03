@@ -1,70 +1,76 @@
-<div class="container">
-  <!-- Buscador y filtros -->
-  <div class="buscador-filtros">
-    <input 
-      type="text" 
-      placeholder="Buscar usuario" 
-      [value]="searchQuery()" 
-      (input)="actualizarBusqueda($event.target.value)" 
-    />
-    <button (click)="cambiarFiltro(true)" [class.active]="mostrarActivos()">Activos</button>
-    <button (click)="cambiarFiltro(false)" [class.active]="!mostrarActivos()">Inactivos</button>
-    <button (click)="agregarUsuario()">+ Nuevo Usuario</button>
-  </div>
+<div class="usuario-container">
+  <h2>Registro de Nuevo Usuario</h2>
 
-  <!-- Cargando -->
-  <div [hidden]="!cargando()">Cargando usuarios...</div>
+  <form [formGroup]="userForm" (ngSubmit)="onSubmit()" class="usuario-form">
 
-  <!-- Lista de usuarios -->
-  <ng-container>
-    <div *ngFor="let u of filteredUsuarios()">
-      <div class="usuario-item">
-        <div class="info">
-          <span class="nombre">{{ u.nombre }}</span>
-          <span class="rol">{{ u.rol }}</span>
-          <span class="contacto">{{ u.contacto }}</span>
-          <span class="ultimo-acceso">{{ u.ultimoAcceso }}</span>
-        </div>
-        <div class="acciones">
-          <button (click)="editarUsuario(u)">Editar</button>
-          <button (click)="permisosUsuario(u)">Permisos</button>
-          <button (click)="toggleActivo(u)">{{ u.activo ? 'Desactivar' : 'Activar' }}</button>
-        </div>
-      </div>
+    <!-- Nombre completo -->
+    <div class="form-group">
+      <label for="nombreCompleto">Nombre completo</label>
+      <input
+        id="nombreCompleto"
+        type="text"
+        formControlName="nombreCompleto"
+        placeholder="Ej. Johana Pérez"
+      />
+      <small>Este campo es obligatorio</small>
     </div>
-  </ng-container>
 
-  <!-- Modal Editar -->
-  <div [hidden]="!mostrarModalEditar()">
-    <div class="modal-content">
-      <h3>Editar Usuario</h3>
-      <input [(ngModel)]="usuarioSeleccionado().nombre" placeholder="Nombre">
-      <input [(ngModel)]="usuarioSeleccionado().rol" placeholder="Rol">
-      <input [(ngModel)]="usuarioSeleccionado().contacto" placeholder="Contacto">
-      <input [(ngModel)]="usuarioSeleccionado().especialidad" placeholder="Especialidad">
-      <button (click)="guardarEdicion()">Guardar</button>
-      <button (click)="mostrarModalEditar.set(false)">Cancelar</button>
+    <!-- Correo electrónico -->
+    <div class="form-group">
+      <label for="correoElectronico">Correo electrónico</label>
+      <input
+        id="correoElectronico"
+        type="email"
+        formControlName="correoElectronico"
+        placeholder="ejemplo@correo.com"
+      />
+      <small>Ingrese un correo válido</small>
     </div>
-  </div>
 
-  <!-- Modal Permisos -->
-  <div [hidden]="!mostrarModalPermisos()">
-    <div class="modal-content">
-      <h3>Permisos de {{ usuarioSeleccionado()?.nombre }}</h3>
-      <button (click)="mostrarModalPermisos.set(false)">Cerrar</button>
+    <!-- Contraseña -->
+    <div class="form-group">
+      <label for="contrasena">Contraseña</label>
+      <input
+        id="contrasena"
+        type="password"
+        formControlName="contrasena"
+        placeholder="Mínimo 8 caracteres"
+      />
+      <small>Debe contener al menos 8 caracteres</small>
     </div>
-  </div>
 
-  <!-- Modal Nuevo -->
-  <div [hidden]="!mostrarModalNuevo()">
-    <div class="modal-content">
-      <h3>Nuevo Usuario</h3>
-      <input [(ngModel)]="usuarioSeleccionado().nombre" placeholder="Nombre">
-      <input [(ngModel)]="usuarioSeleccionado().rol" placeholder="Rol">
-      <input [(ngModel)]="usuarioSeleccionado().contacto" placeholder="Contacto">
-      <input [(ngModel)]="usuarioSeleccionado().especialidad" placeholder="Especialidad">
-      <button (click)="guardarNuevoUsuario()">Guardar</button>
-      <button (click)="mostrarModalNuevo.set(false)">Cancelar</button>
+    <!-- Rol -->
+    <div class="form-group">
+      <label for="rol">Rol</label>
+      <select id="rol" formControlName="rol">
+        <option value="">Seleccione un rol</option>
+        <option value="1">Coordinador</option>
+        <option value="2">Padre</option>
+        <option value="3">Terapeuta</option>
+        <option value="4">Servicio</option>
+        <option value="5">Prácticas</option>
+        <option value="6">Administrador</option>
+      </select>
+      <small>Seleccione un rol válido</small>
     </div>
-  </div>
+
+    <!-- Especialidad -->
+    <div class="form-group">
+      <label for="especialidad">Especialidad</label>
+      <input
+        id="especialidad"
+        type="text"
+        formControlName="especialidad"
+        placeholder="Ej. Motricidad fina"
+      />
+      <small>Este campo es obligatorio para terapeutas</small>
+    </div>
+
+    <!-- Botones -->
+    <div class="botones">
+      <button type="submit">Registrar usuario</button>
+      <button type="button" class="cancelar" (click)="userForm.reset()">Limpiar</button>
+    </div>
+
+  </form>
 </div>
