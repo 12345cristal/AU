@@ -1,1 +1,51 @@
-<p>planes works!</p>
+<div class="planes-container">
+  <h1>Planes de Tratamiento</h1>
+  <p>Planes terapéuticos individualizados</p>
+
+  <!-- Plan 1 -->
+  <div class="plan">
+    <h2>{{ plan1.nombre }}</h2>
+    <p>{{ plan1.diagnostico }}</p>
+    <p><strong>Servicios activos:</strong></p>
+    <ul>
+      <li>{{ plan1.servicios[0] }}</li>
+      <li>{{ plan1.servicios[1] }}</li>
+    </ul>
+    <button (click)="verPlan(plan1)">Ver Plan Completo</button>
+  </div>
+
+  <!-- Plan 2 -->
+  <div class="plan">
+    <h2>{{ plan2.nombre }}</h2>
+    <p>{{ plan2.diagnostico }}</p>
+    <p><strong>Servicios activos:</strong></p>
+    <ul>
+      <li>{{ plan2.servicios[0] }}</li>
+      <li>{{ plan2.servicios[1] }}</li>
+    </ul>
+    <button (click)="verPlan(plan2)">Ver Plan Completo</button>
+  </div>
+
+  <!-- Plan 3 -->
+  <div class="plan">
+    <h2>{{ plan3.nombre }}</h2>
+    <p>{{ plan3.diagnostico }}</p>
+    <p><strong>Servicios activos:</strong></p>
+    <ul>
+      <li>{{ plan3.servicios[0] }}</li>
+    </ul>
+    <button (click)="verPlan(plan3)">Ver Plan Completo</button>
+  </div>
+
+  <!-- Plan 4 -->
+  <div class="plan">
+    <h2>{{ plan4.nombre }}</h2>
+    <p>{{ plan4.diagnostico }}</p>
+    <p><strong>Servicios activos:</strong></p>
+    <ul>
+      <li>{{ plan4.servicios[0] }}</li>
+      <li>{{ plan4.servicios[1] }}</li>
+    </ul>
+    <button (click)="verPlan(plan4)">Ver Plan Completo</button>
+  </div>
+</div>

@@ -1,1 +1,28 @@
-<p>notas works!</p>
+<div class="notas-container">
+  <h1>Notas y Observaciones</h1>
+  <p>Registro de sesiones y observaciones</p>
+
+  <div class="acciones">
+    <button class="nueva">Nueva Nota de Sesión</button>
+  </div>
+
+  <div class="formulario">
+    <label for="paciente">Paciente</label>
+    <select id="paciente" (change)="actualizarPaciente($event)">
+      <option value="">Seleccionar paciente...</option>
+      <option value="{{paciente1}}">{{paciente1}}</option>
+      <option value="{{paciente2}}">{{paciente2}}</option>
+      <option value="{{paciente3}}">{{paciente3}}</option>
+      <option value="{{paciente4}}">{{paciente4}}</option>
+    </select>
+
+    <label for="observaciones">Observaciones de la sesión</label>
+    <textarea id="observaciones" placeholder="Describa los avances, comportamientos observados y actividades realizadas..."
+      (input)="actualizarObservaciones($event)"></textarea>
+
+    <div class="botones">
+      <button (click)="guardarNota()">Guardar Nota</button>
+      <button class="cancelar" (click)="cancelar()">Cancelar</button>
+    </div>
+  </div>
+</div>
