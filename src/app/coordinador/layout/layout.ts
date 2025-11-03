@@ -1,4 +1,5 @@
-import { Component } from '@angular/core';
+// src/app/coordinador/layout/layout.ts
+import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
 import { SidebarComponent } from '../components/sidebar/sidebar';
@@ -8,12 +9,17 @@ import { SidebarComponent } from '../components/sidebar/sidebar';
   standalone: true,
   imports: [CommonModule, RouterOutlet, SidebarComponent],
   templateUrl: './layout.html',
-  styleUrls: ['./layout.scss']
+  styleUrls: ['./layout.scss'],
 })
 export class LayoutComponent {
   sidebarOpen = window.innerWidth > 1024;
 
   onSidebarToggled(state: boolean) {
     this.sidebarOpen = state;
+  }
+
+  @HostListener('window:resize')
+  onResize() {
+    this.sidebarOpen = window.innerWidth > 1024;
   }
 }

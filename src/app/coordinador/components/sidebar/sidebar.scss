@@ -1,5 +1,5 @@
 /* ==============================
-   ESTILOS GENERALES
+   ESTILOS GLOBALES
 ============================== */
 :host {
   display: block;
@@ -250,7 +250,7 @@
   position: fixed;
   inset: 0;
   background: rgba(0, 0, 0, 0.4);
-  z-index: 250; /* debajo del sidebar pero encima de main */
+  z-index: 250;
   pointer-events: auto;
 
   &.show {
@@ -269,7 +269,9 @@
   transform: rotate(-45deg) translateY(-6px);
 }
 
-/* INICIO */
+/* ==============================
+   INICIO CONTAINER (adaptable al sidebar)
+============================== */
 .inicio-container {
   flex: 1;
   display: flex;
@@ -278,13 +280,13 @@
   align-items: center;
   padding: 2rem;
   box-sizing: border-box;
-  width: 100%;
-  height: 100%;
-  overflow: hidden;
-  transition: all 0.3s ease;
   background: #ffffff;
-  margin-top: 60px;
   text-align: center;
+  overflow-y: auto;
+  transition: all 0.3s ease;
+  margin-top: 60px; /* espacio toolbar */
+  margin-left: 230px; /* espacio sidebar por defecto */
+  width: calc(100% - 230px);
 
   h2 {
     color: #2563eb;
@@ -301,47 +303,46 @@
   }
 }
 
-/* ANIMACIONES */
+/* Ajuste cuando sidebar cerrado */
+.layout-container:not(.sidebar-open) .inicio-container {
+  margin-left: 0;
+  width: 100%;
+}
+
+/* ==============================
+   ANIMACIONES
+============================== */
 @keyframes fadeIn {
   from { opacity: 0; transform: translateY(-5px); }
   to { opacity: 1; transform: translateY(0); }
 }
 
-/* RESPONSIVE */
+/* ==============================
+   RESPONSIVE
+============================== */
 @media (max-width: 1024px) {
-  .sidebar {
-    transform: translateX(-100%);
-    width: 220px;
-  }
+  .sidebar { width: 220px; }
+  .inicio-container { margin-left: 220px; width: calc(100% - 220px); }
+  .layout-container:not(.sidebar-open) .inicio-container { margin-left: 0; width: 100%; }
 }
 
 @media (max-width: 768px) {
-  .sidebar {
-    width: 200px;
-    z-index: 300;
-  }
+  .sidebar { width: 200px; }
+  .inicio-container { margin-left: 200px; width: calc(100% - 200px); padding: 1rem; }
+  .layout-container:not(.sidebar-open) .inicio-container { margin-left: 0; width: 100%; }
 
-  .sidebar.open + .sidebar-overlay {
-    display: block;
-  }
+  .sidebar.open + .sidebar-overlay { display: block; }
+  .close-sidebar-btn { display: block; }
 
-  .close-sidebar-btn {
-    display: block;
-  }
-
-  .inicio-container {
-    padding: 1rem;
-
-    h2 { font-size: 1.5rem; }
-    p { font-size: 0.95rem; }
-  }
+  .inicio-container h2 { font-size: 1.5rem; }
+  .inicio-container p { font-size: 0.95rem; }
 }
 
 @media (max-width: 480px) {
-  .inicio-container {
-    padding: 0.8rem;
+  .sidebar { width: 180px; }
+  .inicio-container { margin-left: 180px; width: calc(100% - 180px); padding: 0.8rem; }
+  .layout-container:not(.sidebar-open) .inicio-container { margin-left: 0; width: 100%; }
 
-    h2 { font-size: 1.3rem; }
-    p { font-size: 0.9rem; }
-  }
+  .inicio-container h2 { font-size: 1.3rem; }
+  .inicio-container p { font-size: 0.9rem; }
 }

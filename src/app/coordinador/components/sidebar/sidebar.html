@@ -1,7 +1,12 @@
+<!-- ==============================
+     TOOLBAR
+============================== -->
 <header class="toolbar">
   <div class="toolbar-left">
-    <!-- Botón hamburguesa SIEMPRE visible -->
-    <button class="toggle-btn-desktop" (click)="toggleSidebar()" [class.active]="menuVisible" aria-label="Menú">
+    <button class="toggle-btn-desktop" 
+            (click)="toggleSidebar()" 
+            [class.active]="menuVisible" 
+            aria-label="Menú">
       <span class="bar"></span>
       <span class="bar"></span>
       <span class="bar"></span>
@@ -12,19 +17,21 @@
 
   <div class="toolbar-right">
     <button class="icon-btn notification-btn">
-      🔔 <span class="badge">3</span>
+      Notificaciones <span class="badge">3</span>
     </button>
     <button class="icon-btn">Perfil</button>
   </div>
 </header>
 
-<!-- SIDEBAR -->
+<!-- ==============================
+     SIDEBAR
+============================== -->
 <nav class="sidebar" [class.open]="menuVisible">
   <div class="sidebar-content">
     <div class="sidebar-header">
       <img src="autismo_mochis.png" alt="Autismo Mochis" class="sidebar-logo" />
       <span class="sidebar-title">Coordinador</span>
-      <button class="close-sidebar-btn" (click)="closeSidebar()">✕</button>
+      <button class="close-sidebar-btn" (click)="closeSidebar()">Cerrar</button>
     </div>
 
     <div class="sidebar-scroll">
@@ -34,9 +41,9 @@
           Panel principal <span>{{ panelPrincipalOpen ? '▲' : '▼' }}</span>
         </div>
         <div class="sidebar-links">
-          <a routerLink="/coordinador/inicio">🏠 Inicio</a>
-          <a href="#">📅 Citas</a>
-          <a href="#">👥 Terapeutas</a>
+          <a routerLink="/coordinador/inicio">Inicio</a>
+          <a routerLink="/coordinador/citas">Citas</a>
+          <a routerLink="/coordinador/terapeutas">Terapeutas</a>
         </div>
       </div>
 
@@ -46,12 +53,12 @@
           Gestión clínica <span>{{ gestionClinicaOpen ? '▲' : '▼' }}</span>
         </div>
         <div class="sidebar-links">
-          <a href="#">👨‍👩‍👧 Padres</a>
-          <a href="#">📘 Recursos</a>
-          <a href="#">💬 Mensajes</a>
-          <a href="#">🩺 Parte clínica</a>
-          <a href="#">🕓 Horarios</a>
-          <a href="#">📂 Expedientes clínicos</a>
+          <a routerLink="/coordinador/padres">Padres</a>
+          <a routerLink="/coordinador/recursos">Recursos</a>
+          <a routerLink="/coordinador/mensajes">Mensajes</a>
+          <a routerLink="/coordinador/parte-clinica">Parte clínica</a>
+          <a routerLink="/coordinador/horarios">Horarios</a>
+          <a routerLink="/coordinador/expedientes-clinicos">Expedientes clínicos</a>
         </div>
       </div>
 
@@ -61,20 +68,25 @@
           Administración <span>{{ administracionOpen ? '▲' : '▼' }}</span>
         </div>
         <div class="sidebar-links">
-          <a href="#">🔒 Filtros de acceso</a>
-          <a href="#">➕ Nuevo beneficiario</a>
-          <a href="#">👤 Usuarios</a>
-          <a href="#">📊 Reportes</a>
+          <a routerLink="/coordinador/filtros-acceso">Filtros de acceso</a>
+          <a routerLink="/coordinador/nuevo-beneficiario">Nuevo beneficiario</a>
+          <a routerLink="/coordinador/usuarios">Usuarios</a>
+          <a routerLink="/coordinador/reportes">Reportes</a>
         </div>
       </div>
     </div>
 
+    <!-- Footer del sidebar -->
     <div class="sidebar-footer">
-      <a href="#">⚙️ Configuración</a>
-      <a href="#" class="logout">🚪 Cerrar sesión</a>
+      <a href="#">Configuración</a>
+      <a href="#" class="logout">Cerrar sesión</a>
     </div>
   </div>
 </nav>
 
-<!-- Overlay móvil -->
-<div class="sidebar-overlay" [class.show]="menuVisible" (click)="closeSidebar()"></div>
+<!-- ==============================
+     OVERLAY
+============================== -->
+<div class="sidebar-overlay" 
+     [class.show]="menuVisible" 
+     (click)="closeSidebar()"></div>

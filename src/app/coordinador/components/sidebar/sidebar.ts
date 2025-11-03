@@ -1,12 +1,17 @@
-import { Component, HostListener, Output, EventEmitter } from '@angular/core';
+// src/app/coordinador/components/sidebar/sidebar.ts
+import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { RouterModule } from '@angular/router';
 
 @Component({
   selector: 'app-sidebar',
+  standalone: true,
+  imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss']
 })
 export class SidebarComponent {
-  menuVisible = window.innerWidth > 1024; // visible por defecto en desktop
+  menuVisible = window.innerWidth > 1024;
   panelPrincipalOpen = false;
   gestionClinicaOpen = false;
   administracionOpen = false;
@@ -30,12 +35,6 @@ export class SidebarComponent {
 
   @HostListener('window:resize')
   onResize() {
-    if (window.innerWidth > 1024) {
-      // Desktop: sidebar siempre visible
-      this.menuVisible = true;
-    } else {
-      // Tablet/Móvil: sidebar oculto al cargar
-      this.menuVisible = false;
-    }
+    this.menuVisible = window.innerWidth > 1024;
   }
 }
