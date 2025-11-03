@@ -1,0 +1,43 @@
+<app-header></app-header>
+<div class="login-container">
+  <div class="login-card">
+    <!-- Imagen -->
+    <div class="login-img">
+      <img src="autismo_mochis.png" alt="Autismo Mochis" />
+    </div>
+
+    <h2>Iniciar Sesión</h2>
+
+    <form [formGroup]="loginForm" (ngSubmit)="enviar()" class="login-form">
+      <!-- Usuario -->
+      <div class="form-group">
+        <label for="usuario">Usuario</label>
+        <input id="usuario" type="text" formControlName="usuario" placeholder="Ingresa tu usuario" />
+      </div>
+
+      <!-- Contraseña -->
+      <div class="form-group password-group">
+        <label for="contraseña">Contraseña</label>
+        <input
+          [type]="mostrarPassword ? 'text' : 'password'"
+          id="contraseña"
+          formControlName="contraseña"
+          placeholder="Ingresa tu contraseña"
+        />
+        <span class="toggle-password" (click)="togglePassword()">
+          <i *ngIf="!mostrarPassword" class="fas fa-eye"></i>
+          <i *ngIf="mostrarPassword" class="fas fa-eye-slash"></i>
+        </span>
+      </div>
+
+      <div class="forgot">
+        <a href="#">¿Olvidaste tu contraseña?</a>
+      </div>
+
+      <button type="submit">Ingresar</button>
+
+      <div class="error-message">{{ mensajeError }}</div>
+    </form>
+  </div>
+</div>
+<app-footer></app-footer>   

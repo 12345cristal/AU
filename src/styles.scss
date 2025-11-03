@@ -1,0 +1,67 @@
+/* ==============================
+   ESTILOS GLOBALES
+============================== */
+
+/* Fuente general y tamaño */
+* {
+  font-family: Arial, sans-serif;
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+/* Body y html ocupan toda la pantalla y scroll solo en layout */
+html, body {
+  height: 100%;
+  width: 100%;
+  overflow: hidden; /* quitar scroll global */
+  background: #f5f7fb;
+}
+
+/* Layout principal ocupa toda la pantalla y puede scrollear */
+.layout-container {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+  width: 100%;
+  overflow-y: auto; /* scroll vertical aquí */
+}
+
+/* Sidebar fijo */
+.sidebar {
+  position: fixed;
+  top: 60px; /* debajo del toolbar */
+  left: 0;
+  width: 230px;
+  height: calc(100vh - 60px);
+}
+
+/* Toolbar fijo */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 60px;
+  z-index: 400;
+}
+
+/* Main content ocupa el resto del espacio, pero scroll se maneja en layout-container */
+.main-content {
+  margin-top: 60px; /* espacio toolbar */
+  margin-left: 0; /* si sidebar cerrado */
+  padding-left: 0;
+  flex: 1;
+  width: 100%;
+}
+
+/* Cuando sidebar está abierto */
+.layout-container.sidebar-open .main-content {
+  margin-left: 260px; /* ajusta al ancho del sidebar + margen */
+}
+
+/* Page content ocupa todo el ancho y alto disponible */
+.page-content {
+  width: 100%;
+  min-height: 100%;
+}

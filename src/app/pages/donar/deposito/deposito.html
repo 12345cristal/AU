@@ -1,0 +1,24 @@
+
+<section class="deposito-container">
+  <div class="deposito-card">
+    <h1>Depósito Bancario</h1>
+    <p>
+      Realiza tu depósito en el banco y sube el comprobante para registrar tu donación 💙.
+    </p>
+
+    <label>Nombre del depositante</label>
+    <input type="text" placeholder="Ej. María López" [(ngModel)]="nombreDeposito" />
+
+    <label>Banco</label>
+    <input type="text" placeholder="Ej. BBVA" [(ngModel)]="banco" />
+
+    <label>Monto depositado (MXN)</label>
+    <input type="number" placeholder="Ej. 500" [(ngModel)]="montoDeposito" />
+
+    <label>Sube tu comprobante (imagen o PDF)</label>
+    <input type="file" accept="image/*,.pdf" (change)="subirComprobante($event)" />
+
+    <button (click)="confirmarDeposito()">He realizado mi depósito</button>
+  </div>
+</section>
+

@@ -1,0 +1,72 @@
+<div class="usuarios-container">
+  <div class="usuarios-header">
+    <h2>Gestión de usuarios y equipo terapéutico</h2>
+  </div>
+
+  <div class="resumen">
+    <div class="tarjeta"><h3>Total</h3><p>{{ total() }}</p></div>
+    <div class="tarjeta"><h3>Coordinador</h3><p>{{ totalCoordinador() }}</p></div>
+    <div class="tarjeta"><h3>Terapeuta</h3><p>{{ totalTerapeutas() }}</p></div>
+    <div class="tarjeta"><h3>Recepción</h3><p>{{ totalRecepcion() }}</p></div>
+    <div class="tarjeta"><h3>Administrativo</h3><p>{{ totalAdministrativo() }}</p></div>
+  </div>
+
+  <div class="acciones-top">
+    <input type="text" [formControl]="filtro" placeholder="Buscar usuarios por nombre, email o especialidad..." />
+    <div class="botones">
+      <button (click)="agregarUsuario()">➕ Nuevo Usuario</button>
+      <button (click)="mostrarActivos.set(true)">Activos</button>
+      <button (click)="mostrarActivos.set(false)">Dados de Baja</button>
+    </div>
+  </div>
+
+  <h3>@if (mostrarActivos()) { Equipo Completo } @else { Usuarios Dados de Baja }</h3>
+
+  <div class="tabla-usuarios">
+    <table>
+      <thead>
+        <tr>
+          <th>Usuario</th>
+          <th>Rol</th>
+          <th>Especialidad</th>
+          <th>Contacto</th>
+          <th>Último Acceso</th>
+          <th>Estado</th>
+          <th>Acciones</th>
+        </tr>
+      </thead>
+      <tbody>
+        @for (usuario of usuariosFiltrados(); track usuario.id) {
+          <tr>
+            <td>
+              <div class="usuario-info">
+                <div class="iniciales">{{ usuario.iniciales }}</div>
+                <div>
+                  <strong>{{ usuario.nombre }}</strong><br>
+                  <small>{{ usuario.correo }}</small>
+                </div>
+              </div>
+            </td>
+            <td>{{ usuario.rol }}</td>
+            <td>{{ usuario.especialidad }}</td>
+            <td>
+              {{ usuario.correo }}<br>
+              {{ usuario.telefono }}
+            </td>
+            <td>{{ usuario.ultimoAcceso }}</td>
+            <td [class.activo]="usuario.activo" [class.inactivo]="!usuario.activo">
+              {{ usuario.activo ? 'Activo' : 'Inactivo' }}
+            </td>
+            <td class="acciones">
+              <button>Editar</button>
+              <button>Permisos</button>
+              <button (click)="toggleEstado(usuario)">
+                {{ usuario.activo ? 'Dar de baja' : 'Reactivar' }}
+              </button>
+            </td>
+          </tr>
+        }
+      </tbody>
+    </table>
+  </div>
+</div>
