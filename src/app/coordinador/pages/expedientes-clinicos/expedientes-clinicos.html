@@ -1,1 +1,104 @@
-<p>expedientes-clinicos works!</p>
+<div class="expedientes-container">
+  <h1>Gestión de expedientes clínicos</h1>
+
+  <div class="stats">
+    <div>Total Expedientes: {{ totalExpedientes }}</div>
+    <div>Activos: {{ activos }}</div>
+    <div>Documentos: {{ documentos }}</div>
+    <div>Actualizados Hoy: {{ actualizadosHoy }}</div>
+  </div>
+
+  <div class="search">
+    <input type="text" placeholder="Buscar por nombre, ID o diagnóstico..." />
+  </div>
+
+  <table class="expedientes-table">
+    <thead>
+      <tr>
+        <th>ID</th>
+        <th>Paciente</th>
+        <th>Edad</th>
+        <th>Diagnóstico</th>
+        <th>Tutor</th>
+        <th>Servicios</th>
+        <th>Documentos</th>
+        <th>Última Act.</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+      <!-- expediente 1 -->
+      <tr>
+        <td>{{ expediente1.id }}</td>
+        <td>{{ expediente1.paciente }}</td>
+        <td>{{ expediente1.edad }}</td>
+        <td>{{ expediente1.diagnostico }}</td>
+        <td>{{ expediente1.tutor }}</td>
+        <td>
+          <span *ngFor="let s of expediente1.servicios">{{ s }}</span>
+        </td>
+        <td>{{ expediente1.documentos }}</td>
+        <td>{{ expediente1.ultimaActualizacion }}</td>
+        <td>{{ expediente1.estado }}</td>
+        <td>
+          <button>Ver</button>
+        </td>
+      </tr>
+
+      <!-- expediente 2 -->
+      <tr>
+        <td>{{ expediente2.id }}</td>
+        <td>{{ expediente2.paciente }}</td>
+        <td>{{ expediente2.edad }}</td>
+        <td>{{ expediente2.diagnostico }}</td>
+        <td>{{ expediente2.tutor }}</td>
+        <td>
+          <span *ngFor="let s of expediente2.servicios">{{ s }}</span>
+        </td>
+        <td>{{ expediente2.documentos }}</td>
+        <td>{{ expediente2.ultimaActualizacion }}</td>
+        <td>{{ expediente2.estado }}</td>
+        <td>
+          <button>Ver</button>
+        </td>
+      </tr>
+
+      <!-- expediente 3 -->
+      <tr>
+        <td>{{ expediente3.id }}</td>
+        <td>{{ expediente3.paciente }}</td>
+        <td>{{ expediente3.edad }}</td>
+        <td>{{ expediente3.diagnostico }}</td>
+        <td>{{ expediente3.tutor }}</td>
+        <td>
+          <span *ngFor="let s of expediente3.servicios">{{ s }}</span>
+        </td>
+        <td>{{ expediente3.documentos }}</td>
+        <td>{{ expediente3.ultimaActualizacion }}</td>
+        <td>{{ expediente3.estado }}</td>
+        <td>
+          <button>Ver</button>
+        </td>
+      </tr>
+
+      <!-- expediente 4 -->
+      <tr>
+        <td>{{ expediente4.id }}</td>
+        <td>{{ expediente4.paciente }}</td>
+        <td>{{ expediente4.edad }}</td>
+        <td>{{ expediente4.diagnostico }}</td>
+        <td>{{ expediente4.tutor }}</td>
+        <td>
+          <span *ngFor="let s of expediente4.servicios">{{ s }}</span>
+        </td>
+        <td>{{ expediente4.documentos }}</td>
+        <td>{{ expediente4.ultimaActualizacion }}</td>
+        <td>{{ expediente4.estado }}</td>
+        <td>
+          <button>Ver</button>
+        </td>
+      </tr>
+    </tbody>
+  </table>
+</div>

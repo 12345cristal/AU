@@ -15,7 +15,7 @@ export interface Mensaje {
 @Injectable({
   providedIn: 'root'
 })
-export class MensajesService {
+export class MensajesComponent {
 
   private mensajes: Mensaje[] = [
     {

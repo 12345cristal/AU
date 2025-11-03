@@ -1,1 +1,28 @@
-<p>citas works!</p>
+<div class="citas-container">
+
+  <h2>Gestión de Citas</h2>
+  <p>Programación y seguimiento de citas terapéuticas</p>
+
+  <div class="resumen">
+    <div class="resumen-item">
+      <h3>Total</h3>
+      <p>{{total}}</p>
+    </div>
+    <div class="resumen-item">
+      <h3>Completadas</h3>
+      <p>{{completadas}}</p>
+    </div>
+    <div class="resumen-item">
+      <h3>En Proceso</h3>
+      <p>{{enProceso}}</p>
+    </div>
+    <div class="resumen-item">
+      <h3>Pendientes</h3>
+      <p>{{pendientes}}</p>
+    </div>
+  </div>
+
+  <h3>Agenda del Día - Martes 28 de Octubre</h3>
+  <div class="agenda" [innerHTML]="generarHTML()"></div>
+
+</div>

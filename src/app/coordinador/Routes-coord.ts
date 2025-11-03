@@ -7,10 +7,10 @@ import { CitasComponent } from './pages/citas/citas';
 import { TerapeutasComponent } from './pages/terapeutas/terapeutas';
 import { PadresComponent } from './pages/padres/padres';
 import { RecursosComponent } from './pages/recursos/recursos';
-import { MensajesService } from './pages/mensajes/mensajes';
+import { MensajesComponent } from './pages/mensajes/mensajes';
 import { ParteClinicaComponent } from './pages/parte-clinica/parte-clinica';
 import { HorariosComponent } from './pages/horarios/horarios';
-import { ExpedientesClinicosComponent } from './pages/expedientes-clinicos/expedientes-clinicos';
+import { ExpedientesComponent } from './pages/expedientes-clinicos/expedientes-clinicos';
 import { FiltrosAccesoComponent } from './pages/filtros-acceso/filtros-acceso';
 import { NuevoBeneficiarioComponent } from './pages/nuevo-beneficiario/nuevo-beneficiario';
 import { ReportesComponent } from './pages/reportes/reportes';
@@ -27,10 +27,10 @@ export const COORDINADOR_ROUTES: Routes = [
       { path: 'terapeutas', component: TerapeutasComponent },
       { path: 'padres', component: PadresComponent },
       { path: 'recursos', component: RecursosComponent },
-      { path: 'mensajes', component: MensajesService },
+      { path: 'mensajes', component: MensajesComponent },
       { path: 'parte-clinica', component: ParteClinicaComponent },
       { path: 'horarios', component: HorariosComponent },
-      { path: 'expedientes-clinicos', component: ExpedientesClinicosComponent },
+      { path: 'expedientes-clinicos', component: ExpedientesComponent },
       { path: 'filtros-acceso', component: FiltrosAccesoComponent },
       { path: 'nuevo-beneficiario', component: NuevoBeneficiarioComponent },
       { path: 'reportes', component: ReportesComponent },
