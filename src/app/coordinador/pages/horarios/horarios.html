@@ -1,1 +1,55 @@
-<p>horarios works!</p>
+<div class="horarios-container">
+  <h2>Horarios</h2>
+  <p>Calendario semanal de terapias y capacitaciones</p>
+
+  <!-- Leyenda -->
+  <div class="leyenda">
+    <div class="item regular"><span class="color"></span><span>Regular</span></div>
+    <div class="item reposicion"><span class="color"></span><span>Reposición</span></div>
+    <div class="item capacitacion"><span class="color"></span><span>Capacitación</span></div>
+    <div class="item semana-actual"><span class="color"></span><span>Semana Actual</span></div>
+  </div>
+
+  <!-- Calendario -->
+  <div class="calendario">
+    <table>
+      <thead>
+        <tr>
+          <th>Hora</th>
+          <th>Lunes</th>
+          <th>Martes</th>
+          <th>Miércoles</th>
+          <th>Jueves</th>
+          <th>Viernes</th>
+          <th>Sábado</th>
+        </tr>
+      </thead>
+      <tbody>
+        <tr *ngFor="let slot of horarios">
+          <td>{{slot.hora}}</td>
+          <td *ngFor="let dia of slot.dias">
+            <span *ngFor="let evento of dia.eventos" class="evento {{evento.tipo}}">
+              {{evento.nombre}}<br>{{evento.terapia}}<br>{{evento.duracion}} min
+            </span>
+          </td>
+        </tr>
+      </tbody>
+    </table>
+  </div>
+
+  <!-- Resumen de tipos -->
+  <div class="resumen-tipos">
+    <div class="tipo-card">
+      <div class="numero">{{totalRegulares}}</div>
+      <div class="label">Terapias Regulares</div>
+    </div>
+    <div class="tipo-card">
+      <div class="numero">{{totalReposiciones}}</div>
+      <div class="label">Reposiciones</div>
+    </div>
+    <div class="tipo-card">
+      <div class="numero">{{totalCapacitaciones}}</div>
+      <div class="label">Capacitaciones</div>
+    </div>
+  </div>
+</div>

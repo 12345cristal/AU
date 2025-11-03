@@ -1,0 +1,146 @@
+/* ==============================
+   HORARIOS - SCSS OPTIMIZADO
+============================== */
+.horarios-container {
+  padding: 1.5rem;
+  background: #ffffff;
+  min-height: calc(100vh - 60px);
+  font-family: Arial, Helvetica, sans-serif;
+
+  h2 {
+    color: #2563eb;
+    font-size: 1.8rem;
+    margin-bottom: 0.5rem;
+  }
+
+  p {
+    color: #555;
+    font-size: 1rem;
+    margin-bottom: 1rem;
+  }
+
+  /* -------------------------
+     Leyenda
+  ------------------------- */
+  .leyenda {
+    display: flex;
+    gap: 1rem;
+    margin-bottom: 1.5rem;
+    flex-wrap: wrap;
+
+    .item {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+
+      .color {
+        width: 20px;
+        height: 20px;
+        border-radius: 4px;
+      }
+
+      &.regular .color { background-color: #2563eb; }
+      &.reposicion .color { background-color: #f59e0b; }
+      &.capacitacion .color { background-color: #10b981; }
+      &.semana-actual .color { background-color: #9333ea; }
+
+      span { font-size: 0.9rem; color: #333; }
+    }
+  }
+
+  /* -------------------------
+     Calendario
+  ------------------------- */
+  .calendario {
+    overflow-x: auto;
+
+    table {
+      width: 100%;
+      border-collapse: collapse;
+      text-align: center;
+
+      th, td {
+        border: 1px solid #ddd;
+        padding: 0.5rem;
+        min-width: 80px;
+        position: relative;
+      }
+
+      th {
+        background-color: #f3f4f6;
+        color: #333;
+        font-weight: 500;
+      }
+
+      td {
+        height: 60px;
+
+        .evento {
+          display: block;
+          background-color: #2563eb;
+          color: #fff;
+          font-size: 0.75rem;
+          font-weight: 500;
+          border-radius: 6px;
+          padding: 0.15rem 0.3rem;
+          margin: 2px 0;
+          overflow: hidden;
+          white-space: nowrap;
+          text-overflow: ellipsis;
+          cursor: pointer;
+          transition: transform 0.2s;
+
+          &.reposicion { background-color: #f59e0b; }
+          &.capacitacion { background-color: #10b981; }
+
+          &:hover { transform: scale(1.05); }
+        }
+      }
+    }
+  }
+
+  /* -------------------------
+     Contador de tipos
+  ------------------------- */
+  .resumen-tipos {
+    display: flex;
+    gap: 1rem;
+    margin-top: 1.5rem;
+
+    .tipo-card {
+      flex: 1;
+      background-color: #f3f4f6;
+      border-radius: 10px;
+      padding: 0.8rem;
+      text-align: center;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.05);
+
+      .numero {
+        font-size: 1.3rem;
+        font-weight: 700;
+        color: #2563eb;
+      }
+
+      .label {
+        font-size: 0.85rem;
+        color: #555;
+      }
+    }
+  }
+
+  /* -------------------------
+     Responsive
+  ------------------------- */
+  @media (max-width: 768px) {
+    h2 { font-size: 1.5rem; }
+    p { font-size: 0.9rem; }
+
+    .leyenda { gap: 0.5rem; }
+    .resumen-tipos { flex-direction: column; gap: 0.5rem; }
+  }
+
+  @media (max-width: 480px) {
+    table th, table td { min-width: 60px; padding: 0.3rem; }
+    .evento { font-size: 0.65rem; }
+  }
+}

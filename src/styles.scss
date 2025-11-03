@@ -1,8 +1,8 @@
 /* ==============================
-   ESTILOS GLOBALES OPTIMIZADOS
+   ESTILOS GLOBALES LIMPIOS CON MENU HAMBURGUESA
 ============================== */
 
-/* -------------------- Reset básico -------------------- */
+/* Reset básico */
 *,
 *::before,
 *::after {
@@ -11,7 +11,7 @@
   box-sizing: border-box;
 }
 
-/* -------------------- Tipografía global -------------------- */
+/* Tipografía global */
 html {
   font-family: Arial, Helvetica, sans-serif;
   font-size: 16px;
@@ -25,12 +25,10 @@ body {
   line-height: 1.6;
   color: #333;
   background-color: #f5f7fb;
-  overflow-x: hidden; /* prevenir scroll horizontal */
+  overflow-x: hidden;
 }
 
-/* ==============================
-   TOOLBAR
-============================== */
+/* Toolbar básica */
 .toolbar {
   position: fixed;
   top: 0;
@@ -46,9 +44,7 @@ body {
   padding: 0 1rem;
 }
 
-/* ==============================
-   SIDEBAR
-============================== */
+/* Sidebar básico */
 .sidebar {
   position: fixed;
   top: 60px;
@@ -59,79 +55,11 @@ body {
   background-color: #fff;
   border-right: 1px solid #ddd;
   z-index: 300;
-  transition: width 0.3s ease;
 }
 
-/* ==============================
-   LAYOUT PRINCIPAL
-============================== */
-.layout-container {
-  display: flex;
-  margin-top: 60px;
-  width: 100vw;
-  min-height: calc(100vh - 60px);
-}
 
-.layout-container.sidebar-open {
-  margin-left: 230px;
-}
 
-.layout-container:not(.sidebar-open) {
-  margin-left: 0;
-}
-
-/* -------------------- Main content -------------------- */
-.main-content {
-  flex: 1;
-  min-height: 100%;
-  overflow-y: auto; /* scroll solo aquí para páginas normales */
-  padding: 1rem;
-  background-color: #f5f7fb;
-  transition: margin-left 0.3s ease;
-}
-
-.page-content {
-  display: flex;
-  flex-direction: column;
-  min-height: 100%;
-}
-
-/* ==============================
-   INICIO CONTAINER COORDINADOR
-============================== */
-.inicio-container {
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: flex-start;
-  align-items: center;
-  overflow-y: auto; /* scroll solo si hay mucho contenido */
-  width: 100%;
-  height: calc(100vh - 60px); /* altura menos toolbar */
-  padding: 2rem 1.5rem;
-  box-sizing: border-box;
-  text-align: center;
-  background: #ffffff;
-  transition: width 0.3s ease;
-}
-
-.inicio-container h2 {
-  color: #2563eb;
-  font-weight: 600;
-  font-size: 2rem;
-  margin-bottom: 1rem;
-}
-
-.inicio-container p {
-  color: #555;
-  font-size: 1.1rem;
-  max-width: 600px;
-  line-height: 1.6;
-}
-
-/* ==============================
-   MENU HAMBURGUESA
-============================== */
+/* Menu hamburguesa */
 .menu-hamburguesa {
   position: fixed;
   top: 60px;
@@ -163,34 +91,14 @@ body {
   color: #333;
   text-decoration: none;
   font-weight: 500;
+  transition: color 0.3s;
 }
 
 .menu-hamburguesa li a:hover {
   color: #007bff;
 }
 
-/* ==============================
-   BOTONES
-============================== */
-button {
-  font-family: Arial, Helvetica, sans-serif;
-  font-size: 1rem;
-  padding: 0.5rem 1rem;
-  cursor: pointer;
-  border: none;
-  border-radius: 5px;
-  background-color: #007bff;
-  color: #fff;
-  transition: background-color 0.3s;
-}
-
-button:hover {
-  background-color: #0056b3;
-}
-
-/* ==============================
-   ENLACES
-============================== */
+/* Enlaces globales */
 a {
   color: #007bff;
   text-decoration: none;
@@ -201,18 +109,14 @@ a:hover {
   color: #0056b3;
 }
 
-/* ==============================
-   IMÁGENES
-============================== */
+/* Imágenes globales */
 img {
   max-width: 100%;
   height: auto;
   display: block;
 }
 
-/* ==============================
-   ENCABEZADOS
-============================== */
+/* Encabezados */
 h1, h2, h3, h4, h5, h6 {
   font-family: Arial, Helvetica, sans-serif;
   font-weight: normal;
@@ -220,34 +124,7 @@ h1, h2, h3, h4, h5, h6 {
   line-height: 1.2;
 }
 
-/* ==============================
-   SCROLL PERSONALIZADO
-============================== */
-.main-content::-webkit-scrollbar,
-.sidebar::-webkit-scrollbar,
-.menu-hamburguesa::-webkit-scrollbar,
-.inicio-container::-webkit-scrollbar {
-  width: 8px;
-}
-
-.main-content::-webkit-scrollbar-thumb,
-.sidebar::-webkit-scrollbar-thumb,
-.menu-hamburguesa::-webkit-scrollbar-thumb,
-.inicio-container::-webkit-scrollbar-thumb {
-  background-color: rgba(0,0,0,0.2);
-  border-radius: 4px;
-}
-
-.main-content::-webkit-scrollbar-track,
-.sidebar::-webkit-scrollbar-track,
-.menu-hamburguesa::-webkit-scrollbar-track,
-.inicio-container::-webkit-scrollbar-track {
-  background-color: rgba(0,0,0,0.05);
-}
-
-/* ==============================
-   CONTENEDOR RESPONSIVE
-============================== */
+/* Contenedor responsive */
 .container {
   width: 90%;
   max-width: 1200px;
@@ -255,32 +132,13 @@ h1, h2, h3, h4, h5, h6 {
   padding: 1rem;
 }
 
-/* ==============================
-   TIPOGRAFÍA RESPONSIVE
-============================== */
+/* Tipografía responsive */
 @media (max-width: 1200px) { html { font-size: 15px; } }
 @media (max-width: 992px)  { html { font-size: 14px; } }
 @media (max-width: 768px)  { html { font-size: 13px; } }
 @media (max-width: 576px)  { html { font-size: 12px; } }
 
-/* ==============================
-   AJUSTES RESPONSIVE INICIO
-============================== */
-@media (max-width: 1024px) {
-  .inicio-container { padding: 1.5rem; }
-  .inicio-container h2 { font-size: 1.8rem; }
-  .inicio-container p  { font-size: 1rem; }
-}
-
-@media (max-width: 768px) {
-  .inicio-container { padding: 1rem; }
-  .inicio-container h2 { font-size: 1.5rem; }
-  .inicio-container p  { font-size: 0.95rem; }
-}
-
+/* Ajustes responsive menú hamburguesa */
 @media (max-width: 480px) {
-  .inicio-container { padding: 0.8rem; }
-  .inicio-container h2 { font-size: 1.3rem; }
-  .inicio-container p  { font-size: 0.9rem; }
   .menu-hamburguesa { width: 160px; }
 }

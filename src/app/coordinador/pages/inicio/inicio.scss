@@ -1,0 +1,74 @@
+/* ==============================
+   INICIO COMPONENTE
+============================== */
+.inicio-container {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+  background: #ffffff;
+  width: 100%;
+  height: calc(100vh - 60px); /* altura menos toolbar */
+  padding: 2rem 1.5rem;
+  box-sizing: border-box;
+  overflow-y: auto;
+  transition: margin-left 0.3s ease; /* animación cuando sidebar se abre/cierra */
+  margin-left: 0; /* valor inicial sin sidebar */
+}
+
+/* cuando el layout tenga la clase sidebar-open */
+.layout-container.sidebar-open .inicio-container {
+  margin-left: 230px; /* ancho del sidebar */
+}
+
+.inicio-container h2 {
+  color: #2563eb;
+  font-size: 2rem;
+  margin-bottom: 1rem;
+}
+
+.inicio-container p {
+  color: #555;
+  font-size: 1.1rem;
+  max-width: 600px;
+  line-height: 1.6;
+}
+
+/* -------------------- Responsive -------------------- */
+@media (max-width: 1024px) {
+  .inicio-container {
+    padding: 1.5rem;
+  }
+  .inicio-container h2 {
+    font-size: 1.8rem;
+  }
+  .inicio-container p {
+    font-size: 1rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .inicio-container {
+    padding: 1rem;
+  }
+  .inicio-container h2 {
+    font-size: 1.5rem;
+  }
+  .inicio-container p {
+    font-size: 0.95rem;
+  }
+}
+
+@media (max-width: 480px) {
+  .inicio-container {
+    padding: 0.8rem;
+  }
+  .inicio-container h2 {
+    font-size: 1.3rem;
+  }
+  .inicio-container p {
+    font-size: 0.9rem;
+  }
+}

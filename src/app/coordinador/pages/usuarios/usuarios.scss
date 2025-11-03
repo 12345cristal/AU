@@ -1,184 +1,218 @@
-/* ==============================
-   USUARIOS COMPONENTE - SCSS MEJORADO
-============================== */
-
-:host {
-  display: block;
-  padding: 1rem;
-  background: #f5f7fb; /* fondo suave */
-  font-family: Arial, Helvetica, sans-serif;
-  color: #333;
-  min-height: calc(100vh - 60px);
-  overflow-y: auto;
-  box-sizing: border-box;
-}
-
-/* -------------------- Contenedor principal -------------------- */
 .usuarios-container {
-  width: 100%;
   max-width: 1200px;
-  margin: 0 auto;
+  margin: 80px auto 0; /* espacio por toolbar */
+  padding: 1rem;
   display: flex;
   flex-direction: column;
   gap: 1.5rem;
+  height: calc(100vh - 80px);
+  overflow-y: auto;
+  position: relative;
 }
 
-/* -------------------- Tarjetas de usuario -------------------- */
-.usuarios-card {
-  border-radius: 12px;
-  padding: 1rem 1.5rem;
+/* Buscador y filtros */
+.buscador-filtros {
   display: flex;
-  align-items: center;
+  gap: 0.5rem;
+  flex-wrap: wrap;
+}
+
+.buscador-filtros input {
+  flex: 1;
+  padding: 0.5rem 0.75rem;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 0.95rem;
+}
+
+.buscador-filtros button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 6px;
+  background: #2563eb;
+  color: #fff;
+  cursor: pointer;
+  transition: 0.3s;
+}
+
+.buscador-filtros button.active {
+  background: #1d4ed8;
+}
+
+.buscador-filtros button:hover {
+  transform: scale(1.05);
+}
+
+/* Tarjetas de usuario */
+.usuarios-card {
+  display: flex;
   justify-content: space-between;
-  background: #ffffff;
-  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.05);
-  transition: all 0.3s ease;
+  align-items: center;
+  background: #fff;
+  padding: 1rem 1.5rem;
+  border-radius: 12px;
   border-left: 5px solid #2563eb;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+  transition: all 0.3s ease;
 }
 
 .usuarios-card:hover {
-  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
   transform: translateY(-2px);
+  box-shadow: 0 8px 20px rgba(0,0,0,0.15);
 }
 
-/* -------------------- Información del usuario -------------------- */
 .user-info {
   display: flex;
-  align-items: center;
-  gap: 1rem;
+  flex-direction: column;
+  gap: 0.25rem;
 }
 
-.user-info img {
-  width: 50px;
-  height: 50px;
-  border-radius: 50%;
-  object-fit: cover;
-  border: 2px solid #2563eb;
-  transition: transform 0.3s;
-}
-
-.user-info img:hover {
-  transform: scale(1.1);
-}
-
-.user-info .name {
-  font-weight: 600;
-  font-size: 1rem;
-  color: #2563eb;
-}
-
-.user-info .email {
-  font-size: 0.9rem;
-  color: #555;
-}
-
-/* -------------------- Botones de acción -------------------- */
-.btn-usuarios {
-  background-color: #2563eb;
-  color: #fff;
-  border-radius: 8px;
-  padding: 0.6rem 1.2rem;
-  cursor: pointer;
-  font-weight: 600;
+.acciones button {
+  margin-left: 0.5rem;
+  padding: 0.4rem 0.8rem;
   border: none;
-  box-shadow: 0 4px 6px rgba(0,0,0,0.1);
-  transition: all 0.3s ease;
-}
-
-.btn-usuarios:hover {
-  background-color: #1d4ed8;
-  transform: scale(1.05);
-  box-shadow: 0 6px 12px rgba(0,0,0,0.15);
-}
-
-/* -------------------- Tabla responsive -------------------- */
-.usuarios-table {
-  width: 100%;
-  border-collapse: collapse;
-  margin-top: 1rem;
-  border-radius: 12px;
-  overflow: hidden;
-  box-shadow: 0 4px 10px rgba(0,0,0,0.05);
-}
-
-.usuarios-table th,
-.usuarios-table td {
-  padding: 0.75rem 1rem;
-  text-align: left;
-  border-bottom: 1px solid #eee;
-}
-
-.usuarios-table th {
-  background-color: #2563eb;
+  border-radius: 6px;
+  background: #2563eb;
   color: #fff;
-  font-weight: 600;
+  cursor: pointer;
+  transition: 0.3s;
 }
 
-.usuarios-table tr:nth-child(even) {
-  background-color: #f9fafb;
+.acciones button:hover {
+  background: #1d4ed8;
 }
 
-.usuarios-table tr:hover {
-  background-color: #e0e7ff;
-  transform: scale(1.01);
-}
-
-/* -------------------- Scroll personalizado -------------------- */
-:host::-webkit-scrollbar,
-.usuarios-container::-webkit-scrollbar,
-.usuarios-table::-webkit-scrollbar {
+/* Scroll propio del contenedor */
+.usuarios-container::-webkit-scrollbar {
   width: 8px;
 }
 
-:host::-webkit-scrollbar-thumb,
-.usuarios-container::-webkit-scrollbar-thumb,
-.usuarios-table::-webkit-scrollbar-thumb {
-  background-color: rgba(37, 99, 235, 0.4);
+.usuarios-container::-webkit-scrollbar-thumb {
+  background-color: rgba(0,0,0,0.2);
   border-radius: 4px;
 }
 
-:host::-webkit-scrollbar-track,
-.usuarios-container::-webkit-scrollbar-track,
-.usuarios-table::-webkit-scrollbar-track {
-  background-color: rgba(0,0,0,0.03);
+.usuarios-container::-webkit-scrollbar-track {
+  background-color: rgba(0,0,0,0.05);
+}
+/* ==============================
+   MODALES CENTRADOS MEJORADOS
+============================== */
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background: rgba(0,0,0,0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  padding: 1rem;
 }
 
-/* -------------------- Responsive -------------------- */
-@media (max-width: 992px) {
-  .usuarios-card {
-    flex-direction: column;
-    align-items: flex-start;
-    gap: 0.7rem;
-  }
-
-  .user-info {
-    flex-direction: column;
-    align-items: flex-start;
-  }
-
-  .usuarios-table th,
-  .usuarios-table td {
-    padding: 0.5rem;
-  }
+.modal-content {
+  background: #fff;
+  padding: 2rem;
+  border-radius: 16px;
+  width: 100%;
+  max-width: 480px;
+  box-shadow: 0 12px 30px rgba(0,0,0,0.25);
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+  animation: fadeIn 0.3s ease;
+  position: relative;
+  transform: translateY(0);
+  transition: transform 0.3s ease;
 }
 
+/* Título centrado */
+.modal-content h3 {
+  margin: 0 0 1rem 0;
+  font-size: 1.4rem;
+  text-align: center;
+  color: #2563eb;
+  font-weight: 600;
+}
+
+/* Inputs modernos */
+.modal-content input {
+  padding: 0.6rem 0.75rem;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 1rem;
+  width: 100%;
+  transition: border 0.3s, box-shadow 0.3s;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #2563eb;
+  box-shadow: 0 0 6px rgba(37,99,235,0.4);
+}
+
+/* Contenedor de botones */
+.modal-buttons {
+  display: flex;
+  justify-content: flex-end;
+  gap: 0.75rem;
+  margin-top: 1rem;
+}
+
+.modal-buttons button {
+  padding: 0.55rem 1.25rem;
+  border-radius: 8px;
+  border: none;
+  cursor: pointer;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 3px 8px rgba(0,0,0,0.15);
+}
+
+/* Botón Guardar */
+.modal-buttons .guardar {
+  background: linear-gradient(135deg, #2563eb, #1e40af);
+  color: #fff;
+}
+
+.modal-buttons .guardar:hover {
+  background: linear-gradient(135deg, #1d4ed8, #1e3a8a);
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0,0,0,0.2);
+}
+
+/* Botón Cancelar */
+.modal-buttons .cancelar {
+  background: #e0e0e0;
+  color: #333;
+}
+
+.modal-buttons .cancelar:hover {
+  background: #bdbdbd;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 10px rgba(0,0,0,0.15);
+}
+
+/* Animación de fade in */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(-20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+/* Responsive */
 @media (max-width: 576px) {
-  .usuarios-card {
-    padding: 0.8rem 1rem;
+  .modal-content {
+    padding: 1.5rem;
   }
 
-  .btn-usuarios {
-    width: 100%;
-    text-align: center;
+  .modal-content h3 {
+    font-size: 1.2rem;
   }
 
-  .user-info img {
-    width: 40px;
-    height: 40px;
-  }
-
-  .usuarios-table th,
-  .usuarios-table td {
-    font-size: 0.85rem;
+  .modal-buttons button {
+    padding: 0.45rem 1rem;
+    font-size: 0.95rem;
   }
 }
