@@ -1,1 +1,64 @@
-<p>filtros-acceso works!</p>
+<div class="filtro-acceso-container">
+
+  <h1>Filtros de Acceso</h1>
+  <p>Control de permisos y roles del sistema</p>
+
+  <!-- Lista de Roles -->
+  <div class="roles">
+    <button (click)="cambiarRol('Coordinador')">Coordinador (2)</button>
+    <button (click)="cambiarRol('Terapeuta')">Terapeuta (15)</button>
+    <button (click)="cambiarRol('Recepción')">Recepción (3)</button>
+    <button (click)="cambiarRol('Administrativo')">Administrativo (4)</button>
+  </div>
+
+  <!-- Matriz de permisos -->
+  <div class="matriz">
+    <h2>Matriz de Permisos</h2>
+    <p>Configurar permisos para rol: {{ selectedRole }}</p>
+
+    <!-- Dashboard -->
+    <label>
+      <input type="checkbox" [checked]="permisos[selectedRole].dashboard" 
+             (change)="togglePermiso(selectedRole, 'dashboard')">
+      Ver Dashboard
+    </label>
+
+    <!-- Citas -->
+    <label>
+      <input type="checkbox" [checked]="permisos[selectedRole].verCitas" 
+             (change)="togglePermiso(selectedRole, 'verCitas')">
+      Ver Citas
+    </label>
+    <label>
+      <input type="checkbox" [checked]="permisos[selectedRole].editarCitas" 
+             (change)="togglePermiso(selectedRole, 'editarCitas')">
+      Crear/Editar Citas
+    </label>
+
+    <!-- Recursos -->
+    <label>
+      <input type="checkbox" [checked]="permisos[selectedRole].verRecursos" 
+             (change)="togglePermiso(selectedRole, 'verRecursos')">
+      Ver Recursos
+    </label>
+    <label>
+      <input type="checkbox" [checked]="permisos[selectedRole].crearRecursos" 
+             (change)="togglePermiso(selectedRole, 'crearRecursos')">
+      Crear Recursos
+    </label>
+
+    <!-- Repite para todos los permisos similares -->
+
+    <button class="guardar" (click)="guardarCambios()">Guardar Cambios</button>
+  </div>
+
+  <!-- Seguridad y privacidad -->
+  <div class="seguridad">
+    <h3>Seguridad y Privacidad</h3>
+    <ul>
+      <li>Protección de Datos del Menor: Todos los expedientes están protegidos según normativas de privacidad de datos de menores. El acceso está registrado y auditado.</li>
+      <li>Encriptación de Datos: Toda la información sensible está encriptada en reposo y en tránsito.</li>
+      <li>Registro de Actividad: Todas las acciones en expedientes y datos sensibles quedan registradas con fecha, hora y usuario.</li>
+    </ul>
+  </div>
+</div>

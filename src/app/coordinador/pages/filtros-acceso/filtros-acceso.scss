@@ -1,0 +1,75 @@
+.filtro-acceso-container {
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  max-width: 900px;
+  margin: auto;
+
+  h1, h2, h3 {
+    color: #333;
+  }
+
+  .roles {
+    display: flex;
+    gap: 1rem;
+    flex-wrap: wrap;
+    margin-bottom: 1rem;
+
+    button {
+      padding: 0.5rem 1rem;
+      border: 1px solid #ccc;
+      background-color: #f7f7f7;
+      cursor: pointer;
+      border-radius: 5px;
+      transition: 0.2s;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+  }
+
+  .matriz {
+    display: flex;
+    flex-direction: column;
+    gap: 0.5rem;
+    margin-bottom: 1rem;
+
+    label {
+      display: flex;
+      align-items: center;
+      gap: 0.5rem;
+    }
+
+    .guardar {
+      margin-top: 1rem;
+      padding: 0.5rem 1rem;
+      background-color: #4caf50;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+
+  .seguridad {
+    background-color: #f0f0f0;
+    padding: 1rem;
+    border-radius: 5px;
+
+    ul {
+      margin: 0;
+      padding-left: 1.2rem;
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .roles {
+    flex-direction: column;
+  }
+}

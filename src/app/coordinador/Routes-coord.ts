@@ -11,9 +11,14 @@ import { MensajesComponent } from './pages/mensajes/mensajes';
 import { ParteClinicaComponent } from './pages/parte-clinica/parte-clinica';
 import { HorariosComponent } from './pages/horarios/horarios';
 import { ExpedientesComponent } from './pages/expedientes-clinicos/expedientes-clinicos';
-import { FiltrosAccesoComponent } from './pages/filtros-acceso/filtros-acceso';
+import { FiltroAccesoComponent } from './pages/filtros-acceso/filtros-acceso';
 import { NuevoBeneficiarioComponent } from './pages/nuevo-beneficiario/nuevo-beneficiario';
 import { ReportesComponent } from './pages/reportes/reportes';
+
+// Componentes hijos de Parte clínica
+import { PlanesComponent } from './pages/parte-clinica/planes/planes';
+import { NotasComponent } from './pages/parte-clinica/notas/notas';
+import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
 
 export const COORDINADOR_ROUTES: Routes = [
   {
@@ -28,12 +33,21 @@ export const COORDINADOR_ROUTES: Routes = [
       { path: 'padres', component: PadresComponent },
       { path: 'recursos', component: RecursosComponent },
       { path: 'mensajes', component: MensajesComponent },
-      { path: 'parte-clinica', component: ParteClinicaComponent },
+      {
+        path: 'parte-clinica',
+        component: ParteClinicaComponent, // Contenedor
+        children: [
+          { path: '', redirectTo: 'planes', pathMatch: 'full' },
+          { path: 'planes', component: PlanesComponent },
+          { path: 'notas', component: NotasComponent },
+          { path: 'pacientes', component: PacientesComponent }
+        ]
+      },
       { path: 'horarios', component: HorariosComponent },
       { path: 'expedientes-clinicos', component: ExpedientesComponent },
-      { path: 'filtros-acceso', component: FiltrosAccesoComponent },
+      { path: 'filtros-acceso', component: FiltroAccesoComponent },
       { path: 'nuevo-beneficiario', component: NuevoBeneficiarioComponent },
-      { path: 'reportes', component: ReportesComponent },
+      { path: 'reportes', component: ReportesComponent }
     ]
   }
 ];

@@ -56,7 +56,20 @@
           <a routerLink="/coordinador/padres">Padres</a>
           <a routerLink="/coordinador/recursos">Recursos</a>
           <a routerLink="/coordinador/mensajes">Mensajes</a>
-          <a routerLink="/coordinador/parte-clinica">Parte clínica</a>
+
+          <!-- Parte clínica con subopciones -->
+          <div class="sidebar-subsection">
+            <div class="subsection-title" (click)="parteClinicaOpen = !parteClinicaOpen">
+              Parte clínica <span>{{ parteClinicaOpen ? '▲' : '▼' }}</span>
+            </div>
+            <!-- Subenlaces solo visibles si parteClinicaOpen = true -->
+            <div class="sidebar-sublinks" *ngIf="parteClinicaOpen">
+              <a routerLink="/coordinador/parte-clinica/pacientes">Pacientes</a>
+              <a routerLink="/coordinador/parte-clinica/planes">Planes</a>
+              <a routerLink="/coordinador/parte-clinica/notas">Notas</a>
+            </div>
+          </div>
+
           <a routerLink="/coordinador/horarios">Horarios</a>
           <a routerLink="/coordinador/expedientes-clinicos">Expedientes clínicos</a>
         </div>

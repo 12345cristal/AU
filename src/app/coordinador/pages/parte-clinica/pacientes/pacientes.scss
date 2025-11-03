@@ -1,0 +1,76 @@
+.pacientes-container {
+  font-family: Arial, sans-serif;
+  padding: 1rem;
+  max-width: 1000px;
+  margin: auto;
+
+  h1 {
+    color: #333;
+  }
+
+  .acciones {
+    display: flex;
+    gap: 1rem;
+    margin: 1rem 0;
+    flex-wrap: wrap;
+
+    button {
+      padding: 0.5rem 1rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      cursor: pointer;
+      background-color: #f7f7f7;
+
+      &:hover {
+        background-color: #e0e0e0;
+      }
+    }
+
+    input {
+      padding: 0.5rem;
+      border-radius: 5px;
+      border: 1px solid #ccc;
+      flex: 1;
+      min-width: 200px;
+    }
+  }
+
+  table {
+    width: 100%;
+    border-collapse: collapse;
+
+    th, td {
+      border: 1px solid #ccc;
+      padding: 0.5rem;
+      text-align: left;
+    }
+
+    th {
+      background-color: #f0f0f0;
+    }
+
+    button {
+      padding: 0.25rem 0.5rem;
+      border-radius: 3px;
+      border: none;
+      background-color: #4caf50;
+      color: white;
+      cursor: pointer;
+
+      &:hover {
+        background-color: #45a049;
+      }
+    }
+  }
+}
+
+// Responsive
+@media (max-width: 600px) {
+  .acciones {
+    flex-direction: column;
+  }
+
+  table {
+    font-size: 0.9rem;
+  }
+}

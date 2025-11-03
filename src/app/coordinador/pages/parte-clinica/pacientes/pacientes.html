@@ -1,0 +1,74 @@
+<div class="pacientes-container">
+  <h1>Pacientes</h1>
+  <p>Gestión de pacientes activos</p>
+
+  <div class="acciones">
+    <button class="nuevo">Nuevo Paciente</button>
+    <button class="lista">Lista de Pacientes</button>
+    <input type="text" placeholder="Buscar paciente..." (input)="searchQuery = $event.target.value">
+  </div>
+
+  <table>
+    <thead>
+      <tr>
+        <th>Nombre</th>
+        <th>Edad</th>
+        <th>Diagnóstico</th>
+        <th>Servicios</th>
+        <th>Estado</th>
+        <th>Acciones</th>
+      </tr>
+    </thead>
+    <tbody>
+
+      <!-- Paciente 1 -->
+      <tr>
+        <td>{{ mostrarNombre(paciente1) }}</td>
+        <td>{{ mostrarEdad(paciente1) }}</td>
+        <td>{{ mostrarDiagnostico(paciente1) }}</td>
+        <td>{{ mostrarServicios(paciente1) }}</td>
+        <td>{{ mostrarEstado(paciente1) }}</td>
+        <td>
+          <button [disabled]="!botonAccion(paciente1)" (click)="verDetalles(paciente1)">Ver detalles</button>
+        </td>
+      </tr>
+
+      <!-- Paciente 2 -->
+      <tr>
+        <td>{{ mostrarNombre(paciente2) }}</td>
+        <td>{{ mostrarEdad(paciente2) }}</td>
+        <td>{{ mostrarDiagnostico(paciente2) }}</td>
+        <td>{{ mostrarServicios(paciente2) }}</td>
+        <td>{{ mostrarEstado(paciente2) }}</td>
+        <td>
+          <button [disabled]="!botonAccion(paciente2)" (click)="verDetalles(paciente2)">Ver detalles</button>
+        </td>
+      </tr>
+
+      <!-- Paciente 3 -->
+      <tr>
+        <td>{{ mostrarNombre(paciente3) }}</td>
+        <td>{{ mostrarEdad(paciente3) }}</td>
+        <td>{{ mostrarDiagnostico(paciente3) }}</td>
+        <td>{{ mostrarServicios(paciente3) }}</td>
+        <td>{{ mostrarEstado(paciente3) }}</td>
+        <td>
+          <button [disabled]="!botonAccion(paciente3)" (click)="verDetalles(paciente3)">Ver detalles</button>
+        </td>
+      </tr>
+
+      <!-- Paciente 4 -->
+      <tr>
+        <td>{{ mostrarNombre(paciente4) }}</td>
+        <td>{{ mostrarEdad(paciente4) }}</td>
+        <td>{{ mostrarDiagnostico(paciente4) }}</td>
+        <td>{{ mostrarServicios(paciente4) }}</td>
+        <td>{{ mostrarEstado(paciente4) }}</td>
+        <td>
+          <button [disabled]="!botonAccion(paciente4)" (click)="verDetalles(paciente4)">Ver detalles</button>
+        </td>
+      </tr>
+
+    </tbody>
+  </table>
+</div>

@@ -1,4 +1,3 @@
-// src/app/coordinador/components/sidebar/sidebar.ts
 import { Component, EventEmitter, Output, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
@@ -15,6 +14,9 @@ export class SidebarComponent {
   panelPrincipalOpen = false;
   gestionClinicaOpen = false;
   administracionOpen = false;
+
+  // Control de apertura del submenú Parte clínica
+  parteClinicaOpen = false;
 
   @Output() sidebarToggled = new EventEmitter<boolean>();
 
