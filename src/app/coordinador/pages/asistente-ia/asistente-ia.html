@@ -1,0 +1,48 @@
+<div class="asistente-container">
+  <h1>Configuración</h1>
+  <p>Herramientas inteligentes para optimizar tu trabajo clínico</p>
+
+  <div class="paneles">
+    <button (click)="togglePanel('generador')">Generador IA</button>
+    <button (click)="togglePanel('analisis')">Análisis Predictivo</button>
+    <button (click)="togglePanel('historial')">Historial</button>
+  </div>
+
+  <!-- Panel Generador IA -->
+  <div class="panel" [class.abierto]="panelGeneradorIA">
+    <h2>Generador IA</h2>
+    <p>Generación con IA: {{ porcentajeGeneracionIA }}% completado</p>
+
+    <label>Tipo de Análisis</label>
+    <select (change)="seleccionarAnalisis($event)">
+      <option value="">Seleccione qué desea generar</option>
+      <option value="Reporte Cuatrimestral">Reporte Cuatrimestral</option>
+      <option value="Análisis de Progreso">Análisis de Progreso</option>
+      <option value="Recomendaciones Terapéuticas">Recomendaciones Terapéuticas</option>
+      <option value="Mejorar Redacción">Mejorar Redacción</option>
+      <option value="Plan de Intervención">Plan de Intervención</option>
+      <option value="Informe para Familia">Informe para Familia</option>
+      <option value="Evaluación Inicial">Evaluación Inicial</option>
+      <option value="Resumen Ejecutivo">Resumen Ejecutivo</option>
+    </select>
+  </div>
+
+  <!-- Panel Análisis Predictivo -->
+  <div class="panel" [class.abierto]="panelAnalisisPredictivo">
+    <h2>Análisis Predictivo</h2>
+    <p>Información del Paciente: {{ informacionPaciente }}</p>
+    <p>Detalles Clínicos: {{ detallesClinicos }}</p>
+    <p>Configuración Avanzada: {{ configuracionAvanzada }}</p>
+  </div>
+
+  <!-- Panel Historial -->
+  <div class="panel" [class.abierto]="panelHistorial">
+    <h2>Historial</h2>
+    <p>Reportes Generados: {{ reportesGenerados }}</p>
+    <p>+{{ reportesMes }} este mes</p>
+    <p>Tiempo Ahorrado: {{ tiempoAhorrado }}</p>
+    <p>Calidad Promedio: {{ calidadPromedio }}</p>
+    <p>Este Mes: {{ reportesMeses }}</p>
+    <p>Actividad: {{ actividad }}</p>
+  </div>
+</div>

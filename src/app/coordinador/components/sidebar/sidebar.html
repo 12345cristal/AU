@@ -1,6 +1,3 @@
-<!-- ==============================
-     TOOLBAR
-============================== -->
 <header class="toolbar">
   <div class="toolbar-left">
     <button class="toggle-btn-desktop" 
@@ -11,7 +8,6 @@
       <span class="bar"></span>
       <span class="bar"></span>
     </button>
-
     <h1 (click)="openSidebar()">Autismo Mochis</h1>
   </div>
 
@@ -23,9 +19,6 @@
   </div>
 </header>
 
-<!-- ==============================
-     SIDEBAR
-============================== -->
 <nav class="sidebar" [class.open]="menuVisible">
   <div class="sidebar-content">
     <div class="sidebar-header">
@@ -35,6 +28,7 @@
     </div>
 
     <div class="sidebar-scroll">
+
       <!-- Panel principal -->
       <div class="sidebar-section" [class.open]="panelPrincipalOpen">
         <div class="section-title" (click)="panelPrincipalOpen = !panelPrincipalOpen">
@@ -57,16 +51,26 @@
           <a routerLink="/coordinador/recursos">Recursos</a>
           <a routerLink="/coordinador/mensajes">Mensajes</a>
 
-          <!-- Parte clínica con subopciones -->
+          <!-- Parte clínica -->
           <div class="sidebar-subsection">
             <div class="subsection-title" (click)="parteClinicaOpen = !parteClinicaOpen">
               Parte clínica <span>{{ parteClinicaOpen ? '▲' : '▼' }}</span>
             </div>
-            <!-- Subenlaces solo visibles si parteClinicaOpen = true -->
             <div class="sidebar-sublinks" *ngIf="parteClinicaOpen">
               <a routerLink="/coordinador/parte-clinica/pacientes">Pacientes</a>
               <a routerLink="/coordinador/parte-clinica/planes">Planes</a>
               <a routerLink="/coordinador/parte-clinica/notas">Notas</a>
+            </div>
+          </div>
+
+          <!-- Soporte: Asistente IA y Capacitaciones -->
+          <div class="sidebar-subsection">
+            <div class="subsection-title" (click)="asistenteOpen = !asistenteOpen">
+              Soporte <span>{{ asistenteOpen ? '▲' : '▼' }}</span>
+            </div>
+            <div class="sidebar-sublinks" *ngIf="asistenteOpen">
+              <a routerLink="/coordinador/asistente-ia">Asistente IA</a>
+              <a routerLink="/coordinador/capacitaciones">Capacitaciones</a>
             </div>
           </div>
 
@@ -87,9 +91,9 @@
           <a routerLink="/coordinador/reportes">Reportes</a>
         </div>
       </div>
+
     </div>
 
-    <!-- Footer del sidebar -->
     <div class="sidebar-footer">
       <a href="#">Configuración</a>
       <a href="#" class="logout">Cerrar sesión</a>
@@ -97,9 +101,4 @@
   </div>
 </nav>
 
-<!-- ==============================
-     OVERLAY
-============================== -->
-<div class="sidebar-overlay" 
-     [class.show]="menuVisible" 
-     (click)="closeSidebar()"></div>
+<div class="sidebar-overlay" [class.show]="menuVisible" (click)="closeSidebar()"></div>

@@ -1,0 +1,89 @@
+<div class="capacitaciones-container">
+  <h1>Capacitaciones</h1>
+
+  <!-- ==========================
+       Estadísticas Generales
+  =========================== -->
+  <section class="estadisticas">
+    <div class="stat-card">
+      <h3>Total Cursos</h3>
+      <p>{{ totalCursos }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Completadas</h3>
+      <p>{{ completadas }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>En Progreso</h3>
+      <p>{{ enProgreso }}</p>
+    </div>
+    <div class="stat-card">
+      <h3>Participantes</h3>
+      <p>{{ participantes }}</p>
+    </div>
+  </section>
+
+  <!-- ==========================
+       Cursos Disponibles
+  =========================== -->
+  <section class="cursos">
+    <div class="curso-card">
+      <h2>{{ curso1?.nombre }}</h2>
+      <p>{{ curso1?.descripcion }}</p>
+      <p><strong>Estado:</strong> {{ curso1?.estado }}</p>
+      <p><strong>Progreso:</strong> {{ curso1?.progreso }}%</p>
+      <p><strong>Instructor:</strong> {{ curso1?.instructor }}</p>
+      <p><strong>Fechas:</strong> {{ curso1?.fechas }}</p>
+      <button>Descargar Certificado</button>
+    </div>
+
+    <div class="curso-card">
+      <h2>{{ curso2?.nombre }}</h2>
+      <p>{{ curso2?.descripcion }}</p>
+      <p><strong>Estado:</strong> {{ curso2?.estado }}</p>
+      <p><strong>Progreso:</strong> {{ curso2?.progreso }}%</p>
+      <p><strong>Instructor:</strong> {{ curso2?.instructor }}</p>
+      <p><strong>Fechas:</strong> {{ curso2?.fechas }}</p>
+      <button>Descargar Certificado</button>
+    </div>
+
+    <div class="curso-card">
+      <h2>{{ curso3?.nombre }}</h2>
+      <p>{{ curso3?.descripcion }}</p>
+      <p><strong>Estado:</strong> {{ curso3?.estado }}</p>
+      <p><strong>Progreso:</strong> {{ curso3?.progreso }}%</p>
+      <p><strong>Instructor:</strong> {{ curso3?.instructor }}</p>
+      <p><strong>Fechas:</strong> {{ curso3?.fechas }}</p>
+      <button>Descargar Certificado</button>
+    </div>
+
+    <div class="curso-card">
+      <h2>{{ curso4?.nombre }}</h2>
+      <p>{{ curso4?.descripcion }}</p>
+      <p><strong>Estado:</strong> {{ curso4?.estado }}</p>
+      <p><strong>Progreso:</strong> {{ curso4?.progreso }}%</p>
+      <p><strong>Instructor:</strong> {{ curso4?.instructor }}</p>
+      <p><strong>Fechas:</strong> {{ curso4?.fechas }}</p>
+      <button>Descargar Certificado</button>
+    </div>
+  </section>
+
+  <!-- ==========================
+       Próximas Sesiones
+  =========================== -->
+  <section class="sesiones">
+    <h2>Próximas Sesiones</h2>
+
+    <div class="sesion-card">
+      <h3>{{ sesion1?.curso }}</h3>
+      <p>{{ sesion1?.fecha }}</p>
+      <button>Recordarme</button>
+    </div>
+
+    <div class="sesion-card">
+      <h3>{{ sesion2?.curso }}</h3>
+      <p>{{ sesion2?.fecha }}</p>
+      <button>Recordarme</button>
+    </div>
+  </section>
+</div>

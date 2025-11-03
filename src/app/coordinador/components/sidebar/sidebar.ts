@@ -11,12 +11,15 @@ import { RouterModule } from '@angular/router';
 })
 export class SidebarComponent {
   menuVisible = window.innerWidth > 1024;
+
+  // Secciones principales
   panelPrincipalOpen = false;
   gestionClinicaOpen = false;
   administracionOpen = false;
 
-  // Control de apertura del submenú Parte clínica
+  // Submenús
   parteClinicaOpen = false;
+  asistenteOpen = false;
 
   @Output() sidebarToggled = new EventEmitter<boolean>();
 

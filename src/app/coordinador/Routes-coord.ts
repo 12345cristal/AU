@@ -20,6 +20,10 @@ import { PlanesComponent } from './pages/parte-clinica/planes/planes';
 import { NotasComponent } from './pages/parte-clinica/notas/notas';
 import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
 
+// Nuevos componentes
+import { AsistenteIAComponent } from './pages/asistente-ia/asistente-ia';
+import { CapacitacionesComponent } from './pages/capacitaciones/capacitaciones';
+
 export const COORDINADOR_ROUTES: Routes = [
   {
     path: 'coordinador',
@@ -35,7 +39,7 @@ export const COORDINADOR_ROUTES: Routes = [
       { path: 'mensajes', component: MensajesComponent },
       {
         path: 'parte-clinica',
-        component: ParteClinicaComponent, // Contenedor
+        component: ParteClinicaComponent,
         children: [
           { path: '', redirectTo: 'planes', pathMatch: 'full' },
           { path: 'planes', component: PlanesComponent },
@@ -43,6 +47,8 @@ export const COORDINADOR_ROUTES: Routes = [
           { path: 'pacientes', component: PacientesComponent }
         ]
       },
+      { path: 'asistente-ia', component: AsistenteIAComponent },
+      { path: 'capacitaciones', component: CapacitacionesComponent },
       { path: 'horarios', component: HorariosComponent },
       { path: 'expedientes-clinicos', component: ExpedientesComponent },
       { path: 'filtros-acceso', component: FiltroAccesoComponent },
