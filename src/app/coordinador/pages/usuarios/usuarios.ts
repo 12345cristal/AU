@@ -1,7 +1,18 @@
-import { Component } from '@angular/core';
+import { Component, signal, computed } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
 import { CommonModule } from '@angular/common';
 import { FormsModule } from '@angular/forms';
-import { Usuario, UsuariosService } from '../../../service/usuarios.service';
+
+interface Usuario {
+  id: number;
+  iniciales: string;
+  nombre: string;
+  rol: string;
+  especialidad?: string;
+  contacto: string;
+  ultimoAcceso: string;
+  activo: boolean;
+}
 
 @Component({
   selector: 'app-usuarios',
@@ -11,51 +22,94 @@ import { Usuario, UsuariosService } from '../../../service/usuarios.service';
   styleUrls: ['./usuarios.scss']
 })
 export class UsuariosComponent {
-  usuarios: Usuario[] = [];
-  searchQuery: string = '';
-  mostrarActivos: boolean = true;
-  cargando: boolean = false;
+  usuarios = signal<Usuario[]>([]);
+  searchQuery = signal('');
+  mostrarActivos = signal(true);
+  cargando = signal(false);
 
-  constructor(private usuariosService: UsuariosService) {
+  // Modal y usuario seleccionado
+  mostrarModalEditar = signal(false);
+  mostrarModalPermisos = signal(false);
+  mostrarModalNuevo = signal(false);
+  usuarioSeleccionado = signal<Usuario>({ 
+    id: 0, iniciales: '', nombre: '', rol: '', contacto: '', ultimoAcceso: '', activo: true 
+  });
+
+  // Computed para filtrar usuarios
+  filteredUsuarios = computed(() => {
+    const query = this.searchQuery().toLowerCase();
+    return this.usuarios().filter(u =>
+      u.activo === this.mostrarActivos() &&
+      (u.nombre.toLowerCase().includes(query) ||
+       u.contacto.includes(query) ||
+       (u.especialidad && u.especialidad.toLowerCase().includes(query)))
+    );
+  });
+
+  constructor(private http: HttpClient) {
     this.cargarUsuarios();
   }
 
   cargarUsuarios() {
-    this.cargando = true;
-    this.usuariosService.getUsuarios().subscribe({
+    this.cargando.set(true);
+    this.http.get<Usuario[]>('http://localhost:8000/usuarios').subscribe({
       next: data => {
-        this.usuarios = data;
-        this.cargando = false;
+        this.usuarios.set(data);
+        this.cargando.set(false);
       },
       error: err => {
-        console.error('Error al cargar usuarios', err);
-        this.cargando = false;
+        console.error(err);
+        this.cargando.set(false);
       }
     });
   }
 
-  toggleActivo(usuario: Usuario) {
-    this.usuariosService.toggleActivo(usuario.id, !usuario.activo).subscribe({
-      next: () => usuario.activo = !usuario.activo,
-      error: err => console.error('Error al actualizar estado', err)
+  toggleActivo(u: Usuario) {
+    const nuevoEstado = !u.activo;
+    this.http.patch(`http://localhost:8000/usuarios/${u.id}/activar`, { activo: nuevoEstado })
+      .subscribe(() => {
+        const updated = this.usuarios().map(x => x.id === u.id ? { ...x, activo: nuevoEstado } : x);
+        this.usuarios.set(updated);
+      });
+  }
+
+  editarUsuario(u: Usuario) {
+    this.usuarioSeleccionado.set({ ...u });
+    this.mostrarModalEditar.set(true);
+  }
+
+  guardarEdicion() {
+    const u = this.usuarioSeleccionado();
+    this.http.put(`http://localhost:8000/usuarios/${u.id}`, u).subscribe(() => {
+      const updated = this.usuarios().map(x => x.id === u.id ? u : x);
+      this.usuarios.set(updated);
+      this.mostrarModalEditar.set(false);
     });
   }
 
-  get filteredUsuarios() {
-    return this.usuarios
-      .filter(u => this.mostrarActivos ? u.activo : !u.activo)
-      .filter(u =>
-        u.nombre.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        u.email.toLowerCase().includes(this.searchQuery.toLowerCase()) ||
-        (u.especialidad?.toLowerCase().includes(this.searchQuery.toLowerCase()) ?? false)
-      );
+  permisosUsuario(u: Usuario) {
+    this.usuarioSeleccionado.set({ ...u });
+    this.mostrarModalPermisos.set(true);
   }
 
   agregarUsuario() {
-    console.log('Abrir formulario de nuevo usuario');
+    this.usuarioSeleccionado.set({ id: 0, iniciales: '', nombre: '', rol: '', contacto: '', ultimoAcceso: '', activo: true });
+    this.mostrarModalNuevo.set(true);
   }
 
-  verEquipoCompleto() {
-    console.log('Mostrar lista completa de usuarios');
+  guardarNuevoUsuario() {
+    const u = this.usuarioSeleccionado();
+    this.http.post<Usuario>('http://localhost:8000/usuarios', u).subscribe(usuario => {
+      this.usuarios.set([...this.usuarios(), usuario]);
+      this.mostrarModalNuevo.set(false);
+    });
+  }
+
+  actualizarBusqueda(value: string) {
+    this.searchQuery.set(value);
+  }
+
+  cambiarFiltro(activos: boolean) {
+    this.mostrarActivos.set(activos);
   }
 }

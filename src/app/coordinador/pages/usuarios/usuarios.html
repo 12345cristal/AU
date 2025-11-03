@@ -1,47 +1,70 @@
-<div class="usuarios-container">
-  <h1>Usuarios</h1>
-  <p>Gestión de usuarios y equipo terapéutico</p>
-
-  <div class="acciones">
-    <input type="text" [(ngModel)]="searchQuery" placeholder="Buscar usuarios por nombre, email o especialidad..." />
-    <button (click)="agregarUsuario()">Nuevo Usuario</button>
-    <button (click)="verEquipoCompleto()">Equipo Completo</button>
-    <button (click)="mostrarActivos = true">Activos</button>
-    <button (click)="mostrarActivos = false">Dados de baja</button>
+<div class="container">
+  <!-- Buscador y filtros -->
+  <div class="buscador-filtros">
+    <input 
+      type="text" 
+      placeholder="Buscar usuario" 
+      [value]="searchQuery()" 
+      (input)="actualizarBusqueda($event.target.value)" 
+    />
+    <button (click)="cambiarFiltro(true)" [class.active]="mostrarActivos()">Activos</button>
+    <button (click)="cambiarFiltro(false)" [class.active]="!mostrarActivos()">Inactivos</button>
+    <button (click)="agregarUsuario()">+ Nuevo Usuario</button>
   </div>
 
-  <div *ngIf="cargando">Cargando usuarios...</div>
+  <!-- Cargando -->
+  <div [hidden]="!cargando()">Cargando usuarios...</div>
 
-  <table class="tabla-usuarios" *ngIf="!cargando && filteredUsuarios.length">
-    <thead>
-      <tr>
-        <th>Usuario</th>
-        <th>Rol</th>
-        <th>Especialidad</th>
-        <th>Contacto</th>
-        <th>Último Acceso</th>
-        <th>Estado</th>
-        <th>Acciones</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let u of filteredUsuarios">
-        <td>{{ u.iniciales }} - {{ u.nombre }}</td>
-        <td>{{ u.rol }}</td>
-        <td>{{ u.especialidad || '-' }}</td>
-        <td>{{ u.contacto }}</td>
-        <td>{{ u.ultimoAcceso }}</td>
-        <td>{{ u.activo ? 'Activo' : 'Inactivo' }}</td>
-        <td>
-          <button (click)="toggleActivo(u)">{{ u.activo ? 'Dar de baja' : 'Activar' }}</button>
-          <button>Editar</button>
-          <button>Permisos</button>
-        </td>
-      </tr>
-    </tbody>
-  </table>
+  <!-- Lista de usuarios -->
+  <ng-container>
+    <div *ngFor="let u of filteredUsuarios()">
+      <div class="usuario-item">
+        <div class="info">
+          <span class="nombre">{{ u.nombre }}</span>
+          <span class="rol">{{ u.rol }}</span>
+          <span class="contacto">{{ u.contacto }}</span>
+          <span class="ultimo-acceso">{{ u.ultimoAcceso }}</span>
+        </div>
+        <div class="acciones">
+          <button (click)="editarUsuario(u)">Editar</button>
+          <button (click)="permisosUsuario(u)">Permisos</button>
+          <button (click)="toggleActivo(u)">{{ u.activo ? 'Desactivar' : 'Activar' }}</button>
+        </div>
+      </div>
+    </div>
+  </ng-container>
 
-  <div *ngIf="!cargando && filteredUsuarios.length === 0">
-    No se encontraron usuarios.
+  <!-- Modal Editar -->
+  <div [hidden]="!mostrarModalEditar()">
+    <div class="modal-content">
+      <h3>Editar Usuario</h3>
+      <input [(ngModel)]="usuarioSeleccionado().nombre" placeholder="Nombre">
+      <input [(ngModel)]="usuarioSeleccionado().rol" placeholder="Rol">
+      <input [(ngModel)]="usuarioSeleccionado().contacto" placeholder="Contacto">
+      <input [(ngModel)]="usuarioSeleccionado().especialidad" placeholder="Especialidad">
+      <button (click)="guardarEdicion()">Guardar</button>
+      <button (click)="mostrarModalEditar.set(false)">Cancelar</button>
+    </div>
+  </div>
+
+  <!-- Modal Permisos -->
+  <div [hidden]="!mostrarModalPermisos()">
+    <div class="modal-content">
+      <h3>Permisos de {{ usuarioSeleccionado()?.nombre }}</h3>
+      <button (click)="mostrarModalPermisos.set(false)">Cerrar</button>
+    </div>
+  </div>
+
+  <!-- Modal Nuevo -->
+  <div [hidden]="!mostrarModalNuevo()">
+    <div class="modal-content">
+      <h3>Nuevo Usuario</h3>
+      <input [(ngModel)]="usuarioSeleccionado().nombre" placeholder="Nombre">
+      <input [(ngModel)]="usuarioSeleccionado().rol" placeholder="Rol">
+      <input [(ngModel)]="usuarioSeleccionado().contacto" placeholder="Contacto">
+      <input [(ngModel)]="usuarioSeleccionado().especialidad" placeholder="Especialidad">
+      <button (click)="guardarNuevoUsuario()">Guardar</button>
+      <button (click)="mostrarModalNuevo.set(false)">Cancelar</button>
+    </div>
   </div>
 </div>
