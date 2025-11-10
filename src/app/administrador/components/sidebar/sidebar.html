@@ -1,0 +1,89 @@
+<header class="toolbar">
+  <div class="toolbar-left">
+    <button class="toggle-btn-desktop"
+            (click)="toggleSidebar()"
+            [class.active]="isOpen"
+            aria-label="Menú">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+    <h1 (click)="openSidebar()">Panel Administrador</h1>
+  </div>
+
+  <div class="toolbar-right">
+    <button class="icon-btn notification-btn">
+      Notificaciones <span class="badge">4</span>
+    </button>
+    <button class="icon-btn">Perfil</button>
+  </div>
+</header>
+
+<nav class="sidebar" [class.open]="isOpen">
+  <div class="sidebar-content">
+    <div class="sidebar-header">
+      <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="Administrador" class="sidebar-logo" />
+      <span class="sidebar-title">Administrador</span>
+      <button class="close-sidebar-btn" (click)="closeSidebar()">Cerrar</button>
+    </div>
+
+    <div class="sidebar-scroll">
+
+      <!-- Panel general -->
+      <div class="sidebar-section" [class.open]="panelGeneralOpen">
+        <div class="section-title" (click)="panelGeneralOpen = !panelGeneralOpen">
+          Panel general <span>{{ panelGeneralOpen ? '▲' : '▼' }}</span>
+        </div>
+        <div class="sidebar-links">
+          <a routerLink="/administrador/inicio">Inicio</a>
+          <a routerLink="/administrador/ia">Asistente IA</a>
+          <a routerLink="/administrador/analisis-avanzado">Análisis Avanzado</a>
+        </div>
+      </div>
+
+      <!-- Comunicación -->
+      <div class="sidebar-section" [class.open]="comunicacionOpen">
+        <div class="section-title" (click)="comunicacionOpen = !comunicacionOpen">
+          Comunicación <span>{{ comunicacionOpen ? '▲' : '▼' }}</span>
+        </div>
+        <div class="sidebar-links">
+          <a routerLink="/administrador/mensajes">Mensajes</a>
+          <a routerLink="/administrador/comunicados">Comunicados</a>
+          <a routerLink="/administrador/publicidad">Publicidad</a>
+        </div>
+      </div>
+
+      <!-- Administración financiera -->
+      <div class="sidebar-section" [class.open]="finanzasOpen">
+        <div class="section-title" (click)="finanzasOpen = !finanzasOpen">
+          Administración financiera <span>{{ finanzasOpen ? '▲' : '▼' }}</span>
+        </div>
+        <div class="sidebar-links">
+          <a routerLink="/administrador/pagos">Pagos</a>
+          <a routerLink="/administrador/ventas">Ventas</a>
+          <a routerLink="/administrador/reportes">Reportes</a>
+        </div>
+      </div>
+
+      <!-- Gestión de usuarios -->
+      <div class="sidebar-section" [class.open]="usuariosOpen">
+        <div class="section-title" (click)="usuariosOpen = !usuariosOpen">
+          Gestión de usuarios <span>{{ usuariosOpen ? '▲' : '▼' }}</span>
+        </div>
+        <div class="sidebar-links">
+          <a routerLink="/administrador/usuarios">Usuarios</a>
+          <a routerLink="/administrador/perfil">Perfil</a>
+          <a routerLink="/administrador/configuracion">Configuración</a>
+        </div>
+      </div>
+
+    </div>
+
+    <div class="sidebar-footer">
+      <a routerLink="/administrador/soporte">Soporte</a>
+      <a href="#" class="logout">Cerrar sesión</a>
+    </div>
+  </div>
+</nav>
+
+<div class="sidebar-overlay" [class.show]="isOpen" (click)="closeSidebar()"></div>
