@@ -10,11 +10,25 @@ import { RouterLink, RouterLinkActive } from '@angular/router';
   styleUrls: ['./sidebar.scss']
 })
 export class SidebarComponent {
-  // Estado del sidebar (abierto o cerrado)
+  // Control de visibilidad general del sidebar
   @HostBinding('class.open') isOpen = false;
 
-  // Alternar visibilidad del sidebar
+  // Estados de secciones internas
+  panelGeneralOpen = true;
+  comunicacionOpen = false;
+  finanzasOpen = false;
+  usuariosOpen = false;
+
+  // Métodos de control del sidebar
   toggleSidebar(): void {
     this.isOpen = !this.isOpen;
+  }
+
+  openSidebar(): void {
+    this.isOpen = true;
+  }
+
+  closeSidebar(): void {
+    this.isOpen = false;
   }
 }
