@@ -1,0 +1,44 @@
+<div class="toolbar">
+  <button class="toggle-btn" (click)="toggleSidebar()">
+    <span class="bar"></span>
+    <span class="bar"></span>
+    <span class="bar"></span>
+  </button>
+  <h1 class="titulo">Panel Administrador</h1>
+</div>
+
+<!-- Contenedor principal del sidebar -->
+<nav class="sidebar" [class.open]="isOpen">
+  <div class="sidebar-content">
+    <div class="usuario-info">
+      <img src="https://cdn-icons-png.flaticon.com/512/1946/1946429.png" alt="Usuario" />
+      <div>
+        <h3>Cristal Cruz</h3>
+        <p>Administrador</p>
+      </div>
+    </div>
+
+    <!-- Menú principal -->
+    <ul class="menu">
+      <li><a routerLink="/administrador/inicio" routerLinkActive="active">🏠 Inicio</a></li>
+      <li><a routerLink="/administrador/ia" routerLinkActive="active">🤖 IA</a></li>
+      <li><a routerLink="/administrador/analisis-avanzado" routerLinkActive="active">📊 Análisis Avanzado</a></li>
+      <li><a routerLink="/administrador/mensajes" routerLinkActive="active">💬 Mensajes</a></li>
+      <li><a routerLink="/administrador/comunicados" routerLinkActive="active">📢 Comunicados</a></li>
+      <li><a routerLink="/administrador/pagos" routerLinkActive="active">💳 Pagos</a></li>
+      <li><a routerLink="/administrador/publicidad" routerLinkActive="active">📺 Publicidad</a></li>
+      <li><a routerLink="/administrador/ventas" routerLinkActive="active">🛒 Ventas</a></li>
+      <li><a routerLink="/administrador/usuarios" routerLinkActive="active">👥 Usuarios</a></li>
+      <li><a routerLink="/administrador/reportes" routerLinkActive="active">📑 Reportes</a></li>
+    </ul>
+
+    <!-- Botones inferiores -->
+    <div class="acciones">
+      <a routerLink="/administrador/perfil">👤 Ver Perfil</a>
+      <button class="logout">🚪 Cerrar Sesión</button>
+    </div>
+  </div>
+
+  <!-- Fondo oscuro al abrir en móvil -->
+  <div class="overlay" [class.show]="isOpen" (click)="toggleSidebar()"></div>
+</nav>
