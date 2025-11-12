@@ -1,0 +1,24 @@
+<nav class="sidebar">
+  <div class="sidebar-header">
+    <div class="logo-icon">
+      <i class="fas fa-hands-helping"></i>
+    </div>
+    <div class="logo-text">
+      <span>Panel de Padres</span>
+      <small>Autismo Mochis IA</small>
+    </div>
+  </div>
+
+  <ul class="nav-list">
+    @for (item of navItems; track item.path) {
+      <li class="nav-item">
+        <a [routerLink]="item.path" 
+           routerLinkActive="active" 
+           class="nav-link">
+          <i [class]="item.icon"></i>
+          <span>{{ item.label }}</span>
+        </a>
+      </li>
+    }
+  </ul>
+</nav>
