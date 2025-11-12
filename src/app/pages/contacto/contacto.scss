@@ -19,7 +19,7 @@
     gap: 2rem;
 
     .info-card, .horario-card, .redes-card, .map-card {
-      background: linear-gradient(135deg, #fdf6fb, #e0f7fa);
+      background: linear-gradient(135deg, #e0e0ff, #e7e7fb);
       padding: 1.8rem 1.5rem;
       border-radius: 20px;
       box-shadow: 0 12px 28px rgba(0,0,0,0.1);
@@ -77,7 +77,7 @@
 
   /* ===== DERECHA (FORMULARIO) ===== */
   .contact-form {
-    background: linear-gradient(135deg, #fff3e0, #fbe9e7);
+    background: linear-gradient(135deg, #e0e0ff, #e7e7fb);
     padding: 2rem;
     border-radius: 25px;
     box-shadow: 0 15px 35px rgba(0,0,0,0.12);
@@ -119,7 +119,7 @@
     button {
       margin-top: 1.5rem;
       padding: 0.85rem 1.5rem;
-      background: linear-gradient(135deg, #d84315, #f57c00);
+      background: linear-gradient(135deg, #1539d8, #007ff5);
       color: #fff;
       font-weight: 600;
       font-size: 1rem;
@@ -130,11 +130,11 @@
 
       &:hover {
         transform: scale(1.05);
-        box-shadow: 0 8px 20px rgba(216,67,21,0.4);
+        box-shadow: 0 8px 20px rgba(21, 73, 216, 0.4);
       }
 
       &:disabled {
-        background: #fff2e8;
+        background: #ebe8ff;
         cursor: not-allowed;
       }
     }
