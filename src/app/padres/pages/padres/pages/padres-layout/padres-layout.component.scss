@@ -1,0 +1,18 @@
+:host {
+  --sidebar-width: 260px;
+  --content-bg: #f4f7fa; 
+}
+
+.layout-container {
+  display: flex;
+}
+
+.main-content-area {
+  flex: 1; 
+  margin-left: var(--sidebar-width);
+  min-height: 100vh;
+  background-color: var(--content-bg);
+  position: relative; 
+  height: 100vh;
+  overflow-y: auto;
+}

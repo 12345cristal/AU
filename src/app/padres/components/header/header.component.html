@@ -1,0 +1,16 @@
+<header class="header-container">
+  <div class="header-actions">
+    <button class="btn-icon notification-bell">
+      <i class="fas fa-bell"></i>
+      @if (notificationCount > 0) {
+        <span class="notification-badge">{{ notificationCount }}</span>
+      }
+    </button>
+  </div>
+
+  <div class="user-profile">
+    <img [src]="userAvatarUrl" alt="Avatar de {{ userName }}" class="user-avatar" />
+    <span class="user-name">{{ userName }}</span>
+    <i class="fas fa-chevron-down"></i>
+  </div>
+</header>

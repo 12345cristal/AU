@@ -7,30 +7,25 @@ import { HEADER_ROUTES } from './pages/header_routes';
 import { COORDINADOR_ROUTES } from './coordinador/Routes-coord';
 import { ADMIN_ROUTES } from './administrador/administrador_routes';
 
+// 👇 Nueva importación
+import { PADRES_ROUTES } from './padres/padres.routes';
+
 export const routes: Routes = [
-  // 🏠 Página principal (pública)
-  { path: '', component: LandingPageComponent, pathMatch: 'full' },
+  { path: '', component: LandingPageComponent },
 
-  // 🔐 Login
-  { path: 'login', component: Login },
-
-  // 👑 Rutas de administrador (protegidas)
   {
     path: 'administrador',
     canActivate: [AuthGuard],
     children: ADMIN_ROUTES
   },
 
-  // 🧑‍🏫 Rutas de coordinador (protegidas)
   {
-    path: 'coordinador',
-    canActivate: [AuthGuard],
-    children: COORDINADOR_ROUTES
+    path: 'padres',
+    children: PADRES_ROUTES  // ✅ Rutas para la sección Padres
   },
 
-  // 🧩 Rutas del encabezado (compartidas)
   ...HEADER_ROUTES,
+  ...COORDINADOR_ROUTES,
 
-  // 🚫 Cualquier ruta desconocida vuelve al inicio
-  { path: '**', redirectTo: '' }
+  { path: '**', redirectTo: '' }  // Manejo de rutas no encontradas
 ];
