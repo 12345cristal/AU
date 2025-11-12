@@ -12,9 +12,9 @@ import { HorariosComponent } from './pages/horarios/horarios';
 import { ExpedientesComponent } from './pages/expedientes-clinicos/expedientes-clinicos';
 import { FiltroAccesoComponent } from './pages/filtros-acceso/filtros-acceso';
 import { NuevoBeneficiarioComponent } from './pages/nuevo-beneficiario/nuevo-beneficiario';
-import { ReportesComponent } from './pages/reportes/reportes';
+import { ReportesCoordinadorComponent } from './pages/reportes/reportes';
 
-// Componentes hijos de Parte clínica
+// Hijos de Parte clínica
 import { PlanesComponent } from './pages/parte-clinica/planes/planes';
 import { NotasComponent } from './pages/parte-clinica/notas/notas';
 import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
@@ -23,9 +23,10 @@ import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
 import { AsistenteIAComponent } from './pages/asistente-ia/asistente-ia';
 import { CapacitacionesComponent } from './pages/capacitaciones/capacitaciones';
 import { PersonalComponent } from './pages/personal/personal';
+
 export const COORDINADOR_ROUTES: Routes = [
   {
-    path: 'coordinador',
+    path: '',
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
@@ -52,7 +53,7 @@ export const COORDINADOR_ROUTES: Routes = [
       { path: 'expedientes-clinicos', component: ExpedientesComponent },
       { path: 'filtros-acceso', component: FiltroAccesoComponent },
       { path: 'nuevo-beneficiario', component: NuevoBeneficiarioComponent },
-      { path: 'reportes', component: ReportesComponent }
+      { path: 'reportes', component: ReportesCoordinadorComponent }
     ]
   }
 ];

@@ -1,43 +1,59 @@
 <app-header></app-header>
+
 <div class="login-container">
   <div class="login-card">
-    <!-- Imagen -->
-    <div class="login-img">
-      <img src="autismo_mochis.png" alt="Autismo Mochis" />
+    <!-- 🌈 Panel izquierdo con la imagen -->
+    <div class="illustration">
+      <div class="overlay"></div>
+      <div class="content">
+        <img src="autismo_mochis.png" alt="Autismo Mochis" class="logo" />
+        <h2>Bienvenido a Autismo Mochis</h2>
+        <p>Gestiona usuarios, terapias y recursos desde una sola plataforma inteligente.</p>
+      </div>
     </div>
 
-    <h2>Iniciar Sesión</h2>
+    <!-- 🧩 Panel derecho (formulario de login) -->
+    <div class="login-form-section">
+      <h3>Iniciar sesión</h3>
 
-    <form [formGroup]="loginForm" (ngSubmit)="enviar()" class="login-form">
-      <!-- Usuario -->
-      <div class="form-group">
-        <label for="usuario">Usuario</label>
-        <input id="usuario" type="text" formControlName="usuario" placeholder="Ingresa tu usuario" />
-      </div>
+      <form [formGroup]="loginForm" (ngSubmit)="login()" class="login-form">
+        <div class="form-group">
+          <label for="correo">Correo electrónico</label>
+          <input
+            type="email"
+            id="correo"
+            formControlName="correo"
+            placeholder="ejemplo@correo.com"
+          />
+        </div>
 
-      <!-- Contraseña -->
-      <div class="form-group password-group">
-        <label for="contraseña">Contraseña</label>
-        <input
-          [type]="mostrarPassword ? 'text' : 'password'"
-          id="contraseña"
-          formControlName="contraseña"
-          placeholder="Ingresa tu contraseña"
-        />
-        <span class="toggle-password" (click)="togglePassword()">
-          <i *ngIf="!mostrarPassword" class="fas fa-eye"></i>
-          <i *ngIf="mostrarPassword" class="fas fa-eye-slash"></i>
-        </span>
-      </div>
+        <div class="form-group password-field">
+          <label for="contrasena">Contraseña</label>
+          <input
+            [type]="mostrarPassword ? 'text' : 'password'"
+            id="contrasena"
+            formControlName="contrasena"
+            placeholder="••••••••"
+          />
+          <span class="toggle-password" (click)="togglePassword()">
+            {{ mostrarPassword ? 'Ocultar' : 'Ver' }}
+          </span>
+        </div>
 
-      <div class="forgot">
-        <a href="#">¿Olvidaste tu contraseña?</a>
-      </div>
+        <div *ngIf="mensajeError" class="error-message">
+          {{ mensajeError }}
+        </div>
 
-      <button type="submit">Ingresar</button>
+        <div class="forgot">
+          <a href="#">¿Olvidaste tu contraseña?</a>
+        </div>
 
-      <div class="error-message">{{ mensajeError }}</div>
-    </form>
+        <button type="submit" [disabled]="loginForm.invalid">
+          Ingresar
+        </button>
+      </form>
+    </div>
   </div>
 </div>
-<app-footer></app-footer>   
+
+<app-footer></app-footer>
