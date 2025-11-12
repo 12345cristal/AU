@@ -12,20 +12,12 @@ import { PADRES_ROUTES } from './padres/padres.routes';
 
 export const routes: Routes = [
   { path: '', component: LandingPageComponent },
-
   {
     path: 'administrador',
     canActivate: [AuthGuard],
     children: ADMIN_ROUTES
   },
-
-  {
-    path: 'padres',
-    children: PADRES_ROUTES  // ✅ Rutas para la sección Padres
-  },
-
   ...HEADER_ROUTES,
   ...COORDINADOR_ROUTES,
-
-  { path: '**', redirectTo: '' }  // Manejo de rutas no encontradas
+  { path: '**', redirectTo: '' }
 ];
