@@ -1,6 +1,8 @@
-// src/app/app.routes.ts
 import { Routes } from '@angular/router';
 import { LandingPageComponent } from './pages/landing/landing';
+import { Login } from './pages/login/login';
+import { AuthGuard } from './auth/auth.guard';
+
 import { HEADER_ROUTES } from './pages/header_routes';
 import { COORDINADOR_ROUTES } from './coordinador/Routes-coord';
 import { ADMIN_ROUTES } from './administrador/administrador_routes';
@@ -13,6 +15,7 @@ export const routes: Routes = [
 
   {
     path: 'administrador',
+    canActivate: [AuthGuard],
     children: ADMIN_ROUTES
   },
 

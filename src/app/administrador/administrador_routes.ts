@@ -9,7 +9,7 @@ import { Pagos } from './pages/pagos/pagos';
 import { Publicidad } from './pages/publicidad/publicidad';
 import { Ventas } from './pages/ventas/ventas';
 import { Usuarios } from './pages/usuarios/usuarios';
-import { Reportes } from './pages/reportes/reportes';
+import { ReportesAdministradorComponent } from './pages/reportes/reportes';
 import { Perfil } from './components/perfil/perfil';
 import { Logout } from './components/logout/logout';
 
@@ -27,7 +27,7 @@ export const ADMIN_ROUTES: Routes = [
       { path: 'publicidad', component: Publicidad },
       { path: 'ventas', component: Ventas },
       { path: 'usuarios', component: Usuarios },
-      { path: 'reportes', component: Reportes },
+      { path: 'reportes', component: ReportesAdministradorComponent },
       { path: 'perfil', component: Perfil },
       { path: 'logout', component: Logout },
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
