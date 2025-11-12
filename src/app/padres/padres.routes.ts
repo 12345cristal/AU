@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { PadresLayoutComponent } from './pages/padres/pages/padres-layout/padres-layout.component';
-import { Inicio } from './pages/padres/pages/inicio/inicio.component';
+import { Inicio } from './pages/inicio/inicio';
 
 export const PADRES_ROUTES: Routes = [
   {
