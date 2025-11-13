@@ -1,0 +1,90 @@
+.contenedor {
+  padding: 2rem;
+}
+
+.tabs {
+  display: flex;
+  gap: .7rem;
+  margin: 1rem 0;
+
+  button {
+    padding: .5rem 1rem;
+    border-radius: 8px;
+    border: none;
+    background: #e5e7eb;
+    cursor: pointer;
+
+    &.active {
+      background: #2563eb;
+      color: #fff;
+    }
+  }
+}
+
+.form-grid {
+  max-width: 900px;
+}
+
+.panel {
+  background: #fff;
+  padding: 1.5rem;
+  border-radius: 12px;
+  display: grid;
+  gap: .8rem;
+}
+
+.panel.archivos {
+  display: flex;
+  gap: 2rem;
+  align-items: flex-start;
+}
+
+.foto-preview img {
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  object-fit: cover;
+  margin-bottom: .5rem;
+}
+
+.placeholder-foto {
+  width: 150px;
+  height: 150px;
+  border-radius: 999px;
+  background: #e5e7eb;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+label {
+  font-weight: 500;
+}
+
+input, select, textarea {
+  padding: .5rem .7rem;
+  border-radius: 8px;
+  border: 1px solid #d4d4d8;
+}
+
+textarea {
+  min-height: 80px;
+}
+
+.acciones-form {
+  margin-top: 1rem;
+  display: flex;
+  gap: 1rem;
+}
+
+.btn {
+  background: #2563eb;
+  color: #fff;
+  border: none;
+  padding: .6rem 1.3rem;
+  border-radius: 8px;
+}
+
+.btn.cancel {
+  background: #6b7280;
+}

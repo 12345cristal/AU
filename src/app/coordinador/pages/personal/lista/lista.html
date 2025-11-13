@@ -1,1 +1,153 @@
-<p>lista works!</p>
+<div class="contenedor">
+  <!-- HEADER ELEGANTE -->
+  <div class="header-section">
+    <div class="header-content">
+      <div class="header-text">
+        <h1>👥 Gestión de Personal</h1>
+        <p>Administra terapeutas, coordinadores y equipo de trabajo</p>
+      </div>
+      <button class="btn btn-primary btn-lg" (click)="irNuevo()">
+        <span class="icon">➕</span>
+        Nuevo Personal
+      </button>
+    </div>
+  </div>
+
+  <!-- FILTROS AVANZADOS -->
+  <div class="filters-section" [formGroup]="filtrosForm">
+    <div class="search-container">
+      <span class="search-icon">🔍</span>
+      <input
+        type="text"
+        placeholder="Buscar por nombre o correo..."
+        formControlName="busqueda"
+        class="search-input"
+      />
+    </div>
+
+    <select formControlName="filtroRol" class="filter-select">
+      <option value="todos">🎯 Todos los roles</option>
+      <option value="Coordinador">📋 Coordinador</option>
+      <option value="Terapeuta">👨‍⚕️ Terapeuta</option>
+      <option value="Recepcionista">📞 Recepcionista</option>
+    </select>
+
+    <select formControlName="filtroActivo" class="filter-select">
+      <option value="todos">📊 Todos</option>
+      <option value="activos">✅ Activos</option>
+      <option value="inactivos">❌ Inactivos</option>
+    </select>
+
+    <div class="export-buttons">
+      <button class="btn btn-secondary btn-sm" (click)="exportarCSV()" title="Descargar en Excel">
+        <span>📊</span> CSV
+      </button>
+      <button class="btn btn-secondary btn-sm" (click)="exportarPDF()" title="Imprimir PDF">
+        <span>📄</span> PDF
+      </button>
+    </div>
+  </div>
+
+  <!-- ESTADO DE CARGA -->
+  @if (cargando) {
+    <div class="loading-container">
+      <div class="spinner"></div>
+      <p>Cargando personal...</p>
+    </div>
+  } @else if (filtrados.length === 0) {
+    <div class="empty-state">
+      <div class="empty-icon">📭</div>
+      <h3>Sin resultados</h3>
+      <p>No se encontró personal con los filtros aplicados</p>
+      <button class="btn btn-primary" (click)="irNuevo()">Registrar el primero</button>
+    </div>
+  } @else {
+    <!-- GRID DE TARJETAS -->
+    <div class="grid-container">
+      @for (p of filtrados; track p.id_personal) {
+        <div class="card-wrapper">
+          <div class="card">
+            <!-- HEADER CARD CON ESTADO -->
+            <div class="card-header">
+              <div class="state-badge" [class.active]="p.activo">
+                {{ p.activo ? '🟢 Activo' : '🔴 Inactivo' }}
+              </div>
+            </div>
+
+            <!-- CONTENIDO PRINCIPAL -->
+            <div class="card-body">
+              <!-- AVATAR -->
+              <div class="avatar-section">
+                <div class="avatar">
+                  @if (p.foto) {
+                    <img [src]="p.foto" [alt]="p.nombre" />
+                  } @else {
+                    <div class="avatar-initials">{{ p.iniciales }}</div>
+                  }
+                </div>
+              </div>
+
+              <!-- INFO -->
+              <div class="info-section" (click)="verDetalle(p.id_personal)">
+                <h3 class="name">{{ p.nombre }}</h3>
+                <p class="email">{{ p.email }}</p>
+                <div class="meta">
+                  <span class="role">{{ p.rol }}</span>
+                  <span class="separator">•</span>
+                  <span class="grade">{{ p.grado_academico || 'Sin grado' }}</span>
+                </div>
+              </div>
+            </div>
+
+            <!-- ACCIONES -->
+            <div class="card-footer">
+              <button
+                class="btn-action btn-toggle"
+                [class.active]="p.activo"
+                (click)="abrirModalEstado(p)"
+                [title]="p.activo ? 'Desactivar' : 'Activar'"
+              >
+                {{ p.activo ? '⏸️' : '▶️' }}
+              </button>
+              <button
+                class="btn-action btn-delete"
+                (click)="eliminar(p.id_personal)"
+                title="Eliminar"
+              >
+                🗑️
+              </button>
+            </div>
+          </div>
+        </div>
+      }
+    </div>
+  }
+
+  <!-- MODAL -->
+  @if (modalEstado && personaSeleccionada) {
+    <div class="modal-overlay" (click)="cerrarModalEstado()">
+      <div class="modal-dialog" (click)="$event.stopPropagation()">
+        <div class="modal-header">
+          <h2>Cambiar estado</h2>
+          <button class="close-btn" (click)="cerrarModalEstado()">&times;</button>
+        </div>
+        <div class="modal-body">
+          <div class="confirmation-icon">
+            {{ personaSeleccionada.activo ? '⏸️' : '▶️' }}
+          </div>
+          <p class="confirmation-text">
+            ¿Estás seguro que deseas <strong>{{ personaSeleccionada.activo ? 'desactivar' : 'activar' }}</strong> a
+          </p>
+          <p class="person-name">{{ personaSeleccionada.nombre }}</p>
+        </div>
+        <div class="modal-footer">
+          <button class="btn btn-secondary" (click)="cerrarModalEstado()">Cancelar</button>
+          <button class="btn btn-primary" (click)="confirmarCambioEstado()">
+            {{ personaSeleccionada.activo ? 'Desactivar' : 'Activar' }}
+          </button>
+        </div>
+      </div>
+    </div>
+  }
+</div>
+

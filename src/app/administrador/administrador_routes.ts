@@ -1,6 +1,6 @@
 import { Routes } from '@angular/router';
 import { AdministradorComponent } from './administrador';
-import { Inicio } from './pages/inicio/inicio';
+import { InicioAdministrador } from './pages/inicio/inicio';
 import { AsistenteIAComponent } from '../coordinador/pages/asistente-ia/asistente-ia';
 import { AnalisisAvanzado } from './pages/analisis-avanzado/analisis-avanzado';
 import { Mensajes } from './pages/mensajes/mensajes';
@@ -18,7 +18,7 @@ export const ADMIN_ROUTES: Routes = [
     path: '',
     component: AdministradorComponent,
     children: [
-      { path: 'inicio', component: Inicio },
+      { path: 'inicio', component: InicioAdministrador },
       { path: 'ia', component: AsistenteIAComponent },
       { path: 'analisis-avanzado', component: AnalisisAvanzado },
       { path: 'mensajes', component: Mensajes },

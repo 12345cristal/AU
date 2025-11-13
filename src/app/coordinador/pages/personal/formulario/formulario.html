@@ -1,1 +1,137 @@
-<p>formulario works!</p>
+<div class="contenedor">
+
+  <h1>{{ modo === 'crear' ? 'Registrar personal' : 'Editar personal' }}</h1>
+
+  <div class="tabs">
+    <button (click)="setTab('basico')" [class.active]="tab === 'basico'">Datos básicos</button>
+    <button (click)="setTab('laboral')" [class.active]="tab === 'laboral'">Laboral</button>
+    <button (click)="setTab('domicilio')" [class.active]="tab === 'domicilio'">Domicilio</button>
+    <button (click)="setTab('archivos')" [class.active]="tab === 'archivos'">Archivos</button>
+  </div>
+
+  <form [formGroup]="form" (ngSubmit)="enviar()" class="form-grid">
+
+    <!-- TAB BÁSICO -->
+    @if (tab === 'basico') {
+      <div class="panel">
+        <label>Nombre *</label>
+        <input formControlName="nombre">
+
+        <label>Apellido paterno</label>
+        <input formControlName="apellido_paterno">
+
+        <label>Apellido materno</label>
+        <input formControlName="apellido_materno">
+
+        <label>Correo *</label>
+        <input formControlName="correo" type="email">
+
+        <label>Teléfono</label>
+        <input formControlName="telefono">
+
+        <label>Rol *</label>
+        <select formControlName="id_rol">
+          @for (r of roles; track r.id_rol) {
+            <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
+          }
+        </select>
+
+        @if (modo === 'crear') {
+          <label>Contraseña *</label>
+          <input type="password" formControlName="contrasena">
+        }
+      </div>
+    }
+
+    <!-- TAB LABORAL -->
+    @if (tab === 'laboral') {
+      <div class="panel">
+        <label>Fecha de nacimiento</label>
+        <input formControlName="fecha_nacimiento" type="date">
+
+        <label>Fecha de ingreso</label>
+        <input formControlName="fecha_ingreso" type="date">
+
+        <label>Grado académico</label>
+        <select formControlName="id_grado">
+          <option value="">Sin grado</option>
+          @for (g of grados; track g.id_grado) {
+            <option [value]="g.id_grado">{{ g.nombre }}</option>
+          }
+        </select>
+
+        <label>Especialidades</label>
+        <textarea formControlName="especialidades"></textarea>
+
+        <label>Teléfono personal</label>
+        <input formControlName="telefono_personal">
+
+        <label>Correo personal</label>
+        <input formControlName="correo_personal" type="email">
+
+        <label>RFC</label>
+        <input formControlName="rfc">
+        <label>INE</label>
+        <input formControlName="ine">
+        <label>CURP</label>
+        <input formControlName="curp">
+
+        <label>Experiencia</label>
+        <textarea formControlName="experiencia"></textarea>
+      </div>
+    }
+
+    <!-- TAB DOMICILIO -->
+    @if (tab === 'domicilio') {
+      <div class="panel">
+        <label>Calle</label>
+        <input formControlName="domicilio_calle">
+
+        <label>Colonia</label>
+        <input formControlName="domicilio_colonia">
+
+        <label>Código postal</label>
+        <input formControlName="domicilio_cp">
+
+        <label>Municipio</label>
+        <input formControlName="domicilio_municipio">
+
+        <label>Estado</label>
+        <input formControlName="domicilio_estado">
+      </div>
+    }
+
+    <!-- TAB ARCHIVOS -->
+    @if (tab === 'archivos') {
+      <div class="panel archivos">
+        <div class="foto-preview">
+          <label>Foto de perfil</label>
+          @if (fotoPreview) {
+            <img [src]="fotoPreview" alt="Foto previa">
+          } @else {
+            <div class="placeholder-foto">Sin foto</div>
+          }
+          <input type="file" (change)="onFileChange($event, 'foto')" accept="image/*">
+        </div>
+
+        <div>
+          <label>Curriculum Vitae (PDF / DOC)</label>
+          <input type="file" (change)="onFileChange($event, 'cv')">
+
+          <label>Comprobante de domicilio</label>
+          <input type="file" (change)="onFileChange($event, 'comp')">
+        </div>
+      </div>
+    }
+
+    <div class="acciones-form">
+      <button type="submit" class="btn">
+        {{ modo === 'crear' ? 'Crear' : 'Guardar cambios' }}
+      </button>
+      <button type="button" class="btn cancel" (click)="router.navigate(['/coordinador/personal'])">
+        Cancelar
+      </button>
+    </div>
+
+  </form>
+</div>
