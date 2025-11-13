@@ -1,88 +1,33 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environments';
 
-/**
- * Interface para los datos de resumen (tarjetas superiores)
- */
-export interface PersonalSummary {
-  totalPersonal: number;
-  terapeutas: number;
-  personalActivo: number;
-  calificacionPromedio: number;
-}
-
-/**
- * Interface para los datos de un miembro del personal (tarjetas inferiores)
- */
-export interface PersonalMember {
-  id: number;
-  nombre: string;
-  rol: string;
-  activo: boolean;
-  iniciales: string;
-  email: string;
-  telefono: string;
-  fechaIngreso: string;
-  pacientes: number;
-  sesionesSem: number;
-  calificacion: number;
-  especialidades: string[];
-}
-
-@Injectable({
-  providedIn: 'root'
-})
+@Injectable({ providedIn: 'root' })
 export class PersonalService {
+  private http = inject(HttpClient);
+  private api = `${environment.apiUrl}/personal`;
 
-  constructor() {}
-
-  /**
-   * Simula el resumen superior
-   */
-  getPersonalSummary(): Observable<PersonalSummary> {
-    const resumen: PersonalSummary = {
-      totalPersonal: 8,
-      terapeutas: 5,
-      personalActivo: 7,
-      calificacionPromedio: 9.2
-    };
-    return of(resumen);
+  listar() {
+    return this.http.get(`${this.api}`);
   }
 
-  /**
-   * Simula la lista de personal
-   */
-  getPersonalList(): Observable<PersonalMember[]> {
-    const lista: PersonalMember[] = [
-      {
-        id: 1,
-        nombre: 'Johana Pérez',
-        rol: 'Terapeuta',
-        activo: true,
-        iniciales: 'JP',
-        email: 'johana@centro.com',
-        telefono: '667-201-3345',
-        fechaIngreso: '2021-04-20',
-        pacientes: 8,
-        sesionesSem: 15,
-        calificacion: 9.4,
-        especialidades: ['Lenguaje', 'Motricidad']
-      },
-      {
-        id: 2,
-        nombre: 'Luis García',
-        rol: 'Coordinador',
-        activo: true,
-        iniciales: 'LG',
-        email: 'luis@centro.com',
-        telefono: '667-998-2311',
-        fechaIngreso: '2020-08-10',
-        pacientes: 3,
-        sesionesSem: 6,
-        calificacion: 8.8,
-        especialidades: ['Organización', 'Supervisión']
-      }
-    ];
-    return of(lista);
+  obtener(id: number) {
+    return this.http.get(`${this.api}/${id}`);
+  }
+
+  crear(fd: FormData) {
+    return this.http.post(this.api, fd);
+  }
+
+  editar(id: number, fd: FormData) {
+    return this.http.put(`${this.api}/${id}`, fd);
+  }
+
+  cambiarEstado(id: number, activo: boolean) {
+    return this.http.patch(`${this.api}/${id}/activo`, { activo });
+  }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.api}/${id}`);
   }
 }

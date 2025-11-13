@@ -1,46 +1,72 @@
-<div class="personal-dashboard">
+<div class="contenedor">
 
-  <!-- 🔹 Encabezado -->
-  <header class="dashboard-header">
-    <div class="title-section">
-      <h2 class="title">Gestión de Personal</h2>
-      <p class="subtitle">Administra el equipo terapéutico y personal del centro</p>
+  <h1>Personal</h1>
+
+  <button class="btn" (click)="abrirCrear()">+ Nuevo</button>
+
+  @for (p of personal; track p.id_personal) {
+    <div class="card">
+
+      <div class="info">
+        <h3>{{ p.nombre }}</h3>
+        <p>{{ p.email }}</p>
+        <small>{{ p.rol }} | {{ p.grado_academico || 'Sin grado' }}</small>
+      </div>
+
+      <div class="acciones">
+        <button (click)="abrirEditar(p)">Editar</button>
+        <button (click)="cambiarEstado(p)">
+          {{ p.activo ? 'Desactivar' : 'Activar' }}
+        </button>
+        <button class="danger" (click)="eliminar(p.id_personal)">Eliminar</button>
+      </div>
+
     </div>
-    <button class="add-button">
-      <span class="icon">+</span> Agregar Personal
-    </button>
-  </header>
+  }
 
-  <!-- 🔹 Tarjetas de resumen (se llenan dinámicamente en renderSummary) -->
-  <section id="summaryContainer" class="summary-cards-container"></section>
+  @if (modal) {
+    <div class="modal">
+      <div class="modal-content">
 
-  <!-- 🔹 Controles de búsqueda y filtro -->
-  <section class="controls-section">
-    <div class="search-bar">
-      <input 
-        type="text" 
-        placeholder="Buscar por nombre o especialidad..."
-        (input)="updateSearch($any($event.target))"
-      >
-      <span class="search-icon">🔍</span>
+        <h2>{{ modo === 'crear' ? 'Nuevo personal' : 'Editar personal' }}</h2>
+
+        <form [formGroup]="form" (ngSubmit)="guardar()">
+
+          <label>Nombre</label>
+          <input formControlName="nombre">
+
+          <label>Apellido paterno</label>
+          <input formControlName="apellido_paterno">
+
+          <label>Correo</label>
+          <input formControlName="correo">
+
+          <label>Rol</label>
+          <select formControlName="id_rol">
+            @for (r of roles; track r.id_rol) {
+              <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
+            }
+          </select>
+
+          <label>Grado académico</label>
+          <select formControlName="id_grado">
+            <option value="">Sin grado</option>
+            @for (g of grados; track g.id_grado) {
+              <option [value]="g.id_grado">{{ g.nombre }}</option>
+            }
+          </select>
+
+          @if (modo === 'crear') {
+            <label>Contraseña</label>
+            <input type="password" formControlName="contrasena">
+          }
+
+          <button type="submit" class="btn">Guardar</button>
+          <button class="cancel" type="button" (click)="cerrar()">Cancelar</button>
+
+        </form>
+
+      </div>
     </div>
-
-    <div class="view-tabs">
-      <button 
-        [class.active]="viewMode === 'tarjeta'" 
-        (click)="switchView('tarjeta')"
-        class="tab-button"
-      >Vista de Tarjetas</button>
-
-      <button 
-        [class.active]="viewMode === 'tabla'" 
-        (click)="switchView('tabla')"
-        class="tab-button"
-      >Vista de Tabla</button>
-    </div>
-  </section>
-
-  <!-- 🔹 Lista de personal (se renderiza dinámicamente en renderPersonalList) -->
-  <section id="listContainer" class="personal-list-grid"></section>
-
+  }
 </div>
