@@ -1,82 +1,141 @@
-import { Component, OnInit } from '@angular/core';
-import { PersonalMember, PersonalService, PersonalSummary} from '../../../service/personal.service';
+import { Component, signal, OnInit, computed } from '@angular/core';
+import { CommonModule } from '@angular/common';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
+import { PersonalService, PersonalMember } from '../../../service/personal.service';
+import { RolesService, Rol } from '../../../service/roles.service';
 
 @Component({
-  selector: 'app-personal-dashboard',
+  selector: 'app-personal',
   standalone: true,
+  imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './personal.html',
-  styleUrls: ['./personal.scss']
+  styleUrls: ['./personal.scss'],
 })
 export class PersonalComponent implements OnInit {
 
-  summaryData: PersonalSummary | null = null;
-  personalList: PersonalMember[] = [];
-  viewMode: 'tarjeta' | 'tabla' = 'tarjeta';
-  searchText: string = '';
+  personales = signal<PersonalMember[]>([]);
+  roles = signal<Rol[]>([]);
+  viewMode = signal<'tarjeta' | 'tabla'>('tarjeta');
+  searchText = signal('');
+  sheetOpen = signal(false);
 
-  constructor(private personalService: PersonalService) {}
+  personalForm!: FormGroup;
+  cvFile: File | null = null;
+  fotoFile: File | null = null;
 
-  ngOnInit(): void {
-    this.loadSummary();
-    this.loadPersonalList();
+  filtered = computed(() => {
+    const q = this.searchText().toLowerCase().trim();
+    return q
+      ? this.personales().filter((p) =>
+          [p.nombre, p.email, p.telefono, p.rol].some((x) =>
+            (x || '').toLowerCase().includes(q)
+          )
+        )
+      : this.personales();
+  });
+
+  constructor(
+    private fb: FormBuilder,
+    private personalService: PersonalService,
+    private rolesService: RolesService
+  ) {}
+
+  ngOnInit() {
+    this.initForm();
+    this.cargarPersonal();
+    this.cargarRoles();
   }
 
-  loadSummary(): void {
-    this.personalService.getPersonalSummary().subscribe(resumen => {
-      this.summaryData = resumen;
-      this.renderSummary();
+  private initForm() {
+    this.personalForm = this.fb.group({
+      nombre: ['', Validators.required],
+      apellido_paterno: [''],
+      apellido_materno: [''],
+      correo: ['', [Validators.required, Validators.email]],
+      telefono: [''],
+      id_rol: ['', Validators.required],
+      contrasena: ['', [Validators.required, Validators.minLength(6)]],
+
+      fecha_nacimiento: [''],
+      grado_academico: [''],
+      especialidades: [''],
+      telefono_personal: [''],
+      correo_personal: [''],
+      rfc: [''],
+      ine: [''],
+      curp: [''],
+      domicilio_calle: [''],
+      domicilio_colonia: [''],
+      domicilio_cp: [''],
+      domicilio_municipio: [''],
+      domicilio_estado: [''],
+      experiencia: [''],
     });
   }
 
-  loadPersonalList(): void {
-    this.personalService.getPersonalList().subscribe(lista => {
-      this.personalList = lista;
-      this.renderPersonalList();
+  cargarPersonal() {
+    this.personalService.getPersonalList().subscribe({
+      next: (data) => this.personales.set(data),
+      error: (err) => console.error('❌ Error al cargar personal:', err),
     });
   }
 
-  // ✅ Genera dinámicamente el contenido sin usar *ngFor ni *ngIf
-  renderSummary(): void {
-    const container = document.getElementById('summaryContainer');
-    if (!container || !this.summaryData) return;
-
-    container.innerHTML = `
-      <div class="summary-card"><h3>Total Personal</h3><p>${this.summaryData.totalPersonal}</p></div>
-      <div class="summary-card"><h3>Terapeutas</h3><p>${this.summaryData.terapeutas}</p></div>
-      <div class="summary-card"><h3>Personal Activo</h3><p>${this.summaryData.personalActivo}</p></div>
-      <div class="summary-card"><h3>Calificación Promedio</h3><p>${this.summaryData.calificacionPromedio}</p></div>
-    `;
+  cargarRoles() {
+    this.rolesService.getRoles().subscribe({
+      next: (data) => this.roles.set(data),
+      error: (err) => console.error('❌ Error al cargar roles:', err),
+    });
   }
 
-  renderPersonalList(): void {
-    const container = document.getElementById('listContainer');
-    if (!container) return;
-
-    const filtered = this.personalList.filter(p =>
-      p.nombre.toLowerCase().includes(this.searchText.toLowerCase()) ||
-      p.rol.toLowerCase().includes(this.searchText.toLowerCase())
-    );
-
-    container.innerHTML = filtered.map(p => `
-      <div class="card">
-        <div class="avatar">${p.iniciales}</div>
-        <div class="info">
-          <h4>${p.nombre}</h4>
-          <p>${p.rol}</p>
-          <p>📧 ${p.email}</p>
-          <p>📞 ${p.telefono}</p>
-          <p>⭐ ${p.calificacion}</p>
-        </div>
-      </div>
-    `).join('');
+  // 🔥 METODO QUE FALTABA Y ROMPIÓ TODO
+  switchView(mode: 'tarjeta' | 'tabla') {
+    this.viewMode.set(mode);
   }
 
-  updateSearch(input: HTMLInputElement): void {
-    this.searchText = input.value;
-    this.renderPersonalList();
+  toggleSheet(open?: boolean) {
+    this.sheetOpen.set(open ?? !this.sheetOpen());
   }
 
-  switchView(mode: 'tarjeta' | 'tabla'): void {
-    this.viewMode = mode;
+  onFileChange(event: Event, type: 'cv' | 'foto') {
+    const input = event.target as HTMLInputElement;
+    const file = input.files?.[0] ?? null;
+    if (type === 'cv') this.cvFile = file;
+    if (type === 'foto') this.fotoFile = file;
+  }
+
+  guardarPersonal() {
+    if (this.personalForm.invalid) {
+      this.personalForm.markAllAsTouched();
+      return;
+    }
+
+    const formData = new FormData();
+
+    Object.entries(this.personalForm.value).forEach(([key, value]) => {
+      formData.append(key, value ?? '');
+    });
+
+    if (this.cvFile) formData.append('cv_archivo', this.cvFile);
+    if (this.fotoFile) formData.append('foto_perfil', this.fotoFile);
+
+    this.personalService.createPersonal(formData).subscribe({
+      next: () => {
+        alert('✅ Personal registrado correctamente');
+        this.cargarPersonal();
+        this.personalForm.reset();
+        this.cvFile = null;
+        this.fotoFile = null;
+        this.toggleSheet(false);
+      },
+      error: (err) => {
+        console.error('❌ Error al crear personal:', err);
+        alert(err?.error?.detail || 'Error del servidor');
+      },
+    });
+  }
+
+  updateSearch(event: Event) {
+    const input = event.target as HTMLInputElement;
+    this.searchText.set(input.value);
   }
 }

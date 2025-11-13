@@ -1,88 +1,44 @@
-import { Injectable } from '@angular/core';
-import { Observable, of } from 'rxjs';
+import { Injectable, inject } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable } from 'rxjs';
+import { environment } from '../../environments/environments';
 
-/**
- * Interface para los datos de resumen (tarjetas superiores)
- */
-export interface PersonalSummary {
-  totalPersonal: number;
-  terapeutas: number;
-  personalActivo: number;
-  calificacionPromedio: number;
-}
-
-/**
- * Interface para los datos de un miembro del personal (tarjetas inferiores)
- */
 export interface PersonalMember {
-  id: number;
+  id_personal: number;
   nombre: string;
-  rol: string;
-  activo: boolean;
-  iniciales: string;
   email: string;
   telefono: string;
-  fechaIngreso: string;
-  pacientes: number;
-  sesionesSem: number;
+  rol: string;
+  iniciales: string;
   calificacion: number;
-  especialidades: string[];
 }
 
-@Injectable({
-  providedIn: 'root'
-})
+export interface PersonalMember {
+  id_personal: number;
+  nombre: string;
+  email: string;
+  telefono: string;
+  rol: string;
+  iniciales: string;
+  calificacion: number;
+  foto?: string;  // 🔥 necesario para evitar errores
+}
+
+
+@Injectable({ providedIn: 'root' })
 export class PersonalService {
+  private http = inject(HttpClient);
+  private readonly baseUrl = `${environment.apiUrl}/personal`;
 
-  constructor() {}
-
-  /**
-   * Simula el resumen superior
-   */
-  getPersonalSummary(): Observable<PersonalSummary> {
-    const resumen: PersonalSummary = {
-      totalPersonal: 8,
-      terapeutas: 5,
-      personalActivo: 7,
-      calificacionPromedio: 9.2
-    };
-    return of(resumen);
+  getPersonalList(): Observable<PersonalMember[]> {
+    return this.http.get<PersonalMember[]>(this.baseUrl + '/');
   }
 
-  /**
-   * Simula la lista de personal
-   */
-  getPersonalList(): Observable<PersonalMember[]> {
-    const lista: PersonalMember[] = [
-      {
-        id: 1,
-        nombre: 'Johana Pérez',
-        rol: 'Terapeuta',
-        activo: true,
-        iniciales: 'JP',
-        email: 'johana@centro.com',
-        telefono: '667-201-3345',
-        fechaIngreso: '2021-04-20',
-        pacientes: 8,
-        sesionesSem: 15,
-        calificacion: 9.4,
-        especialidades: ['Lenguaje', 'Motricidad']
-      },
-      {
-        id: 2,
-        nombre: 'Luis García',
-        rol: 'Coordinador',
-        activo: true,
-        iniciales: 'LG',
-        email: 'luis@centro.com',
-        telefono: '667-998-2311',
-        fechaIngreso: '2020-08-10',
-        pacientes: 3,
-        sesionesSem: 6,
-        calificacion: 8.8,
-        especialidades: ['Organización', 'Supervisión']
-      }
-    ];
-    return of(lista);
+  createPersonal(data: FormData): Observable<any> {
+    return this.http.post(this.baseUrl + '/', data);
+  }
+
+  getPersonalSummary(): Observable<PersonalSummary> {
+    return this.http.get<PersonalSummary>(`${this.baseUrl}/resumen`);
   }
 }

@@ -1,283 +1,423 @@
-.personal-dashboard {
-  display: flex;
-  flex-direction: column;
-  gap: 1.5rem;
-  padding: 1.5rem;
-  font-family: 'Arial', sans-serif;
-  background: #f5f6fa;
+// =====================================================================
+// 🎨 Gestión de Personal - SCSS Premium UX (MODAL CENTRADO)
+// =====================================================================
+
+// 🎨 Colores base
+$primary: #3b82f6;
+$secondary: #8b5cf6;
+$success: #22c55e;
+$danger: #ef4444;
+$warning: #facc15;
+
+$bg: #f5f6fb;
+$card: #ffffff;
+$border: #e5e7eb;
+$text: #1f2937;
+$muted: #6b7280;
+
+$radius: 14px;
+$shadow-sm: 0 2px 6px rgba(0, 0, 0, 0.05);
+$shadow-md: 0 4px 16px rgba(0, 0, 0, 0.1);
+$transition: 0.25s ease;
+
+// =====================================================================
+// 📌 Página base
+// =====================================================================
+.personal-page {
+  font-family: "Poppins", sans-serif;
+  background: $bg;
   min-height: 100vh;
-  box-sizing: border-box;
+  padding: 1.5rem;
+  color: $text;
 
-  /* ===============================
-     🟦 Encabezado
-     =============================== */
-  .dashboard-header {
+  .hidden {
+    display: none !important;
+  }
+}
+
+// =====================================================================
+// 📌 Toolbar Superior
+// =====================================================================
+.toolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 1rem;
+  margin-bottom: 1.8rem;
+
+  h2 {
+    font-size: 1.6rem;
+    font-weight: 700;
+    letter-spacing: 0.2px;
+  }
+
+  .controls {
     display: flex;
-    justify-content: space-between;
     align-items: center;
-    flex-wrap: wrap;
-    background: #fff;
-    padding: 1rem 1.5rem;
-    border-radius: 1rem;
-    box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
+    gap: 1rem;
+  }
 
-    .title-section {
-      .title {
-        font-size: 1.8rem;
-        font-weight: 700;
-        color: #1e1e2f;
-        margin: 0;
-      }
+  // 🔍 Search box
+  .search {
+    position: relative;
 
-      .subtitle {
-        font-size: 0.95rem;
-        color: #6b7280;
-        margin-top: 0.2rem;
+    input {
+      width: 240px;
+      padding: 0.65rem 2.6rem 0.65rem 1rem;
+      border-radius: $radius;
+      border: 1px solid $border;
+      background: white;
+      font-size: 0.92rem;
+      transition: $transition;
+
+      &:focus {
+        border-color: $primary;
+        box-shadow: 0 0 0 3px rgba($primary, 0.25);
+        outline: none;
       }
     }
 
-    .add-button {
-      display: flex;
-      align-items: center;
-      gap: 0.4rem;
-      background-color: #4c6ef5;
-      color: #fff;
-      border: none;
-      padding: 0.7rem 1.2rem;
-      border-radius: 10px;
-      font-weight: 600;
-      cursor: pointer;
-      transition: all 0.25s ease;
+    .kbd {
+      position: absolute;
+      right: 0.6rem;
+      top: 50%;
+      transform: translateY(-50%);
+      background: #eef0f3;
+      border: 1px solid $border;
+      padding: 2px 6px;
+      border-radius: 6px;
+      font-size: 0.7rem;
+      color: $muted;
+    }
+  }
 
-      .icon {
-        font-size: 1.2rem;
-      }
+  // 🔄 Vista tarjetas/tabla
+  .view-switch {
+    display: flex;
+    gap: 0.25rem;
+
+    button {
+      padding: 0.45rem 0.7rem;
+      background: white;
+      border: 1px solid $border;
+      border-radius: $radius;
+      cursor: pointer;
+      font-size: 0.85rem;
+      transition: $transition;
 
       &:hover {
-        background-color: #3b5bdb;
-        transform: scale(1.03);
+        background: #f3f4f6;
+      }
+
+      &.active {
+        background: $primary;
+        color: white;
+        border-color: $primary;
+        box-shadow: 0 2px 6px rgba($primary, 0.3);
       }
     }
   }
 
-  /* ===============================
-     🟩 Tarjetas de resumen
-     =============================== */
-  .summary-cards-container {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  // ➕ Botón agregar
+  .btn-add {
+    background: linear-gradient(90deg, $primary, $secondary);
+    color: white;
+    padding: 0.65rem 1.4rem;
+    border-radius: $radius;
+    border: none;
+    font-weight: 600;
+    cursor: pointer;
+    transition: $transition;
+
+    &:hover {
+      transform: scale(1.05);
+      box-shadow: 0 4px 12px rgba($primary, 0.4);
+    }
+  }
+}
+
+// =====================================================================
+// 📌 Modal centrado
+// =====================================================================
+
+// 🔹 FONDO OSCURO DEL MODAL
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(0, 0, 0, 0.40);
+  backdrop-filter: blur(3px);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.25s ease;
+  z-index: 90;
+
+  &.open {
+    opacity: 1;
+    pointer-events: auto;
+  }
+}
+
+// 🔹 CONTENEDOR DEL MODAL
+.modal {
+  position: fixed;
+  top: 50%;
+  left: 50%;
+  width: min(850px, 95vw);
+  max-height: 90vh;
+transform: translate(-50%, -40%) scale(0.8);
+  background: white;
+  border-radius: 16px;
+  box-shadow: $shadow-md;
+  opacity: 0;
+  pointer-events: none;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  z-index: 100;
+  transition: opacity 0.25s ease, transform 0.25s ease;
+
+  &.open {
+    opacity: 1;
+    transform: translate(-50%, -40%) scale(1);
+    pointer-events: auto;
+  }
+
+  // Header
+  .modal-header {
+    padding: 1.2rem 1.4rem;
+    border-bottom: 1px solid $border;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+
+    h3 {
+      margin: 0;
+      font-size: 1.3rem;
+      font-weight: 600;
+    }
+
+    .close-btn {
+      background: transparent;
+      border: none;
+      font-size: 1.3rem;
+      cursor: pointer;
+      color: $muted;
+      padding: 0.3rem;
+      border-radius: $radius;
+      transition: $transition;
+
+      &:hover {
+        background: #f3f4f6;
+        color: $text;
+      }
+    }
+  }
+
+  // Body
+  .modal-body {
+    padding: 1.2rem;
+    overflow-y: auto;
+    flex: 1;
+
+    .section {
+      font-weight: 700;
+      margin: 0.7rem 0 0.9rem;
+      color: $text;
+    }
+
+    // GRID DEL FORMULARIO
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(12, 1fr);
+      gap: 0.75rem;
+
+      input,
+      select,
+      textarea,
+      .file {
+        grid-column: span 6;
+        padding: 0.75rem 0.9rem;
+        border-radius: $radius;
+        border: 1px solid $border;
+        background: #fafbfc;
+        font-size: 0.92rem;
+        transition: $transition;
+
+        &:focus {
+          border-color: $primary;
+          box-shadow: 0 0 0 3px rgba($primary, 0.20);
+          background: white;
+          outline: none;
+        }
+      }
+
+      textarea {
+        grid-column: span 12;
+        resize: vertical;
+      }
+
+      .file {
+        display: flex;
+        align-items: center;
+        gap: 0.6rem;
+        cursor: pointer;
+
+        input {
+          padding: 0;
+          border: none;
+          background: transparent;
+        }
+      }
+    }
+  }
+
+  // Footer
+  .modal-footer {
+    padding: 1rem 1.3rem;
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.8rem;
+    border-top: 1px solid $border;
+    background: #fafafa;
+
+    .btn {
+      padding: 0.65rem 1.2rem;
+      border-radius: $radius;
+      cursor: pointer;
+      font-weight: 500;
+      border: 1px solid transparent;
+      transition: $transition;
+
+      &.ghost {
+        background: white;
+        border: 1px solid $border;
+        color: $text;
+
+        &:hover {
+          background: #f3f4f6;
+        }
+      }
+
+      &.primary {
+        background: $primary;
+        color: white;
+
+        &:hover {
+          background: darken($primary, 6%);
+          box-shadow: 0 4px 9px rgba($primary, 0.3);
+        }
+
+        &:disabled {
+          opacity: 0.5;
+          cursor: not-allowed;
+        }
+      }
+    }
+  }
+}
+
+// =====================================================================
+// 📌 Cards View
+// =====================================================================
+.cards-view {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 1.25rem;
+
+  .card {
+    background: $card;
+    border-radius: $radius;
+    padding: 1.1rem;
+    border: 1px solid $border;
+    box-shadow: $shadow-sm;
+    display: flex;
     gap: 1rem;
+    cursor: pointer;
+    transition: transform 0.2s ease, box-shadow 0.2s ease;
 
-    .summary-card {
-      background: #fff;
-      border-radius: 1rem;
-      padding: 1rem;
-      text-align: center;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      transition: all 0.2s ease;
+    &:hover {
+      transform: translateY(-3px);
+      box-shadow: $shadow-md;
+    }
 
-      h3 {
+    .avatar {
+      width: 58px;
+      height: 58px;
+      border-radius: 50%;
+      background: linear-gradient(120deg, $primary, $secondary);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: white;
+      font-weight: 600;
+      font-size: 1.2rem;
+      flex-shrink: 0;
+    }
+
+    .info {
+      h4 {
+        margin: 0;
         font-size: 1rem;
-        color: #4b5563;
-        margin-bottom: 0.5rem;
+        font-weight: 600;
       }
 
       p {
-        font-size: 1.4rem;
-        font-weight: 700;
-        color: #1f2937;
-        margin: 0;
-      }
-
-      &:hover {
-        transform: translateY(-3px);
-        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.08);
+        margin: 3px 0;
+        color: $muted;
+        font-size: 0.86rem;
       }
     }
   }
+}
 
-  /* ===============================
-     🟨 Controles (búsqueda + tabs)
-     =============================== */
-  .controls-section {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    flex-wrap: wrap;
-    gap: 1rem;
+// =====================================================================
+// 📌 Tabla
+// =====================================================================
+.table-view {
+  background: white;
+  border-radius: $radius;
+  border: 1px solid $border;
+  box-shadow: $shadow-sm;
+  overflow-x: auto;
 
-    .search-bar {
-      position: relative;
-      flex: 0 1 250px; /* 🔹 más chica */
-      min-width: 300px;
-      max-width: 300px;
+  table {
+    width: 100%;
+    border-collapse: collapse;
 
-      input {
-        width: 100%;
-        padding: 0.6rem 2.2rem 0.6rem 0.8rem; /* 🔹 menos padding */
-        border: 1px solid #d1d5db;
-        border-radius: 10px;
-        font-size: 0.9rem;
-        transition: all 0.2s ease;
+    thead {
+      background: #f3f4f6;
 
-        &:focus {
-          outline: none;
-          border-color: #4c6ef5;
-          box-shadow: 0 0 0 2px rgba(76, 110, 245, 0.2);
-        }
-      }
-
-      .search-icon {
-        position: absolute;
-        right: 0.8rem;
-        top: 50%;
-        transform: translateY(-50%);
-        font-size: 1rem;
-        color: #6b7280;
-      }
-    }
-
-    .view-tabs {
-      display: flex;
-      gap: 0.5rem;
-      flex-wrap: wrap;
-
-      .tab-button {
-        border: none;
-        background: #e9ecef;
-        padding: 0.5rem 1rem;
-        border-radius: 8px;
-        cursor: pointer;
+      th {
+        padding: 0.85rem;
         font-weight: 600;
-        transition: all 0.25s ease;
         color: #374151;
-
-        &.active {
-          background: #4c6ef5;
-          color: white;
-        }
-
-        &:hover {
-          background: #d0d4da;
-        }
+        border-bottom: 1px solid $border;
       }
     }
-  }
 
-  /* ===============================
-     🟪 Lista de personal (grid)
-     =============================== */
-  .personal-list-grid {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-    gap: 1.2rem;
-
-    .card {
-      background: white;
-      border-radius: 1rem;
-      padding: 1.2rem;
-      box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-      display: flex;
-      align-items: flex-start;
-      gap: 1rem;
-      transition: all 0.25s ease;
+    tbody tr {
+      transition: background 0.2s ease;
 
       &:hover {
-        transform: translateY(-4px);
-        box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+        background: #f9fafb;
       }
 
-      .avatar {
-        background: #4c6ef5;
-        color: #fff;
-        font-weight: bold;
-        width: 60px;
-        height: 60px;
-        border-radius: 50%;
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        font-size: 1.2rem;
-        flex-shrink: 0;
-      }
-
-      .info {
-        flex: 1;
-
-        h4 {
-          margin: 0;
-          font-size: 1.1rem;
-          font-weight: 700;
-          color: #1f2937;
-        }
-
-        p {
-          margin: 0.2rem 0;
-          color: #4b5563;
-          font-size: 0.9rem;
-
-          &:last-child {
-            font-weight: 600;
-            color: #374151;
-          }
-        }
+      td {
+        padding: 0.85rem;
+        border-bottom: 1px solid $border;
+        font-size: 0.9rem;
       }
     }
   }
+}
 
-  /* ===============================
-     📱 Responsive Design
-     =============================== */
-  @media (max-width: 992px) {
-    .dashboard-header {
-      flex-direction: column;
-      align-items: flex-start;
-      gap: 1rem;
-    }
-
-    .controls-section {
-      flex-direction: column;
-      align-items: stretch;
-      gap: 1rem;
-
-      .search-bar {
-        max-width: 100%;
-        flex: 1;
-      }
-
-      .view-tabs {
-        justify-content: center;
-      }
-    }
-  }
-
-  @media (max-width: 600px) {
-    padding: 1rem;
-
-    .dashboard-header {
-      .title {
-        font-size: 1.5rem;
-      }
-    }
-
-    .summary-cards-container {
-      grid-template-columns: 1fr 1fr;
-    }
-
-    .personal-list-grid {
-      grid-template-columns: 1fr;
-    }
-
-    .card {
-      flex-direction: column;
-      align-items: center;
-      text-align: center;
-
-      .avatar {
-        width: 70px;
-        height: 70px;
-        font-size: 1.4rem;
-      }
-    }
-  }
+// =====================================================================
+// 📌 Estado vacío
+// =====================================================================
+.empty {
+  text-align: center;
+  color: $muted;
+  padding: 1.4rem;
+  font-size: 0.9rem;
 }
