@@ -1,4 +1,4 @@
-import { Component, inject, OnInit } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { ActivatedRoute } from '@angular/router';
 import { PersonalService } from '../../../../service/personal.service';
@@ -11,8 +11,7 @@ import { PersonalService } from '../../../../service/personal.service';
 })
 export class Detalle implements OnInit {
 
-  private route = inject(ActivatedRoute);
-  private personalService = inject(PersonalService);
+  constructor(private route: ActivatedRoute, private personalService: PersonalService) {}
 
   id = 0;
   data: any = null;

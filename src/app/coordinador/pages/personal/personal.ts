@@ -7,7 +7,7 @@ import { RolesService } from '../../../service/roles.service';
 import { GradosAcademicosService } from '../../../service/grados.service';
 
 @Component({
-  selector: 'app-personal',
+  selector: 'app-personal-coordindor',
   standalone: true,
   imports: [CommonModule, ReactiveFormsModule],
   templateUrl: './personal.html',

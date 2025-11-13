@@ -1,3 +1,4 @@
+// src/app/coordinador/services/personal.service.ts
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
 import { environment } from '../../environments/environments';
@@ -6,6 +7,7 @@ import { environment } from '../../environments/environments';
 export class PersonalService {
   private http = inject(HttpClient);
   private api = `${environment.apiUrl}/personal`;
+  private usuariosApi = `${environment.apiUrl}/usuarios`;
 
   listar() {
     return this.http.get(this.api);
@@ -29,5 +31,11 @@ export class PersonalService {
 
   eliminar(id: number) {
     return this.http.delete(`${this.api}/${id}`);
+  }
+
+  cambiarPassword(idUsuario: number, nueva: string) {
+    return this.http.patch(`${this.usuariosApi}/${idUsuario}/password`, {
+      nueva_contrasena: nueva
+    });
   }
 }
