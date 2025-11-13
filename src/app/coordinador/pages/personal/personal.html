@@ -1,250 +1,72 @@
-<div class="personal-wrapper">
+<div class="contenedor">
 
-  <!-- ================================================= -->
-  <!-- 🔹 HEADER SUPERIOR -->
-  <!-- ================================================= -->
-  <header class="header">
-    <h2 class="title">Equipo Profesional</h2>
+  <h1>Personal</h1>
 
-    <div class="actions">
-      <!-- 🔍 Buscador -->
-      <div class="search-box">
-        <input
-          type="text"
-          placeholder="Buscar personal por nombre, correo o rol…"
-          (input)="updateSearch($event)"
-        />
-        <span class="icon">🔍</span>
+  <button class="btn" (click)="abrirCrear()">+ Nuevo</button>
+
+  @for (p of personal; track p.id_personal) {
+    <div class="card">
+
+      <div class="info">
+        <h3>{{ p.nombre }}</h3>
+        <p>{{ p.email }}</p>
+        <small>{{ p.rol }} | {{ p.grado_academico || 'Sin grado' }}</small>
       </div>
 
-      <!-- Vista -->
-      <div class="view-switch">
-        <button
-          [class.active]="viewMode() === 'tarjeta'"
-          (click)="switchView('tarjeta')"
-        >
-          🗂️
+      <div class="acciones">
+        <button (click)="abrirEditar(p)">Editar</button>
+        <button (click)="cambiarEstado(p)">
+          {{ p.activo ? 'Desactivar' : 'Activar' }}
         </button>
-
-        <button
-          [class.active]="viewMode() === 'tabla'"
-          (click)="switchView('tabla')"
-        >
-          📋
-        </button>
+        <button class="danger" (click)="eliminar(p.id_personal)">Eliminar</button>
       </div>
 
-      <button class="btn-primary" (click)="toggleSheet(true)">
-        + Nuevo Profesional
-      </button>
     </div>
-  </header>
+  }
 
-  <!-- ================================================= -->
-  <!-- 🔹 CONTENIDO PRINCIPAL -->
-  <!-- ================================================= -->
-  <section class="content">
+  @if (modal) {
+    <div class="modal">
+      <div class="modal-content">
 
-    @switch (viewMode()) {
+        <h2>{{ modo === 'crear' ? 'Nuevo personal' : 'Editar personal' }}</h2>
 
-      <!-- ================================================= -->
-      <!-- 🟩 VISTA TIPO DOCTORALIA - TARJETAS -->
-      <!-- ================================================= -->
-      @case ('tarjeta') {
-        <div class="cards-grid">
+        <form [formGroup]="form" (ngSubmit)="guardar()">
 
-          @for (p of filtered(); track p.id_personal) {
+          <label>Nombre</label>
+          <input formControlName="nombre">
 
-            <div class="pro-card">
+          <label>Apellido paterno</label>
+          <input formControlName="apellido_paterno">
 
-              <!-- Foto / avatar -->
-              <div class="photo">
-                @if (p.foto) {
-                  <img [src]="p.foto" alt="Foto de {{ p.nombre }}">
-                } @else {
-                  <div class="avatar">{{ p.iniciales }}</div>
-                }
-              </div>
+          <label>Correo</label>
+          <input formControlName="correo">
 
-              <!-- Información -->
-              <div class="info">
-                <h3 class="name">{{ p.nombre }}</h3>
-                <p class="role">{{ p.rol }}</p>
+          <label>Rol</label>
+          <select formControlName="id_rol">
+            @for (r of roles; track r.id_rol) {
+              <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
+            }
+          </select>
 
-                <div class="details">
-                  <p>📧 {{ p.email }}</p>
-                  <p>📞 {{ p.telefono }}</p>
-                </div>
+          <label>Grado académico</label>
+          <select formControlName="id_grado">
+            <option value="">Sin grado</option>
+            @for (g of grados; track g.id_grado) {
+              <option [value]="g.id_grado">{{ g.nombre }}</option>
+            }
+          </select>
 
-                <div class="rating">
-                  ⭐ {{ p.calificacion }} <span>Calificación</span>
-                </div>
-              </div>
-
-              <!-- Botones -->
-              <div class="more">
-                <button class="btn-outline small">Ver perfil</button>
-                <button class="btn-outline small danger">Eliminar</button>
-              </div>
-
-            </div>
-
+          @if (modo === 'crear') {
+            <label>Contraseña</label>
+            <input type="password" formControlName="contrasena">
           }
 
-          @if (!filtered().length) {
-            <div class="empty">No se encontró personal</div>
-          }
+          <button type="submit" class="btn">Guardar</button>
+          <button class="cancel" type="button" (click)="cerrar()">Cancelar</button>
 
-        </div>
-      }
+        </form>
 
-      <!-- ================================================= -->
-      <!-- 🟦 VISTA TABLA -->
-      <!-- ================================================= -->
-      @case ('tabla') {
-        <div class="table-container">
-
-          <table class="premium-table">
-            <thead>
-              <tr>
-                <th>Foto</th>
-                <th>Nombre</th>
-                <th>Rol</th>
-                <th>Email</th>
-                <th>Teléfono</th>
-                <th>Calificación</th>
-                <th>Acciones</th>
-              </tr>
-            </thead>
-
-            <tbody>
-              @for (p of filtered(); track p.id_personal) {
-                <tr>
-                  <td>
-                    @if (p.foto) {
-                      <img [src]="p.foto" class="mini-photo">
-                    } @else {
-                      <div class="mini-avatar">{{ p.iniciales }}</div>
-                    }
-                  </td>
-
-                  <td>{{ p.nombre }}</td>
-                  <td>{{ p.rol }}</td>
-                  <td>{{ p.email }}</td>
-                  <td>{{ p.telefono }}</td>
-                  <td>{{ p.calificacion }}</td>
-
-                  <td>
-                    <button class="btn-mini">Editar</button>
-                    <button class="btn-mini danger">Eliminar</button>
-                  </td>
-                </tr>
-              }
-            </tbody>
-          </table>
-
-          @if (!filtered().length) {
-            <div class="empty">No hay resultados</div>
-          }
-
-        </div>
-      }
-    }
-
-  </section>
-
-  <!-- ================================================= -->
-  <!-- 🟪 MODAL PREMIUM -->
-  <!-- ================================================= -->
-  <div class="modal-backdrop" [class.open]="sheetOpen()" (click)="toggleSheet(false)"></div>
-
-  <div class="modal" [class.open]="sheetOpen()" (click)="$event.stopPropagation()">
-
-    <div class="modal-header">
-      <h3>Registrar nuevo profesional</h3>
-      <button class="close-btn" (click)="toggleSheet(false)">✕</button>
+      </div>
     </div>
-
-    <form [formGroup]="personalForm" (ngSubmit)="guardarPersonal()" class="modal-body">
-
-      <!-- =======================
-      DATOS PERSONALES
-      ======================= -->
-      <h4 class="section">Datos del Usuario</h4>
-
-      <div class="grid">
-        <input formControlName="nombre" placeholder="Nombre completo *" />
-        <input formControlName="apellido_paterno" placeholder="Apellido paterno" />
-        <input formControlName="apellido_materno" placeholder="Apellido materno" />
-        <input formControlName="correo" placeholder="Correo *" type="email" />
-        <input formControlName="telefono" placeholder="Teléfono" />
-
-        <select formControlName="id_rol">
-          <option value="">Seleccionar rol…</option>
-          @for (r of roles(); track r.id_rol) {
-            <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
-          }
-        </select>
-
-        <input type="password" placeholder="Contraseña *" formControlName="contrasena" />
-
-        <label class="file">
-          Foto de perfil
-          <input type="file" accept="image/*" (change)="onFileChange($event, 'foto')">
-        </label>
-      </div>
-
-      <!-- =======================
-      DATOS PROFESIONALES
-      ======================= -->
-      <h4 class="section">Datos Profesionales</h4>
-
-      <div class="grid">
-        <input type="date" formControlName="fecha_nacimiento" />
-
-        <!-- 📌 SELECT premium -->
-        <select formControlName="grado_academico">
-          <option value="">Grado académico…</option>
-          <option>Secundaria</option>
-          <option>Preparatoria</option>
-          <option>Licenciatura</option>
-          <option>Maestría</option>
-          <option>Doctorado</option>
-        </select>
-
-        <input placeholder="Especialidades" formControlName="especialidades" />
-        <input placeholder="Teléfono personal" formControlName="telefono_personal" />
-        <input placeholder="Correo alterno" formControlName="correo_personal" />
-
-        <input placeholder="RFC" formControlName="rfc" />
-        <input placeholder="INE" formControlName="ine" />
-        <input placeholder="CURP" formControlName="curp" />
-
-        <input placeholder="Calle" formControlName="domicilio_calle" />
-        <input placeholder="Colonia" formControlName="domicilio_colonia" />
-        <input placeholder="Código Postal" formControlName="domicilio_cp" />
-        <input placeholder="Municipio" formControlName="domicilio_municipio" />
-        <input placeholder="Estado" formControlName="domicilio_estado" />
-
-        <label class="file">
-          Subir CV
-          <input type="file" accept=".pdf,.doc,.docx" (change)="onFileChange($event, 'cv')">
-        </label>
-
-        <textarea formControlName="experiencia" placeholder="Experiencia profesional" rows="4"></textarea>
-      </div>
-
-      <div class="modal-footer">
-        <button type="button" class="btn ghost" (click)="toggleSheet(false)">
-          Cancelar
-        </button>
-
-        <button type="submit" class="btn primary" [disabled]="personalForm.invalid">
-          Guardar
-        </button>
-      </div>
-
-    </form>
-  </div>
-
+  }
 </div>

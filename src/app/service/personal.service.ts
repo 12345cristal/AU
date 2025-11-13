@@ -1,44 +1,33 @@
 import { Injectable, inject } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from '../../environments/environments';
-
-export interface PersonalMember {
-  id_personal: number;
-  nombre: string;
-  email: string;
-  telefono: string;
-  rol: string;
-  iniciales: string;
-  calificacion: number;
-}
-
-export interface PersonalMember {
-  id_personal: number;
-  nombre: string;
-  email: string;
-  telefono: string;
-  rol: string;
-  iniciales: string;
-  calificacion: number;
-  foto?: string;  // 🔥 necesario para evitar errores
-}
-
 
 @Injectable({ providedIn: 'root' })
 export class PersonalService {
   private http = inject(HttpClient);
-  private readonly baseUrl = `${environment.apiUrl}/personal`;
+  private api = `${environment.apiUrl}/personal`;
 
-  getPersonalList(): Observable<PersonalMember[]> {
-    return this.http.get<PersonalMember[]>(this.baseUrl + '/');
+  listar() {
+    return this.http.get(`${this.api}`);
   }
 
-  createPersonal(data: FormData): Observable<any> {
-    return this.http.post(this.baseUrl + '/', data);
+  obtener(id: number) {
+    return this.http.get(`${this.api}/${id}`);
   }
 
-  getPersonalSummary(): Observable<PersonalSummary> {
-    return this.http.get<PersonalSummary>(`${this.baseUrl}/resumen`);
+  crear(fd: FormData) {
+    return this.http.post(this.api, fd);
+  }
+
+  editar(id: number, fd: FormData) {
+    return this.http.put(`${this.api}/${id}`, fd);
+  }
+
+  cambiarEstado(id: number, activo: boolean) {
+    return this.http.patch(`${this.api}/${id}/activo`, { activo });
+  }
+
+  eliminar(id: number) {
+    return this.http.delete(`${this.api}/${id}`);
   }
 }

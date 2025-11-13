@@ -1,6 +1,10 @@
 // src/app/coordinador/Routes-coord.ts
 import { Routes } from '@angular/router';
+
+// Layout
 import { LayoutComponent } from './layout/layout';
+
+// Páginas principales
 import { InicioComponent } from './pages/inicio/inicio';
 import { UsuariosComponent } from './pages/usuarios/usuarios';
 import { CitasComponent } from './pages/citas/citas';
@@ -14,15 +18,20 @@ import { FiltroAccesoComponent } from './pages/filtros-acceso/filtros-acceso';
 import { NuevoBeneficiarioComponent } from './pages/nuevo-beneficiario/nuevo-beneficiario';
 import { ReportesCoordinadorComponent } from './pages/reportes/reportes';
 
-// Hijos de Parte clínica
+// Parte clínica hijos
 import { PlanesComponent } from './pages/parte-clinica/planes/planes';
 import { NotasComponent } from './pages/parte-clinica/notas/notas';
 import { PacientesComponent } from './pages/parte-clinica/pacientes/pacientes';
 
-// Nuevos componentes
+// Módulos nuevos
 import { AsistenteIAComponent } from './pages/asistente-ia/asistente-ia';
 import { CapacitacionesComponent } from './pages/capacitaciones/capacitaciones';
-import { PersonalComponent } from './pages/personal/personal';
+
+// === PERSONAL - NUEVA ESTRUCTURA ===
+import { Lista} from './pages/personal/lista/lista';
+import { Detalle } from './pages/personal/detalle/detalle';
+import { Formulario } from './pages/personal/formulario/formulario';
+import { DEFAULT_CURRENCY_CODE } from '@angular/core';
 
 export const COORDINADOR_ROUTES: Routes = [
   {
@@ -30,13 +39,28 @@ export const COORDINADOR_ROUTES: Routes = [
     component: LayoutComponent,
     children: [
       { path: '', redirectTo: 'inicio', pathMatch: 'full' },
+
+      // Principales
       { path: 'inicio', component: InicioComponent },
       { path: 'usuarios', component: UsuariosComponent },
       { path: 'citas', component: CitasComponent },
-      { path: 'personal', component: PersonalComponent },
+
+      // === PERSONAL COMPLETO ===
+      {
+        path: 'personal',
+        children: [
+          { path: '', component: Lista},                 // Lista
+          { path: 'nuevo', component: Formulario },      // Crear
+          { path: ':id', component: Detalle },           // Detalle
+          { path: ':id/editar', component: Formulario }, // Editar
+        ]
+      },
+
       { path: 'padres', component: PadresComponent },
       { path: 'recursos', component: RecursosComponent },
       { path: 'mensajes', component: MensajesComponent },
+
+      // Parte clínica
       {
         path: 'parte-clinica',
         component: ParteClinicaComponent,
@@ -47,6 +71,8 @@ export const COORDINADOR_ROUTES: Routes = [
           { path: 'pacientes', component: PacientesComponent }
         ]
       },
+
+      // Extras
       { path: 'asistente-ia', component: AsistenteIAComponent },
       { path: 'capacitaciones', component: CapacitacionesComponent },
       { path: 'horarios', component: HorariosComponent },
