@@ -1,1 +1,93 @@
-<p>detalle works!</p>
+<div class="contenedor" *ngIf="data">
+
+  <div class="top">
+
+    <div class="foto">
+      @if (data.foto_perfil) {
+        <img [src]="data.foto_perfil">
+      } @else {
+        <div class="iniciales">{{ data.nombre[0] }}{{ data.apellido_paterno?.[0] }}</div>
+      }
+    </div>
+
+    <div>
+      <h2>{{ data.nombre }} {{ data.apellido_paterno }}</h2>
+      <p>{{ data.correo }}</p>
+      <p class="rol">{{ data.rol }}</p>
+    </div>
+
+  </div>
+
+  <!-- Pestañas -->
+  <div class="tabs">
+    <button (click)="cambiarTab('general')" [class.active]="tab === 'general'">Datos Generales</button>
+    <button (click)="cambiarTab('laboral')" [class.active]="tab === 'laboral'">Laboral</button>
+    <button (click)="cambiarTab('documentos')" [class.active]="tab === 'documentos'">Documentos</button>
+    <button (click)="cambiarTab('domicilio')" [class.active]="tab === 'domicilio'">Domicilio</button>
+    <button (click)="cambiarTab('seguridad')" [class.active]="tab === 'seguridad'">Seguridad</button>
+  </div>
+
+  <!-- TAB: GENERAL -->
+  @if (tab === 'general') {
+    <div class="panel">
+      <p><strong>Nombre:</strong> {{ data.nombre }}</p>
+      <p><strong>Apellido paterno:</strong> {{ data.apellido_paterno }}</p>
+      <p><strong>Teléfono:</strong> {{ data.telefono }}</p>
+      <p><strong>Correo personal:</strong> {{ data.correo_personal }}</p>
+      <p><strong>Fecha nacimiento:</strong> {{ data.fecha_nacimiento }}</p>
+    </div>
+  }
+
+  <!-- TAB: LABORAL -->
+  @if (tab === 'laboral') {
+    <div class="panel">
+      <p><strong>Rol:</strong> {{ data.rol }}</p>
+      <p><strong>Grado académico:</strong> {{ data.grado_academico }}</p>
+      <p><strong>Especialidades:</strong> {{ data.especialidades }}</p>
+      <p><strong>Fecha ingreso:</strong> {{ data.fecha_ingreso }}</p>
+    </div>
+  }
+
+  <!-- TAB: DOCUMENTOS -->
+  @if (tab === 'documentos') {
+    <div class="panel documentos">
+
+      <div class="doc-item">
+        <p>Curriculum Vitae</p>
+        @if (data.cv_archivo) {
+          <a [href]="data.cv_archivo" target="_blank">Ver documento</a>
+        } @else {
+          <span>No cargado</span>
+        }
+      </div>
+
+      <div class="doc-item">
+        <p>Comprobante de domicilio</p>
+        @if (data.comprobante_domicilio) {
+          <a [href]="data.comprobante_domicilio" target="_blank">Ver documento</a>
+        } @else {
+          <span>No cargado</span>
+        }
+      </div>
+
+    </div>
+  }
+
+  <!-- TAB: DOMICILIO -->
+  @if (tab === 'domicilio') {
+    <div class="panel">
+      <p><strong>Calle: </strong>{{ data.domicilio_calle }}</p>
+      <p><strong>Colonia: </strong>{{ data.domicilio_colonia }}</p>
+      <p><strong>Municipio: </strong>{{ data.domicilio_municipio }}</p>
+      <p><strong>Estado: </strong>{{ data.domicilio_estado }}</p>
+    </div>
+  }
+
+  <!-- TAB: SEGURIDAD -->
+  @if (tab === 'seguridad') {
+    <div class="panel">
+      <p>Desde aquí podrás implementar cambiar contraseña.</p>
+    </div>
+  }
+
+</div>

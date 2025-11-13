@@ -1,1 +1,38 @@
-<p>lista works!</p>
+<div class="contenedor">
+
+  <div class="header">
+    <h1>Personal</h1>
+    <a routerLink="/coordinador/personal/nuevo" class="btn">+ Registrar Personal</a>
+  </div>
+
+  @if (cargando) {
+    <p>Cargando...</p>
+  }
+
+  <div class="grid">
+    @for (p of personal; track p.id_personal) {
+      <div class="card" (click)="verDetalle(p.id_personal)">
+        
+        <div class="foto">
+          @if (p.foto) {
+            <img [src]="p.foto" />
+          } @else {
+            <div class="iniciales">{{ p.iniciales }}</div>
+          }
+        </div>
+
+        <div class="info">
+          <h3>{{ p.nombre }}</h3>
+          <p>{{ p.email }}</p>
+          <span class="rol">{{ p.rol }}</span>
+        </div>
+
+        <div class="estado" [class.activo]="p.activo">
+          {{ p.activo ? 'Activo' : 'Inactivo' }}
+        </div>
+
+      </div>
+    }
+  </div>
+
+</div>

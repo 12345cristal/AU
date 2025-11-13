@@ -8,7 +8,7 @@ export class PersonalService {
   private api = `${environment.apiUrl}/personal`;
 
   listar() {
-    return this.http.get(`${this.api}`);
+    return this.http.get(this.api);
   }
 
   obtener(id: number) {
