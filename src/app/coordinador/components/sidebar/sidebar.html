@@ -1,104 +1,153 @@
-<header class="toolbar">
-  <div class="toolbar-left">
-    <button class="toggle-btn-desktop" 
-            (click)="toggleSidebar()" 
-            [class.active]="menuVisible" 
-            aria-label="Menú">
-      <span class="bar"></span>
-      <span class="bar"></span>
-      <span class="bar"></span>
-    </button>
-    <h1 (click)="openSidebar()">Autismo Mochis</h1>
-  </div>
-
-  <div class="toolbar-right">
-    <button class="icon-btn notification-btn">
-      Notificaciones <span class="badge">3</span>
-    </button>
-    <button class="icon-btn">Perfil</button>
-  </div>
-</header>
-
 <nav class="sidebar" [class.open]="menuVisible">
   <div class="sidebar-content">
+
+    <!-- HEADER -->
     <div class="sidebar-header">
-      <img src="autismo_mochis.png" alt="Autismo Mochis" class="sidebar-logo" />
       <span class="sidebar-title">Coordinador</span>
-      <button class="close-sidebar-btn" (click)="closeSidebar()">Cerrar</button>
+
+      <button class="close-sidebar-btn" (click)="closeSidebar()">
+        ✕
+      </button>
     </div>
 
     <div class="sidebar-scroll">
 
-      <!-- Panel principal -->
-      <div class="sidebar-section" [class.open]="panelPrincipalOpen">
-        <div class="section-title" (click)="panelPrincipalOpen = !panelPrincipalOpen">
-          Panel principal <span>{{ panelPrincipalOpen ? '▲' : '▼' }}</span>
+      <!-- PANEL PRINCIPAL -->
+      <div class="sidebar-section" [class.open]="isOpen('panel')">
+        <div class="section-title" (click)="toggleSection('panel')">
+          <span>Panel principal</span>
+          <span class="arrow"></span>
         </div>
+
         <div class="sidebar-links">
-          <a routerLink="/coordinador/inicio">Inicio</a>
-          <a routerLink="/coordinador/citas">Citas</a>
-          <a routerLink="/coordinador/personal">Personal</a>
+          <a routerLink="/coordinador/inicio">
+            <span class="link-label">Inicio</span>
+          </a>
+
+          <a routerLink="/coordinador/citas">
+            <span class="link-label">Citas</span>
+          </a>
+
+          <a routerLink="/coordinador/personal">
+            <span class="link-label">Personal</span>
+          </a>
         </div>
       </div>
 
-      <!-- Gestión clínica -->
-      <div class="sidebar-section" [class.open]="gestionClinicaOpen">
-        <div class="section-title" (click)="gestionClinicaOpen = !gestionClinicaOpen">
-          Gestión clínica <span>{{ gestionClinicaOpen ? '▲' : '▼' }}</span>
+      <!-- GESTIÓN CLÍNICA -->
+      <div class="sidebar-section" [class.open]="isOpen('clinica')">
+        <div class="section-title" (click)="toggleSection('clinica')">
+          <span>Gestión clínica</span>
+          <span class="arrow"></span>
         </div>
+
         <div class="sidebar-links">
-          <a routerLink="/coordinador/padres">Padres</a>
-          <a routerLink="/coordinador/recursos">Recursos</a>
-          <a routerLink="/coordinador/mensajes">Mensajes</a>
+          <a routerLink="/coordinador/padres">
+            <span class="link-label">Padres</span>
+          </a>
 
-          <!-- Parte clínica -->
-          <div class="sidebar-subsection">
-            <div class="subsection-title" (click)="parteClinicaOpen = !parteClinicaOpen">
-              Parte clínica <span>{{ parteClinicaOpen ? '▲' : '▼' }}</span>
-            </div>
-            <div class="sidebar-sublinks" *ngIf="parteClinicaOpen">
-              <a routerLink="/coordinador/parte-clinica/pacientes">Pacientes</a>
-              <a routerLink="/coordinador/parte-clinica/planes">Planes</a>
-              <a routerLink="/coordinador/parte-clinica/notas">Notas</a>
-            </div>
-          </div>
+          <a routerLink="/coordinador/recursos">
+            <span class="link-label">Recursos</span>
+          </a>
 
-          <!-- Soporte: Asistente IA y Capacitaciones -->
-          <div class="sidebar-subsection">
-            <div class="subsection-title" (click)="asistenteOpen = !asistenteOpen">
-              Soporte <span>{{ asistenteOpen ? '▲' : '▼' }}</span>
-            </div>
-            <div class="sidebar-sublinks" *ngIf="asistenteOpen">
-              <a routerLink="/coordinador/asistente-ia">Asistente IA</a>
-              <a routerLink="/coordinador/capacitaciones">Capacitaciones</a>
-            </div>
-          </div>
+          <a routerLink="/coordinador/mensajes">
+            <span class="link-label">Mensajes</span>
+          </a>
 
-          <a routerLink="/coordinador/horarios">Horarios</a>
-          <a routerLink="/coordinador/expedientes-clinicos">Expedientes clínicos</a>
+          <a routerLink="/coordinador/horarios">
+            <span class="link-label">Horarios</span>
+          </a>
+
+          <a routerLink="/coordinador/expedientes-clinicos">
+            <span class="link-label">Expedientes</span>
+          </a>
         </div>
       </div>
 
-      <!-- Administración -->
-      <div class="sidebar-section" [class.open]="administracionOpen">
-        <div class="section-title" (click)="administracionOpen = !administracionOpen">
-          Administración <span>{{ administracionOpen ? '▲' : '▼' }}</span>
+      <!-- PARTE CLÍNICA -->
+      <div class="sidebar-section" [class.open]="isOpen('parte')">
+        <div class="section-title" (click)="toggleSection('parte')">
+          <span>Parte clínica</span>
+          <span class="arrow"></span>
         </div>
+
         <div class="sidebar-links">
-          <a routerLink="/coordinador/filtros-acceso">Filtros de acceso</a>
-          <a routerLink="/coordinador/nuevo-beneficiario">Nuevo beneficiario</a>
-          <a routerLink="/coordinador/usuarios">Usuarios</a>
-          <a routerLink="/coordinador/reportes">Reportes</a>
+          <a routerLink="/coordinador/parte-clinica/pacientes">
+            <span class="link-label">Pacientes</span>
+          </a>
+
+          <a routerLink="/coordinador/parte-clinica/planes">
+            <span class="link-label">Planes</span>
+          </a>
+
+          <a routerLink="/coordinador/parte-clinica/notas">
+            <span class="link-label">Notas</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- SOPORTE -->
+      <div class="sidebar-section" [class.open]="isOpen('soporte')">
+        <div class="section-title" (click)="toggleSection('soporte')">
+          <span>Soporte</span>
+          <span class="arrow"></span>
+        </div>
+
+        <div class="sidebar-links">
+          <a routerLink="/coordinador/asistente-ia">
+            <span class="link-label">Asistente IA</span>
+          </a>
+
+          <a routerLink="/coordinador/capacitaciones">
+            <span class="link-label">Capacitaciones</span>
+          </a>
+        </div>
+      </div>
+
+      <!-- ADMIN -->
+      <div class="sidebar-section" [class.open]="isOpen('admin')">
+        <div class="section-title" (click)="toggleSection('admin')">
+          <span>Administración</span>
+          <span class="arrow"></span>
+        </div>
+
+        <div class="sidebar-links">
+          <a routerLink="/coordinador/filtros-acceso">
+            <span class="link-label">Filtros</span>
+          </a>
+
+          <a routerLink="/coordinador/nuevo-beneficiario">
+            <span class="link-label">Nuevo</span>
+          </a>
+
+          <a routerLink="/coordinador/usuarios">
+            <span class="link-label">Usuarios</span>
+          </a>
+
+          <a routerLink="/coordinador/reportes">
+            <span class="link-label">Reportes</span>
+          </a>
         </div>
       </div>
 
     </div>
 
+    <!-- FOOTER -->
     <div class="sidebar-footer">
-      <a href="#">Configuración</a>
-      <a href="#" class="logout">Cerrar sesión</a>
+
+      <a routerLink="/config">
+        <span class="link-label">Configuración</span>
+      </a>
+
+      <a class="logout">
+        <span class="link-label">Cerrar sesión</span>
+      </a>
+
     </div>
+
   </div>
 </nav>
 
-<div class="sidebar-overlay" [class.show]="menuVisible" (click)="closeSidebar()"></div>
+<div class="sidebar-overlay"
+     [class.show]="menuVisible"
+     (click)="closeSidebar()"></div>

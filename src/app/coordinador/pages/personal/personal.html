@@ -1,68 +1,101 @@
 <div class="contenedor">
 
-  <h1>Personal</h1>
+  <div class="header">
+    <h1>Personal</h1>
+    <button class="btn btn-primary" (click)="abrirCrear()">+ Nuevo usuario</button>
+  </div>
 
-  <button class="btn" (click)="abrirCrear()">+ Nuevo</button>
+  <div class="lista">
+    @for (p of personal; track p.id_personal) {
+      <div class="card">
 
-  @for (p of personal; track p.id_personal) {
-    <div class="card">
+        <div class="info">
+          <h3>{{ p.nombre }}</h3>
+          <p>{{ p.email }}</p>
+          <small>{{ p.rol }} • {{ p.grado_academico || 'Sin grado' }}</small>
+        </div>
 
-      <div class="info">
-        <h3>{{ p.nombre }}</h3>
-        <p>{{ p.email }}</p>
-        <small>{{ p.rol }} | {{ p.grado_academico || 'Sin grado' }}</small>
+        <div class="acciones">
+          <button class="btn-sm" (click)="abrirEditar(p)">Editar</button>
+          <button class="btn-sm" (click)="cambiarEstado(p)">
+            {{ p.activo ? 'Desactivar' : 'Activar' }}
+          </button>
+          <button class="btn-sm danger" (click)="eliminar(p.id_personal)">Eliminar</button>
+        </div>
+
       </div>
+    }
+  </div>
 
-      <div class="acciones">
-        <button (click)="abrirEditar(p)">Editar</button>
-        <button (click)="cambiarEstado(p)">
-          {{ p.activo ? 'Desactivar' : 'Activar' }}
-        </button>
-        <button class="danger" (click)="eliminar(p.id_personal)">Eliminar</button>
-      </div>
-
-    </div>
-  }
-
+  <!-- ============== MODAL ============== -->
   @if (modal) {
     <div class="modal">
       <div class="modal-content">
 
-        <h2>{{ modo === 'crear' ? 'Nuevo personal' : 'Editar personal' }}</h2>
+        <h2>{{ modo === 'crear' ? 'Crear nuevo usuario' : 'Editar personal' }}</h2>
 
         <form [formGroup]="form" (ngSubmit)="guardar()">
 
-          <label>Nombre</label>
-          <input formControlName="nombre">
+          <!-- ======================= DATOS BÁSICOS ======================= -->
+          <div class="grupo">
+            <label>Nombre</label>
+            <input formControlName="nombre" placeholder="Nombre">
+          </div>
 
-          <label>Apellido paterno</label>
-          <input formControlName="apellido_paterno">
+          <div class="grupo">
+            <label>Apellido paterno</label>
+            <input formControlName="apellido_paterno" placeholder="Apellido paterno">
+          </div>
 
-          <label>Correo</label>
-          <input formControlName="correo">
+          <div class="grupo">
+            <label>Apellido materno</label>
+            <input formControlName="apellido_materno" placeholder="Apellido materno">
+          </div>
 
-          <label>Rol</label>
-          <select formControlName="id_rol">
-            @for (r of roles; track r.id_rol) {
-              <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
-            }
-          </select>
+          <div class="grupo">
+            <label>Correo institucional</label>
+            <input type="email" formControlName="correo" placeholder="correo@ejemplo.com">
+          </div>
 
-          <label>Grado académico</label>
-          <select formControlName="id_grado">
-            <option value="">Sin grado</option>
-            @for (g of grados; track g.id_grado) {
-              <option [value]="g.id_grado">{{ g.nombre }}</option>
-            }
-          </select>
+          <div class="grupo">
+            <label>Teléfono</label>
+            <input formControlName="telefono" placeholder="6641234567">
+          </div>
 
+          <!-- ======================= ROL Y GRADO ======================= -->
+          <div class="grupo">
+            <label>Rol del sistema</label>
+            <select formControlName="id_rol">
+              <option value="">Seleccione un rol</option>
+              @for (r of roles; track r.id_rol) {
+                <option [value]="r.id_rol">{{ r.nombre_rol }}</option>
+              }
+            </select>
+          </div>
+
+          <div class="grupo">
+            <label>Grado académico</label>
+            <select formControlName="id_grado">
+              <option value="">Sin grado</option>
+              @for (g of grados; track g.id_grado) {
+                <option [value]="g.id_grado">{{ g.nombre }}</option>
+              }
+            </select>
+          </div>
+
+          <!-- ======================= SOLO EN CREAR ======================= -->
           @if (modo === 'crear') {
-            <label>Contraseña</label>
-            <input type="password" formControlName="contrasena">
+            <div class="grupo">
+              <label>Contraseña</label>
+              <input type="password" formControlName="contrasena" placeholder="Mínimo 6 caracteres">
+            </div>
           }
 
-          <button type="submit" class="btn">Guardar</button>
-          <button class="cancel" type="button" (click)="cerrar()">Cancelar</button>
+          <!-- ======================= ACCIONES ======================= -->
+          <div class="acciones-modal">
+            <button type="submit" class="btn btn-primary">Guardar</button>
+            <button type="button" class="btn cancel" (click)="cerrar()">Cancelar</button>
+          </div>
 
         </form>
 

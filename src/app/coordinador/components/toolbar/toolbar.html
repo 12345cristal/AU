@@ -1,0 +1,29 @@
+<header class="toolbar">
+
+  <!-- LEFT -->
+  <div class="left">
+
+    <button class="menu-btn" (click)="toggleSidebar()">
+      <span class="bar"></span>
+      <span class="bar"></span>
+      <span class="bar"></span>
+    </button>
+
+    <span class="brand-text">Autismo Mochis</span>
+  </div>
+
+  <!-- RIGHT -->
+  <div class="right">
+
+    <button class="icon-btn notif-btn" routerLink="/coordinador/notificaciones">
+      <span class="icon bell-icon"></span>
+      <span class="badge">{{ notificationCount }}</span>
+    </button>
+
+    <button class="icon-btn profile-btn" routerLink="/coordinador/perfil">
+      <span class="icon user-icon"></span>
+    </button>
+
+  </div>
+
+</header>

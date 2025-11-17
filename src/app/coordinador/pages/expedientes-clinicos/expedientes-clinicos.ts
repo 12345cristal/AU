@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 interface Expediente {
   id: string;
@@ -15,6 +16,8 @@ interface Expediente {
 
 @Component({
   selector: 'app-expedientes-clinicos',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './expedientes-clinicos.html',
   styleUrls: ['./expedientes-clinicos.scss']
 })

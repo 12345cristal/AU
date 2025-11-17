@@ -33,9 +33,9 @@ export class LandingPageComponent {
   // Estadísticas
   stats = [
     { count: '150+', label: 'Familias beneficiadas', color: '#3b82f6' },
-    { count: '15+', label: 'Terapeutas especializados', color: '#10b981' },
-    { count: '5+', label: 'Años de experiencia', color: '#f59e0b' },
-    { count: '300+', label: 'Niños en terapia', color: '#f43f5e' }
+    { count: '10+', label: 'Terapeutas especializados', color: '#10b981' },
+    { count: '10', label: 'Años de experiencia', color: '#f59e0b' },
+    { count: '30+', label: 'Niños en terapia', color: '#f43f5e' }
   ];
 
   // Terapias ofrecidas

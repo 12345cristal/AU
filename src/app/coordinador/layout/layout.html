@@ -1,6 +1,15 @@
+<app-toolbar-coordinador></app-toolbar-coordinador>
+
 <div class="layout-container" [class.sidebar-open]="sidebarOpen">
-  <app-sidebar (sidebarToggled)="onSidebarToggled($event)"></app-sidebar>
-  <div class="main-content">
+
+  <!-- Sidebar -->
+  <app-sidebar-coordinador 
+    [(menuVisible)]="sidebarOpen">
+  </app-sidebar-coordinador>
+
+  <!-- Contenido -->
+  <main class="main-content">
     <router-outlet></router-outlet>
-  </div>
+  </main>
+
 </div>

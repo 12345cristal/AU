@@ -1,21 +1,25 @@
-// src/app/coordinador/layout/layout.ts
 import { Component, HostListener } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterOutlet } from '@angular/router';
+
 import { SidebarComponent } from '../components/sidebar/sidebar';
+import { ToolbarComponent } from '../components/toolbar/toolbar';
 
 @Component({
-  selector: 'app-layout',
+  selector: 'app-layout-coordinador',
   standalone: true,
-  imports: [CommonModule, RouterOutlet, SidebarComponent],
+  imports: [CommonModule, RouterOutlet, SidebarComponent, ToolbarComponent],
   templateUrl: './layout.html',
-  styleUrls: ['./layout.scss'],
+  styleUrls: ['./layout.scss']
 })
 export class LayoutComponent {
+
   sidebarOpen = window.innerWidth > 1024;
 
-  onSidebarToggled(state: boolean) {
-    this.sidebarOpen = state;
+  constructor() {
+    window.addEventListener('toggle-sidebar', () => {
+      this.sidebarOpen = !this.sidebarOpen;
+    });
   }
 
   @HostListener('window:resize')

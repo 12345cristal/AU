@@ -1,45 +1,70 @@
-import { Component, EventEmitter, Output, HostListener } from '@angular/core';
+import { Component, Input, Output, EventEmitter, HostListener, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { RouterModule } from '@angular/router';
 
+
 @Component({
-  selector: 'app-sidebar',
+  selector: 'app-sidebar-coordinador',
   standalone: true,
   imports: [CommonModule, RouterModule],
   templateUrl: './sidebar.html',
   styleUrls: ['./sidebar.scss']
 })
-export class SidebarComponent {
-  menuVisible = window.innerWidth > 1024;
+export class SidebarComponent implements OnInit {
 
-  // Secciones principales
-  panelPrincipalOpen = false;
-  gestionClinicaOpen = false;
-  administracionOpen = false;
+  @Input() menuVisible = false;
+  @Output() menuVisibleChange = new EventEmitter<boolean>();
 
-  // Submenús
-  parteClinicaOpen = false;
-  asistenteOpen = false;
+  /** ⭐ Solo una sección abierta a la vez */
+  sections: Record<string, boolean> = {
+    panel: false,
+    clinica: false,
+    parte: false,
+    soporte: false,
+    admin: false
+  };
 
-  @Output() sidebarToggled = new EventEmitter<boolean>();
+  /** Estado */
+  isOpen(key: string): boolean {
+    return this.sections[key];
+  }
+
+  ngOnInit(): void {
+    // Inicialización si es necesaria
+  }
+
+  /** ⭐ NUEVA LÓGICA — SOLO UNA SECCIÓN ABIERTA */
+  toggleSection(key: string) {
+    const isCurrentlyOpen = this.sections[key];
+
+    // Cerrar TODAS
+    Object.keys(this.sections).forEach(k => this.sections[k] = false);
+
+    // Si la que tocaste estaba cerrada → abrirla
+    this.sections[key] = !isCurrentlyOpen;
+  }
 
   toggleSidebar() {
     this.menuVisible = !this.menuVisible;
-    this.sidebarToggled.emit(this.menuVisible);
+    this.menuVisibleChange.emit(this.menuVisible);
   }
 
   openSidebar() {
     this.menuVisible = true;
-    this.sidebarToggled.emit(true);
+    this.menuVisibleChange.emit(this.menuVisible);
   }
 
   closeSidebar() {
     this.menuVisible = false;
-    this.sidebarToggled.emit(false);
+    this.menuVisibleChange.emit(this.menuVisible);
   }
 
-  @HostListener('window:resize')
-  onResize() {
-    this.menuVisible = window.innerWidth > 1024;
+  @HostListener('document:keydown', ['$event'])
+  onEscape(event: Event) {
+    const ev = event as KeyboardEvent;
+    if (ev.key === 'Escape' && this.menuVisible) {
+      this.closeSidebar();
+      ev.stopPropagation();
+    }
   }
 }

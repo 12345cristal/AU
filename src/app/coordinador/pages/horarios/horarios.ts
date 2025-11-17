@@ -1,8 +1,11 @@
 import { Component, OnInit } from '@angular/core';
+import { CommonModule } from '@angular/common';
 import { HorariosService, Slot, Dia, Evento } from '../../../service/horarios.service';
 
 @Component({
   selector: 'app-horarios',
+  standalone: true,
+  imports: [CommonModule],
   templateUrl: './horarios.html',
   styleUrls: ['./horarios.scss']
 })

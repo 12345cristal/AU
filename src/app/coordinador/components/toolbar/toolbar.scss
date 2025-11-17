@@ -1,0 +1,194 @@
+/* ==============================
+   PALETA
+============================== */
+$blue-primary: #3b82f6;
+$blue-dark: #1e40af;
+$text-dark: #1e293b;
+$text-secondary: #64748b;
+$gray-border: #e5e7eb;
+$gray-light: #f8fafc;
+$white: #ffffff;
+$error: #ef4444;
+
+/* ==============================
+   TOOLBAR
+============================== */
+.toolbar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+
+  height: 64px;
+  padding: 0 1.4rem;
+
+  background: linear-gradient(135deg, $white 0%, $gray-light 100%);
+  border-bottom: 1px solid $gray-border;
+  box-shadow: 0 2px 10px rgba(0,0,0,0.06);
+  backdrop-filter: blur(12px);
+
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+
+  z-index: 9999;
+}
+
+/* ==============================
+   LEFT SIDE
+============================== */
+.left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+/* Hamburguesa */
+.menu-btn {
+  width: 44px;
+  height: 44px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  gap: 5px;
+
+  border: none;
+  background: transparent;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+
+  .bar {
+    width: 24px;
+    height: 3px;
+    background: $blue-primary;
+    border-radius: 3px;
+    transition: 0.25s ease;
+  }
+
+  &:hover {
+    background: rgba($blue-primary, 0.1);
+
+    .bar {
+      background: $blue-dark;
+    }
+  }
+
+  &:active {
+    transform: scale(0.95);
+  }
+}
+
+/* Brand */
+.brand-text {
+  font-size: 1.1rem;
+  font-weight: 700;
+  color: $text-dark;
+  white-space: nowrap;
+}
+
+/* ==============================
+   RIGHT SIDE
+============================== */
+.right {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+}
+
+/* Botón genérico */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+
+  display: grid;
+  place-items: center;
+
+  border-radius: 12px;
+  cursor: pointer;
+  transition: 0.25s ease;
+  position: relative;
+
+  &:hover {
+    background: rgba($blue-primary, 0.1);
+
+    .icon {
+      background-color: $blue-primary;
+    }
+  }
+}
+
+/* ==============================
+   ICONOS SVG PROFESIONALES
+============================== */
+
+.icon {
+  width: 22px;
+  height: 22px;
+  background-color: $text-secondary;
+
+  mask-size: cover;
+  mask-repeat: no-repeat;
+  mask-position: center;
+
+  transition: 0.25s ease;
+}
+
+/* 🔔 CAMPANA */
+.bell-icon {
+  mask-image: url("data:image/svg+xml,%3Csvg fill='black' viewBox='0 0 24 24' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M12 2a6 6 0 00-6 6v3.59L4.29 14.3a1 1 0 00.7 1.7h14a1 1 0 00.7-1.7L18 11.59V8a6 6 0 00-6-6zm0 20a3 3 0 003-3H9a3 3 0 003 3z'/%3E%3C/svg%3E");
+}
+
+/* 👤 USUARIO */
+.user-icon {
+  mask-image: url("data:image/svg+xml,%3Csvg fill='black' viewBox='0 0 24 24'%3E%3Cpath d='M12 12a5 5 0 1 0-5-5 5 5 0 0 0 5 5zm0 2c-3.33 0-10 1.67-10 5v3h20v-3c0-3.33-6.67-5-10-5z'/%3E%3C/svg%3E");
+}
+
+/* ==============================
+   BADGE
+============================== */
+.badge {
+  position: absolute;
+  top: -4px;
+  right: -4px;
+
+  min-width: 18px;
+  height: 18px;
+
+  font-size: 0.7rem;
+  font-weight: 700;
+
+  padding: 0 4px;
+  color: $white;
+  background: linear-gradient(135deg, $error, darken($error, 10%));
+
+  border: 2px solid $white;
+  border-radius: 50%;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  box-shadow: 0 2px 6px rgba($error, .3);
+
+  animation: pulse 2s infinite;
+}
+
+/* ==============================
+   RESPONSIVE
+============================== */
+@media (max-width: 600px) {
+  .brand-text {
+    display: none;
+  }
+
+  .menu-btn {
+    width: 40px;
+    height: 40px;
+
+    .bar {
+      width: 20px;
+    }
+  }
+}

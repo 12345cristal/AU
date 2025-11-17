@@ -1,4 +1,5 @@
 $footer-bg-color: #1f2937;
+@use "sass:color";
 $primary-color: #3b82f6;
 $text-light: #d1d5db;
 $text-lighter: #f9fafb;
@@ -24,12 +25,12 @@ $font-family: 'Arial', sans-serif;
     }
 
     .footer-col {
-      .col-title {
+        .col-title {
         color: $text-lighter;
         font-size: 1.2rem;
         font-weight: 600;
         margin-bottom: 1rem;
-        border-bottom: 2px solid lighten($footer-bg-color, 10%);
+        border-bottom: 2px solid color.adjust($footer-bg-color, $lightness: 10%);
         padding-bottom: 0.5rem;
       }
 
@@ -78,7 +79,7 @@ $font-family: 'Arial', sans-serif;
         }
 
         .schedule-time {
-          color: lighten($text-light, 10%);
+          color: color.adjust($text-light, $lightness: 10%);
           font-size: 0.9rem;
         }
       }
@@ -110,10 +111,10 @@ $font-family: 'Arial', sans-serif;
     }
   }
 
-  .copyright {
+    .copyright {
     text-align: center;
     font-size: 0.8rem;
-    color: lighten($text-light, 10%);
+    color: color.adjust($text-light, $lightness: 10%);
     border-top: 1px solid #374151;
     margin-top: 2rem;
     padding-top: 1rem;
